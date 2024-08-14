@@ -37,7 +37,6 @@ Run & build the BikerSystemApplication java class
 
 ## Version Control Flow
 
-Each member should contribute to a branch separate from the main branch, for example I (yousef) will add,commit and push my changes to a branch that has my name "yousef", this is not completely formal in the programming world but in our use case it will be fine to do that.
 
 Each member should contribute to a branch separate from the main branch. For example, if i am contributing to the
 customer module, i will create a new branch called "customer-module" and i will push all my changes to that branch.
