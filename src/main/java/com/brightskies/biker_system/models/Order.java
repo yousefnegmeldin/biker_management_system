@@ -21,8 +21,7 @@ public class Order {
 
     @Column(nullable = false)
     private Date orderDate;
-
-
+    
     @Column(nullable = false)
     private String orderStatus;
 
@@ -30,17 +29,17 @@ public class Order {
     private String address;
 
     @Column(nullable = false)
-    private int amount;
+    private double amount;
 
     @Column(nullable = false)
     private String paymentMethod;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "biker_id",nullable = false)
-    private Biker bikerId;
+    private Biker biker;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id",nullable = false)
-    private Customer CustomerId;
+    private Customer Customer;
 
 }
