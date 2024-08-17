@@ -1,4 +1,4 @@
-package com.brighskies.biker_system.models;
+package com.brightskies.biker_system.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class Order {
 
     @Column(nullable = false)
     private Date orderDate;
-    
+
     @Column(nullable = false)
     private String orderStatus;
 
