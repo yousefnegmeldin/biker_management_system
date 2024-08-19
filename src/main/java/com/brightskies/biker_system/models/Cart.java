@@ -10,12 +10,26 @@ import org.springframework.stereotype.Component;
 public class Cart
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Customer costumerId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="customerId")
+    private Customer customer;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="productId",nullable = false)
+    private Product product;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="storeId",nullable = false)
+    private Store store;
     @Column(nullable = false)
-    String productId;
-    @Column(nullable = false)
-    String storeId;
-    @Column(nullable = false)
-    int quantity;
+    private int quantity;
+
+    public Cart(){}
+
+    public Cart(Customer customer, Product product, Store store, int quantity) {
+        this.customer = customer;
+        this.product=product;
+        this.store=store;
+        this.quantity = quantity;
+    }
+
+    
 }

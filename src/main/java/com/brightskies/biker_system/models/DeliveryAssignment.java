@@ -1,18 +1,14 @@
 package com.brightskies.biker_system.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class DeliveryAssignment {
 
     @Id
@@ -31,7 +27,7 @@ public class DeliveryAssignment {
     private Biker biker;
 
     @Column(nullable = false)
-    private int expectedTime;
+    private long expectedTime;
 
     @Column(nullable = false)
     private String status;
