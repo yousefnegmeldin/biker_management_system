@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Data
 public class Cart
 {
-    @Id
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="customerId")
     private Customer customer;

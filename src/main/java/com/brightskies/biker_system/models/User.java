@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 public class User implements UserDetails{
     @Id
