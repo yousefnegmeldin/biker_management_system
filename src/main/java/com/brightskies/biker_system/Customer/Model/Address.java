@@ -1,13 +1,11 @@
 package com.brightskies.biker_system.Customer.Model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Address {
     @Id
@@ -24,5 +22,4 @@ public class Address {
     private String street;
     @Column(nullable = false)
     private String apartment;
-
 }

@@ -3,6 +3,7 @@ package com.brightskies.biker_system.GeneralModels;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Component
@@ -10,59 +11,61 @@ import java.util.Date;
 public class Feedback
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String orderId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="orderId")
+    private Order order;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="bikerId",nullable = false)
+    private Biker biker;
     @Column(nullable = false)
-    String bikerId;
+    private LocalDate orderDate;
     @Column(nullable = false)
-    Date orderDate;
+    private LocalDate feedbackDate;
     @Column(nullable = false)
-    Date feedbackDate;
+    private int rating;
     @Column(nullable = false)
-    int rating;
-    @Column(nullable = false)
-    String text;
+    private String text;
 
     public Feedback(){}
 
-    public Feedback(String orderId, String bikerId, Date orderDate, Date feedbackDate, int rating, String text) {
-        this.orderId = orderId;
-        this.bikerId = bikerId;
+    public Feedback(Order order, Biker biker, LocalDate orderDate, LocalDate feedbackDate, int rating, String text) {
+        this.order = order;
+        this.biker = biker;
         this.orderDate = orderDate;
         this.feedbackDate = feedbackDate;
         this.rating = rating;
         this.text = text;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public String getBikerId() {
-        return bikerId;
+    public Biker getBiker() {
+        return biker;
     }
 
-    public void setBikerId(String bikerId) {
-        this.bikerId = bikerId;
+    public void setBiker(Biker biker) {
+        this.biker = biker;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
-    public Date getFeedbackDate() {
+    public LocalDate getFeedbackDate() {
         return feedbackDate;
     }
 
-    public void setFeedbackDate(Date feedbackDate) {
+    public void setFeedbackDate(LocalDate feedbackDate) {
         this.feedbackDate = feedbackDate;
     }
 

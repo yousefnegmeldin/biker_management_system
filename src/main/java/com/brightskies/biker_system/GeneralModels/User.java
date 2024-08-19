@@ -3,16 +3,19 @@ package com.brightskies.biker_system.GeneralModels;
 import com.brightskies.biker_system.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.JOINED)
 @Data
+@NoArgsConstructor
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,19 +34,13 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
-    @Override
-    public String getPassword() {
-        return "";
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
+    public User(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.joinedAt = joinedAt;
+        this.role = role;
     }
 
     @Override
@@ -65,5 +62,17 @@ public class User implements UserDetails{
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+
 }
 
