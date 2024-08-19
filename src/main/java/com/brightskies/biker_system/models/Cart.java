@@ -8,46 +8,49 @@ import org.springframework.stereotype.Component;
 public class Cart
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String costumerId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="customerId")
+    private Customer customer;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="productId",nullable = false)
+    private Product product;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="storeId",nullable = false)
+    private Store store;
     @Column(nullable = false)
-    String productId;
-    @Column(nullable = false)
-    String storeId;
-    @Column(nullable = false)
-    int quantity;
+    private int quantity;
 
     public Cart(){}
 
-    public Cart(String costumerId, String productId, String storeId, int quantity) {
-        this.costumerId = costumerId;
-        this.productId = productId;
-        this.storeId = storeId;
+    public Cart(Customer customer, Product product, Store store, int quantity) {
+        this.customer = customer;
+        this.product=product;
+        this.store=store;
         this.quantity = quantity;
     }
 
-    public String getCostumerId() {
-        return costumerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCostumerId(String costumerId) {
-        this.costumerId = costumerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public String getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public String getStoreId() {
-        return storeId;
+    public Store getStore() {
+        return store;
     }
 
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     public int getQuantity() {
