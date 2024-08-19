@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.order.model;
 
+import com.brightskies.biker_system.store.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 
@@ -8,35 +9,37 @@ import lombok.AllArgsConstructor;
 public class OrderHistory
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String orderId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="order_id")
+    private Order order;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id",nullable = false)
+    private Product product;
     @Column(nullable = false)
-    String productId;
-    @Column(nullable = false)
-    int quantity;
+    private int quantity;
 
     public OrderHistory(){}
 
-    public OrderHistory(int quantity, String productId, String orderId) {
+    public OrderHistory(Order order, Product product, int quantity) {
+        this.order = order;
+        this.product = product;
         this.quantity = quantity;
-        this.productId = productId;
-        this.orderId = orderId;
     }
 
-    public String getId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setId(String orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public String getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {
