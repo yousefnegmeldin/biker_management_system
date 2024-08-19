@@ -2,10 +2,12 @@ package com.brightskies.biker_system.models;
 
 import com.brightskies.biker_system.enums.UserRole;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @MappedSuperclass
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
@@ -24,5 +26,14 @@ public class User {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    public User(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.joinedAt = joinedAt;
+        this.role = role;
+    }
 }
 
