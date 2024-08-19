@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.models;
+package com.brightskies.biker_system.GeneralModels;
 
 import com.brightskies.biker_system.enums.UserRole;
 import jakarta.persistence.*;

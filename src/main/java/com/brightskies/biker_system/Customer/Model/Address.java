@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.models;
+package com.brightskies.biker_system.Customer.Model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

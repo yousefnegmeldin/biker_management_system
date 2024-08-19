@@ -1,5 +1,6 @@
-package com.brightskies.biker_system.models;
+package com.brightskies.biker_system.Order.Model;
 
+import com.brightskies.biker_system.Biker.Model.Biker;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,7 +1,8 @@
-package com.brightskies.biker_system.models;
+package com.brightskies.biker_system.Biker.Model;
 
 import com.brightskies.biker_system.enums.BikerStatus;
 import com.brightskies.biker_system.enums.Zone;
+import com.brightskies.biker_system.GeneralModels.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.Biker;
+package com.brightskies.biker_system.Biker.Controller;
 
 public class BikerController {
 }

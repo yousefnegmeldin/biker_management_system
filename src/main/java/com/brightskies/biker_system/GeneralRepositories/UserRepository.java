@@ -1,6 +1,6 @@
-package com.brightskies.biker_system.repositories;
+package com.brightskies.biker_system.GeneralRepositories;
 
-import com.brightskies.biker_system.models.User;
+import com.brightskies.biker_system.GeneralModels.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

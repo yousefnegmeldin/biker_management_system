@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.models;
+package com.brightskies.biker_system.GeneralModels;
 
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;

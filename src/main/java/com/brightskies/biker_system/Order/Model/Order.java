@@ -1,4 +1,5 @@
-package com.brightskies.biker_system.models;
+package com.brightskies.biker_system.Order.Model;
+import com.brightskies.biker_system.Biker.Model.Biker;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -34,6 +35,6 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id",nullable = false)
-    private Customer Customer;
+    private com.brightskies.biker_system.Customer.Model.Customer Customer;
 
 }

@@ -1,6 +1,6 @@
-package com.brightskies.biker_system.repositories;
+package com.brightskies.biker_system.Admin.Repository;
 
-import com.brightskies.biker_system.models.Admin;
+import com.brightskies.biker_system.Admin.Model.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AdminRepository extends JpaRepository<Admin, Long> {

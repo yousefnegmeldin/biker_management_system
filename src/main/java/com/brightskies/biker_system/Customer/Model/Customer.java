@@ -1,5 +1,6 @@
-package com.brightskies.biker_system.models;
+package com.brightskies.biker_system.Customer.Model;
 
+import com.brightskies.biker_system.GeneralModels.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;

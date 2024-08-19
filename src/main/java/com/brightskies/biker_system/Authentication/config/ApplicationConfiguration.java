@@ -1,7 +1,7 @@
 package com.brightskies.biker_system.Authentication.config;
 
 
-import com.brightskies.biker_system.repositories.UserRepository;
+import com.brightskies.biker_system.GeneralRepositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

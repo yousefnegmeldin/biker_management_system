@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.repositories;
+package com.brightskies.biker_system.Store.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

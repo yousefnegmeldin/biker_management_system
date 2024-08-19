@@ -1,5 +1,6 @@
-package com.brightskies.biker_system.models;
+package com.brightskies.biker_system.Manager.Model;
 
+import com.brightskies.biker_system.GeneralModels.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Manager extends User{
+public class Manager extends User {
     @Column
     private String department;
 }
