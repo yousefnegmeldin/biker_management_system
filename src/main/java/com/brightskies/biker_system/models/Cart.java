@@ -1,10 +1,12 @@
 package com.brightskies.biker_system.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
+@Data
 public class Cart
 {
     @Id
@@ -29,35 +31,5 @@ public class Cart
         this.quantity = quantity;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Store getStore() {
-        return store;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+    
 }

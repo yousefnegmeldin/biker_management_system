@@ -12,8 +12,8 @@ import java.util.Objects;
 @Setter
 public class StockId implements Serializable {
 
-    private int storeId;
-    private int productId;
+    private long storeId;
+    private long productId;
 
     // Default constructor
     public StockId() {}
