@@ -10,11 +10,13 @@ public class Cart
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long costumerId;
+    private Long costumerId;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id",nullable = false)
+    private String productId;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="store_id",nullable = false)
+    private String storeId;
     @Column(nullable = false)
-    String productId;
-    @Column(nullable = false)
-    String storeId;
-    @Column(nullable = false)
-    int quantity;
+    private int quantity;
 }
