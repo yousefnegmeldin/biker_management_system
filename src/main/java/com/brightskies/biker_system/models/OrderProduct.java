@@ -1,10 +1,13 @@
 package com.brightskies.biker_system.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
+@AllArgsConstructor
+
 public class OrderProduct
 {
     @Id

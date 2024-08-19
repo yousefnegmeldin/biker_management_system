@@ -1,60 +1,35 @@
 package com.brightskies.biker_system.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
+@Data
 public class Cart
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String costumerId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="customerId")
+    private Customer customer;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="productId",nullable = false)
+    private Product product;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="storeId",nullable = false)
+    private Store store;
     @Column(nullable = false)
-    String productId;
-    @Column(nullable = false)
-    String storeId;
-    @Column(nullable = false)
-    int quantity;
+    private int quantity;
 
     public Cart(){}
 
-    public Cart(String costumerId, String productId, String storeId, int quantity) {
-        this.costumerId = costumerId;
-        this.productId = productId;
-        this.storeId = storeId;
+    public Cart(Customer customer, Product product, Store store, int quantity) {
+        this.customer = customer;
+        this.product=product;
+        this.store=store;
         this.quantity = quantity;
     }
 
-    public String getCostumerId() {
-        return costumerId;
-    }
-
-    public void setCostumerId(String costumerId) {
-        this.costumerId = costumerId;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+    
 }
