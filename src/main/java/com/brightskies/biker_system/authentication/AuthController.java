@@ -7,7 +7,7 @@ import com.brightskies.biker_system.authentication.dto.UserDTO;
 import com.brightskies.biker_system.authentication.mapper.UserMapper;
 import com.brightskies.biker_system.authentication.service.AuthenticationService;
 import com.brightskies.biker_system.authentication.service.JwtService;
-import com.brightskies.biker_system.models.User;
+import com.brightskies.biker_system.generalmodels.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

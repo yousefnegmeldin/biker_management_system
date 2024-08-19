@@ -12,7 +12,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
 public class User implements UserDetails{

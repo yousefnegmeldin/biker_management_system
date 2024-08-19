@@ -12,14 +12,14 @@ import java.util.Objects;
 @Setter
 public class StockId implements Serializable {
 
-    private long storeId;
-    private long productId;
+    private Long storeId;
+    private Long productId;
 
     // Default constructor
     public StockId() {}
 
     // Constructor
-    public StockId(int storeId, int productId) {
+    public StockId(Long storeId, Long productId) {
         this.storeId = storeId;
         this.productId = productId;
     }

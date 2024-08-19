@@ -1,22 +1,24 @@
 package com.brightskies.biker_system.generalmodels;
 
 import com.brightskies.biker_system.biker.model.Biker;
-import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.order.model.Orderr;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class FeedBack
 {
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
+    private Long id;
+
+    @OneToOne
+    @MapsId
     @JoinColumn(name="order_id")
-    private Order order;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="biker_id",nullable = false)
-    private Biker biker;
+    private Orderr order;
+
     @Column(nullable = false)
     private LocalDate orderDate;
     @Column(nullable = false)
@@ -25,33 +27,24 @@ public class FeedBack
     private int rating;
     @Column(nullable = false)
     private String text;
-
     public FeedBack(){}
 
-    public FeedBack(Order order, Biker biker, LocalDate orderDate, LocalDate feedbackDate, int rating, String text) {
+    public FeedBack(Orderr order, LocalDate orderDate, LocalDate feedbackDate, int rating, String text) {
         this.order = order;
-        this.biker = biker;
         this.orderDate = orderDate;
         this.feedbackDate = feedbackDate;
         this.rating = rating;
         this.text = text;
     }
 
-    public Order getOrder() {
+    public Orderr getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(Orderr order) {
         this.order = order;
     }
 
-    public Biker getBiker() {
-        return biker;
-    }
-
-    public void setBiker(Biker biker) {
-        this.biker = biker;
-    }
 
     public LocalDate getOrderDate() {
         return orderDate;

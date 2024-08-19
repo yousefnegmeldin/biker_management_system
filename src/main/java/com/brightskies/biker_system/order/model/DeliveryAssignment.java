@@ -13,9 +13,12 @@ import java.util.Date;
 public class DeliveryAssignment {
 
     @Id
-    @OneToOne
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "id")
-    private Order order;
+    private Orderr orderr;
 
     @Column(nullable = false)
     private Date assignedAt;
@@ -28,7 +31,7 @@ public class DeliveryAssignment {
     private Biker biker;
 
     @Column(nullable = false)
-    private long expectedTime;
+    private Long expectedTime;
 
     @Column(nullable = false)
     private String status;
