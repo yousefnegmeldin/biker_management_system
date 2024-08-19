@@ -3,9 +3,9 @@ package com.brightskies.biker_system.Authentication.service;
 
 import com.brightskies.biker_system.Authentication.dto.LoginUserDTO;
 import com.brightskies.biker_system.Authentication.dto.RegisterUserDTO;
-import com.brightskies.biker_system.repositories.UserRepository;
+import com.brightskies.biker_system.GeneralRepositories.UserRepository;
 
-import com.brightskies.biker_system.models.User;
+import com.brightskies.biker_system.GeneralModels.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
