@@ -3,6 +3,7 @@ package com.brightskies.biker_system.models;
 import com.brightskies.biker_system.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,11 +11,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
+@NoArgsConstructor
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,14 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    public User(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.joinedAt = joinedAt;
+        this.role = role;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -63,7 +72,5 @@ public class User implements UserDetails{
     public String getUsername() {
         return email;
     }
-
-
 }
 
