@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.order.model;
 import com.brightskies.biker_system.biker.model.Biker;
+import com.brightskies.biker_system.customer.model.Customer;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -8,11 +9,11 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class Orderr {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private LocalDate orderDate;
@@ -35,6 +36,6 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id",nullable = false)
-    private com.brightskies.biker_system.customer.model.Customer Customer;
+    private Customer customer;
 
 }
