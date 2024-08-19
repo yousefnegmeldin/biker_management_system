@@ -1,6 +1,6 @@
 package com.brightskies.biker_system.Authentication.config;
 
-import com.example.spring_jwt.service.JwtService;
+import com.brightskies.biker_system.Authentication.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

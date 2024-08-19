@@ -1,10 +1,11 @@
 package com.brightskies.biker_system.Authentication.service;
 
 
-import com.example.spring_jwt.dto.LoginUserDTO;
-import com.example.spring_jwt.dto.RegisterUserDTO;
-import com.example.spring_jwt.model.User;
-import com.example.spring_jwt.repository.UserRepository;
+import com.brightskies.biker_system.Authentication.dto.LoginUserDTO;
+import com.brightskies.biker_system.Authentication.dto.RegisterUserDTO;
+import com.brightskies.biker_system.repositories.UserRepository;
+
+import com.brightskies.biker_system.models.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,9 +31,10 @@ public class AuthenticationService {
 
     public User signup(RegisterUserDTO input) {
         User user = new User();
-        user.setUsername(input.username());
-        user.setName(input.name());
+        user.setEmail(input.email());
+        user.setName(input.firstName() + " " + input.lastName());
         user.setPassword(passwordEncoder.encode(input.password()));
+        user.setPhone(input.phone());
         user.setRole(input.role());
         return userRepository.save(user);
     }
@@ -45,7 +47,7 @@ public class AuthenticationService {
                 )
         );
 
-        return userRepository.findByUsername(input.username())
+        return userRepository.findByEmail(input.username())
                 .orElseThrow();
     }
 }
