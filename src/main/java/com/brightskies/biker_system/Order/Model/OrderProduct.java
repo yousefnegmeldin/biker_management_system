@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @AllArgsConstructor
-
 public class OrderProduct
 {
     @Id
