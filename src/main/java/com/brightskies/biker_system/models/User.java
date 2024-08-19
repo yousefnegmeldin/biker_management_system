@@ -2,11 +2,13 @@ package com.brightskies.biker_system.models;
 
 import com.brightskies.biker_system.enums.UserRole;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @MappedSuperclass
+@Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
