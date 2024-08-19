@@ -31,7 +31,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/Climatify-Mobile-App/Backend.git
+  git clone https://github.com/yousefnegmeldin/biker_management_system
 ```
 Run & build the BikerSystemApplication java class
 
