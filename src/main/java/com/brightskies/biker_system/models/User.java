@@ -4,10 +4,12 @@ import com.brightskies.biker_system.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @MappedSuperclass
@@ -31,20 +33,6 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
-    @Override
-    public String getPassword() {
-        return "";
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -65,5 +53,17 @@ public class User implements UserDetails{
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+
 }
 
