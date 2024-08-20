@@ -10,10 +10,12 @@ public class FeedBack
 {
     @Id
     private Long id;
+
     @OneToOne
     @MapsId
     @JoinColumn(name="order_id")
     private Order order;
+
     @Column(nullable = false)
     private LocalDate orderDate;
     @Column(nullable = false)

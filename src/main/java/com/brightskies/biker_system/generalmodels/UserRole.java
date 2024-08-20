@@ -5,7 +5,6 @@ public enum UserRole {
     biker("biker"),
     manager("manager"),
     admin("admin");
-
     private String name;
     UserRole(String name) {
         this.name = name;
