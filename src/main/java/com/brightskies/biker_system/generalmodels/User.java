@@ -1,6 +1,5 @@
 package com.brightskies.biker_system.generalmodels;
 
-import com.brightskies.biker_system.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,9 +31,9 @@ public class User implements UserDetails{
     private LocalDate joinedAt;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserRoleEnum role;
+    private UserRole role;
 
-    public User(String name, String email, String phone, String password, LocalDate joinedAt, UserRoleEnum role) {
+    public User(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role) {
         this.name = name;
         this.email = email;
         this.phone = phone;

@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.authentication;
+package com.brightskies.biker_system.authentication.controller;
 
 import com.brightskies.biker_system.authentication.dto.*;
 import com.brightskies.biker_system.authentication.mapper.UserMapper;
