@@ -1,25 +1,27 @@
 package com.brightskies.biker_system.order.model;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.customer.model.Customer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Orderr {
+@Table(name = "orders")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate orderDate;
-
-    @Column(nullable = false)
-    private String orderStatus;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime orderDate;
 
     @Column(nullable = false)
     private String address;
@@ -31,7 +33,7 @@ public class Orderr {
     private String paymentMethod;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "biker_id",nullable = false)
+    @JoinColumn(name = "biker_id")
     private Biker biker;
 
     @ManyToOne(fetch = FetchType.LAZY)
