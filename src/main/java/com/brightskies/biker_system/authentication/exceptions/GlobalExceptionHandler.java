@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.Authentication.exceptions;
+package com.brightskies.biker_system.authentication.exceptions;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
