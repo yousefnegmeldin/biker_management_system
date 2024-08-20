@@ -47,22 +47,14 @@ public class AuthenticationService {
     }
 
     public User authenticate(LoginUserDTO input) {
-        logger.info("Authenticating user with email: {}", input.email());
-        try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             input.email(),
                             input.password()
                     )
             );
-        }catch (Exception e){
-            logger.error("User not found with email: {}", input.email());
-        }
-
-        logger.info("Authentication successful for user with email: {}", input.email());
         return userRepository.findByEmail(input.email())
                 .orElseThrow(() -> {
-                    logger.error("User not found with email: {}", input.email());
                     return new RuntimeException("User not found");
                 });
     }
