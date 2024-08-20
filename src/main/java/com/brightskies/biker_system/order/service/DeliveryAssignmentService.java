@@ -21,9 +21,10 @@ public class DeliveryAssignmentService {
     private BikerRepository bikerRepository;
 
     @Autowired
-    public DeliveryAssignmentService(DeliveryAssignmentRepository deliveryAssignmentRepository, OrderRepository orderRepository) {
+    public DeliveryAssignmentService(DeliveryAssignmentRepository deliveryAssignmentRepository, OrderRepository orderRepository, BikerRepository bikerRepository) {
         this.deliveryAssignmentRepository = deliveryAssignmentRepository;
         this.orderRepository = orderRepository;
+        this.bikerRepository = bikerRepository;
     }
 
     public DeliveryAssignmentDTO addDeliveryAssignment(DeliveryAssignmentDTO deliveryAssignmentDTO) throws Exception {
