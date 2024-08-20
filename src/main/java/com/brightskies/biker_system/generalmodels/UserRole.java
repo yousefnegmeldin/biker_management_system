@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.enums;
+package com.brightskies.biker_system.generalmodels;
 
 public enum UserRole {
     customer("customer"),

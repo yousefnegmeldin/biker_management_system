@@ -1,24 +1,19 @@
 package com.brightskies.biker_system.generalmodels;
 
-import com.brightskies.biker_system.biker.model.Biker;
-import com.brightskies.biker_system.order.model.Orderr;
+import com.brightskies.biker_system.order.model.Order;
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class FeedBack
 {
     @Id
     private Long id;
-
     @OneToOne
     @MapsId
     @JoinColumn(name="order_id")
-    private Orderr order;
-
+    private Order order;
     @Column(nullable = false)
     private LocalDate orderDate;
     @Column(nullable = false)
@@ -29,7 +24,7 @@ public class FeedBack
     private String text;
     public FeedBack(){}
 
-    public FeedBack(Orderr order, LocalDate orderDate, LocalDate feedbackDate, int rating, String text) {
+    public FeedBack(Order order, LocalDate orderDate, LocalDate feedbackDate, int rating, String text) {
         this.order = order;
         this.orderDate = orderDate;
         this.feedbackDate = feedbackDate;
@@ -37,11 +32,11 @@ public class FeedBack
         this.text = text;
     }
 
-    public Orderr getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(Orderr order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
