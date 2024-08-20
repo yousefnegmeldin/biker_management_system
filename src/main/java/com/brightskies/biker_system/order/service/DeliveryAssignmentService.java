@@ -52,9 +52,18 @@ public class DeliveryAssignmentService {
             throw new Exception("Order with the specified ID does not exist.");
         }
     }
-    public void changeStatus(Long id, AssignmentStatus status) {
-        if(deliveryAssignmentRepository.existsById(id)) {
 
+    public void changeStatus(Long id, String status) throws Exception {
+        if(deliveryAssignmentRepository.existsById(id)) {
+            try {
+                deliveryAssignmentRepository.findById(id).get().setStatus(AssignmentStatus.valueOf(status));
+            }
+            catch (IllegalArgumentException exception) {
+                throw new IllegalArgumentException("Invalid delivery assignment status.");
+            }
+        }
+        else {
+            throw new Exception("Order with the specified ID does not exist.");
         }
     }
 }
