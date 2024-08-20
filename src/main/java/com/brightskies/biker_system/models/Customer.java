@@ -1,6 +1,6 @@
 package com.brightskies.biker_system.models;
 
-import com.brightskies.biker_system.enums.UserRole;
+import com.brightskies.biker_system.enums.UserRoleEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Data;
@@ -15,7 +15,7 @@ public class Customer extends User {
     @Column
     private LocalDate lastLogin;
 
-    public Customer(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role, LocalDate lastLogin) {
+    public Customer(String name, String email, String phone, String password, LocalDate joinedAt, UserRoleEnum role, LocalDate lastLogin) {
         super(name, email, phone, password, joinedAt, role);
         this.lastLogin = lastLogin;
     }

@@ -1,35 +1,42 @@
 package com.brightskies.biker_system.Authentication.service;
 
-
 import com.brightskies.biker_system.Authentication.dto.LoginUserDTO;
 import com.brightskies.biker_system.Authentication.dto.RegisterUserDTO;
 import com.brightskies.biker_system.repositories.UserRepository;
-
 import com.brightskies.biker_system.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final AuthenticationManager authenticationManager;
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
+    @Autowired
     public AuthenticationService(
             UserRepository userRepository,
-            AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager
     ) {
-        this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     public User signup(RegisterUserDTO input) {
+        if (userRepository.existsByEmail(input.email()) && userRepository.existsByPhone(input.phone())) {
+            throw new RuntimeException("Email already exists");
+        }
+        if (userRepository.existsByPhone(input.phone())) {
+            throw new RuntimeException("Phone already exists");
+        }
         User user = new User();
         user.setEmail(input.email());
         user.setName(input.firstName() + " " + input.lastName());
@@ -40,14 +47,23 @@ public class AuthenticationService {
     }
 
     public User authenticate(LoginUserDTO input) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        input.username(),
-                        input.password()
-                )
-        );
+        logger.info("Authenticating user with email: {}", input.email());
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            input.email(),
+                            input.password()
+                    )
+            );
+        }catch (Exception e){
+            logger.error("User not found with email: {}", input.email());
+        }
 
-        return userRepository.findByEmail(input.username())
-                .orElseThrow();
+        logger.info("Authentication successful for user with email: {}", input.email());
+        return userRepository.findByEmail(input.email())
+                .orElseThrow(() -> {
+                    logger.error("User not found with email: {}", input.email());
+                    return new RuntimeException("User not found");
+                });
     }
 }

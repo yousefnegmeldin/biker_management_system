@@ -1,6 +1,6 @@
 package com.brightskies.biker_system.models;
 
-import com.brightskies.biker_system.enums.UserRole;
+import com.brightskies.biker_system.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,13 +13,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@MappedSuperclass
 @Data
 @NoArgsConstructor
+@Entity
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false, unique = true)
@@ -32,9 +32,9 @@ public class User implements UserDetails{
     private LocalDate joinedAt;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRoleEnum role;
 
-    public User(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role) {
+    public User(String name, String email, String phone, String password, LocalDate joinedAt, UserRoleEnum role) {
         this.name = name;
         this.email = email;
         this.phone = phone;

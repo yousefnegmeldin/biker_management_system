@@ -1,4 +1,5 @@
 package com.brightskies.biker_system.models;
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -28,12 +30,12 @@ public class Order {
     @Column(nullable = false)
     private String paymentMethod;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "biker_id",nullable = false)
-    private Biker biker;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id",nullable = false)
-    private Customer Customer;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "biker_id",nullable = false)
+//    private Biker biker;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "customer_id",nullable = false)
+//    private Customer customer;
 
 }

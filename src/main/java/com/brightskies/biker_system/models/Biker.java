@@ -1,7 +1,7 @@
 package com.brightskies.biker_system.models;
 
 import com.brightskies.biker_system.enums.BikerStatus;
-import com.brightskies.biker_system.enums.UserRole;
+import com.brightskies.biker_system.enums.UserRoleEnum;
 import com.brightskies.biker_system.enums.Zone;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +25,7 @@ public class Biker extends User {
     @Column
     private Integer rating;
 
-    public Biker(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role, Zone zone, BikerStatus status) {
+    public Biker(String name, String email, String phone, String password, LocalDate joinedAt, UserRoleEnum role, Zone zone, BikerStatus status) {
         super(name, email, phone, password, joinedAt, role);
         this.zone = zone;
         this.status = status;
