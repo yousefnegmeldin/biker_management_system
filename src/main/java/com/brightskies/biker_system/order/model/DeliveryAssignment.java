@@ -18,7 +18,7 @@ public class DeliveryAssignment {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
-    private Orderr orderr;
+    private Order order;
 
     @Column(nullable = false)
     private Date assignedAt;
