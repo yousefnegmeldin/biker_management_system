@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/stock")
 public class StockController
 {
-    private StockService stockService;
-    private StockConverter stockConverter;
+    private final StockService stockService;
+    private final StockConverter stockConverter;
 
     @Autowired
     public StockController(StockService stockService, StockConverter stockConverter) {
@@ -24,13 +24,12 @@ public class StockController
         this.stockConverter = stockConverter;
     }
 
-    @PostMapping("/add_stock")
-    public ResponseEntity<StockDTO> addStock(@RequestBody StockDTO stockDTO)
+    @PostMapping("/add")
+    public ResponseEntity<?> addStock(@RequestBody StockDTO stockDTO)
     {
-        Stock newstockDTO = stockConverter.toEntity(stockDTO);
-        Stock stock = stockService.addStock(newstockDTO);
-        StockDTO newDto = stockConverter.toDTO(stock);
-        return ResponseEntity.ok(newDto);
+        Stock stockEntity = stockConverter.toEntity(stockDTO);
+        Stock stockSaved = stockService.addStock(stockEntity);
+        return ResponseEntity.ok(stockConverter.toDTO(stockSaved));
     }
 
 //    @PostMapping("/update stock/{storeId}/{productId}/{quantity}")

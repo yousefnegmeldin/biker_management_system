@@ -23,6 +23,7 @@ public class ProductConverter
         Product product= new Product();
         product.setId(dto.getId());
         product.setName(dto.getName());
+        product.setCategory(dto.getCategory());
         product.setDescription(dto.getDescription());
         product.setBarcode(dto.getBarcode());
         product.setPrice(dto.getPrice());
