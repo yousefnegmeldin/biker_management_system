@@ -20,9 +20,9 @@ public class StockService {
         this.productRepository = productRepository;
     }
 
-    public Stock addStock(Stock stock)
-    {
-        return stockRepository.save(stock);
+    public Stock addStock(Stock stock) {
+        Stock stock2 = stockRepository.save(stock);
+        return stock2;
     }
 
     public int getProductQuantity (CartItem cartItem) {

@@ -25,6 +25,9 @@ public class SecurityConfiguration {
             "/auth/**",
             "/v3/api-docs/**",
             "/swagger-ui/**",
+            "/product/**",
+            "/store/**",
+            "/stock/**",
     };
 
     @Autowired
