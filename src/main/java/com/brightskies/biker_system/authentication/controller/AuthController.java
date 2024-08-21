@@ -30,7 +30,6 @@ public class AuthController {
         this.customerService = customerService;
     }
 
-
     @PostMapping("/signup/customer")
     public ResponseEntity<UserDTO> register(@RequestBody RegisterCustomerDTO registerCustomerDto) {
         User registeredUser = authenticationService.signUpCustomer(registerCustomerDto);

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    @Query(value = "SELECT * FROM user where WHERE id = :customerId" , nativeQuery = true)
+    @Query("SELECT u FROM User u WHERE u.id = :customerId")
     Customer findByCustomerId(Long customerId);
 }
