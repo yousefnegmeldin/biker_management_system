@@ -22,4 +22,12 @@ public class Address {
     private String street;
     @Column(nullable = false)
     private String apartment;
+
+    public Address(Customer customer, String label, String city, String street, String apartment) {
+        this.customer = customer;
+        this.label = label;
+        this.city = city;
+        this.street = street;
+        this.apartment = apartment;
+    }
 }
