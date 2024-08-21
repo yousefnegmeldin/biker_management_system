@@ -6,7 +6,6 @@ import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.repository.CartRepository;
 import com.brightskies.biker_system.store.model.Product;
 import com.brightskies.biker_system.store.repository.ProductRepository;
-import com.brightskies.biker_system.store.repository.StockRepository;
 import com.brightskies.biker_system.store.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
