@@ -4,14 +4,13 @@ import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.generalmodels.UserRole;
 import com.brightskies.biker_system.biker.enums.Zone;
 import com.brightskies.biker_system.generalmodels.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.brightskies.biker_system.order.model.Order;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,6 +24,9 @@ public class Biker extends User {
     private BikerStatus status;
     @Column
     private Integer rating;
+
+    @OneToMany(mappedBy = "biker", fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     public Biker(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role, Zone zone, BikerStatus status) {
         super(name, email, phone, password, joinedAt, role);
