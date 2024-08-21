@@ -1,6 +1,7 @@
 package com.brightskies.biker_system.store.service;
 
 import com.brightskies.biker_system.order.model.CartItem;
+import com.brightskies.biker_system.store.model.Stock;
 import com.brightskies.biker_system.store.repository.ProductRepository;
 import com.brightskies.biker_system.store.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class StockService {
                         ProductRepository productRepository) {
         this.stockRepository = stockRepository;
         this.productRepository = productRepository;
+    }
+
+    public Stock addStock(Stock stock)
+    {
+        return stockRepository.save(stock);
     }
 
     public int getProductQuantity (CartItem cartItem) {
