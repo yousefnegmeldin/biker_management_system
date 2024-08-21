@@ -1,6 +1,7 @@
 package com.brightskies.biker_system.order.model;
 
 import com.brightskies.biker_system.customer.model.Customer;
+import com.brightskies.biker_system.generalmodels.User;
 import com.brightskies.biker_system.store.model.Product;
 import com.brightskies.biker_system.store.model.Store;
 import jakarta.persistence.*;
@@ -10,32 +11,23 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Component
+
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Cart {
 
+public class Cart {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "customerId")
-    private Customer customer;
+    @OneToOne(mappedBy = "cart")
+    private User user;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productId", nullable = false)
-    private List<Product> product;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CartItem> items = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "storeId", nullable = false)
-    private Store store;
-
-    @Column(nullable = false)
-    private int quantity;
-
+    // Getters and setters
 }

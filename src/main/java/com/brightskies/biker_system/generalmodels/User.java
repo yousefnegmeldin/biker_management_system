@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.generalmodels;
 
+import com.brightskies.biker_system.order.model.Cart;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,9 @@ public class User implements UserDetails{
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    @OneToOne
+    @JoinColumn(name = "cart_id")  // This is optional, you can customize the column name if needed
+    private Cart cart;
 
     public User(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role) {
         this.name = name;

@@ -18,18 +18,18 @@ public class DeliveryAssignmentController {
         this.deliveryAssignmentService = deliveryAssignmentService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addDeliveryAssignment(@RequestBody DeliveryAssignmentDTO deliveryAssignmentDTO) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(deliveryAssignmentService.addDeliveryAssignment(deliveryAssignmentDTO));
-        }
-        catch(IllegalArgumentException exception) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
-        }
-        catch(Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
-        }
-    }
+//    @PostMapping("/add")
+//    public ResponseEntity<?> addDeliveryAssignment(@RequestBody DeliveryAssignmentDTO deliveryAssignmentDTO) {
+//        try {
+//            return ResponseEntity.status(HttpStatus.CREATED).body(deliveryAssignmentService.addDeliveryAssignment(deliveryAssignmentDTO));
+//        }
+//        catch(IllegalArgumentException exception) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+//        }
+//        catch(Exception exception) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+//        }
+//    }
 
     @PatchMapping("/update/status/{id}")
     public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @RequestParam String status) {

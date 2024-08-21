@@ -12,11 +12,11 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Long> {
-    @Query("SELECT o FROM Order o WHERE o.id = :id AND o.biker_id = null")
-    Optional<Order> findFreeOrderById(@Param("id") Long id);
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE Order o SET o.biker = :biker WHERE o.id = :id")
-    void assignBikerToOrder(@Param("biker") Long biker, @Param("id") Long id);
+//    @Query("SELECT o FROM Order o WHERE o.id = :id AND o.biker_id = null")
+//    Optional<Order> findFreeOrderById(@Param("id") Long id);
+//
+//    @Modifying
+//    @Transactional
+//    @Query("UPDATE Order o SET o.biker = :biker WHERE o.id = :id")
+//    void assignBikerToOrder(@Param("biker") Long biker, @Param("id") Long id);
 }
