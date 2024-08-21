@@ -9,20 +9,19 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
-    @Query("SELECT a.label FROM Address a WHERE a.customer = :customer")
-    List<String> findAllProductsInCartByCustomerId(@Param("customer") Long customer);
+    @Query("SELECT a.label FROM Address a WHERE a.customer.id = :customer")
+    List<String> findAllLabelsByCustomer(@Param("customer") Long customer);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Address a WHERE a.customer = :customer AND a.label = :label")
+    @Query("DELETE FROM Address a WHERE a.customer.id = :customer AND a.label = :label")
     void deleteByCustomerAndLabel(@Param("customer") Long customer, @Param("label") String label);
 
-    @Modifying
-    @Transactional
-    @Query("UPDATE Address a SET a.street = :street, a.city = :city, a.apartment = :apartment WHERE a.customer = :customer")
-    void updateAddressByCustomer(@Param("street") String street, @Param("city") String city, @Param("apartment") String apartment, @Param("customer") Long customer);
+    @Query("SELECT a FROM Address a WHERE a.customer.id = :customer AND a.label = :label")
+    Optional<Address> findAddressByCustomerAndLabel(@Param("customer") Long customer, @Param("label") String label);
 }

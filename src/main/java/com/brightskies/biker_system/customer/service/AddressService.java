@@ -38,7 +38,7 @@ public class AddressService {
 
     public void removeAddress(String label) throws InstanceNotFoundException {
         Long customerID = SecurityUtils.getCurrentUserId();
-        List<String> labels = addressRepository.findAllProductsInCartByCustomerId(customerID);
+        List<String> labels = addressRepository.findAllLabelsByCustomer(customerID);
         if(labels.contains(label)) {
             addressRepository.deleteByCustomerAndLabel(customerID, label);
         }
@@ -49,9 +49,13 @@ public class AddressService {
 
     public void updateAddressDetails(String label, UpdateAddressDTO newAddressDTO) throws InstanceNotFoundException {
         Long customerID = SecurityUtils.getCurrentUserId();
-        List<String> labels = addressRepository.findAllProductsInCartByCustomerId(customerID);
+        List<String> labels = addressRepository.findAllLabelsByCustomer(customerID);
         if(labels.contains(label)) {
-            addressRepository.updateAddressByCustomer(newAddressDTO.city(), newAddressDTO.street(), newAddressDTO.apartment(), customerID);
+            Address address = addressRepository.findAddressByCustomerAndLabel(customerID, label).get();
+            address.setCity(newAddressDTO.city());
+            address.setStreet(newAddressDTO.street());
+            address.setApartment(newAddressDTO.apartment());
+            addressRepository.save(address);
         }
         else {
             throw new InstanceNotFoundException("Customer does not have an address with that label");
