@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/product")
 public class ProductController
 {
      private ProductService productService;
@@ -23,7 +24,7 @@ public class ProductController
         this.productConverter=productConverter;
     }
 
-    @PostMapping("/add product")
+    @PostMapping("/add_product")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO)
     {
         Product newproductDTO = productConverter.toEntity(productDTO);
@@ -32,7 +33,7 @@ public class ProductController
         return ResponseEntity.ok(newDto);
     }
 
-    @DeleteMapping("/delete product /{name}")
+    @DeleteMapping("/delete/{name}")
     public ResponseEntity<?> deleteProductByName(@PathVariable String name)
     {
         productService.deleteProductByName(name);

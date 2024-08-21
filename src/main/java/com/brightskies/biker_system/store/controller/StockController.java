@@ -9,12 +9,10 @@ import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/stock")
 public class StockController
 {
     private StockService stockService;
@@ -26,7 +24,7 @@ public class StockController
         this.stockConverter = stockConverter;
     }
 
-    @PostMapping("/add stock")
+    @PostMapping("/add_stock")
     public ResponseEntity<StockDTO> addStock(@RequestBody StockDTO stockDTO)
     {
         Stock newstockDTO = stockConverter.toEntity(stockDTO);
@@ -35,9 +33,9 @@ public class StockController
         return ResponseEntity.ok(newDto);
     }
 
-    @PostMapping("/update stock/{storeId}/{productId}/{quantity}")
-    public Stock updateStock(@PathVariable Long storeId, Long productId, int quantity)
-    {
-        return stockService.updateStock(storeId,productId,quantity);
-    }
+//    @PostMapping("/update stock/{storeId}/{productId}/{quantity}")
+//    public Stock updateStock(@PathVariable Long storeId, Long productId, int quantity)
+//    {
+//        return stockService.updateStock(storeId,productId,quantity);
+//    }
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Store")
+@RequestMapping("/store")
 public class StoreController
 {
     private StoreService storeService;
@@ -26,7 +26,7 @@ public class StoreController
         this.storeConverter = storeConverter;
     }
 
-    @PostMapping("/add store")
+    @PostMapping("/add")
     public ResponseEntity<StoreDTO> addStore(@RequestBody StoreDTO storeDTO)
     {
         Store newstoreDTO = storeConverter.toEntity(storeDTO);
@@ -35,7 +35,7 @@ public class StoreController
         return ResponseEntity.ok(newDto);
     }
 
-    @DeleteMapping("/delete store/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable Long id)
     {
         storeService.deleteStore(id);

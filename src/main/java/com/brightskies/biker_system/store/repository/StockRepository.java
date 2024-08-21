@@ -9,4 +9,8 @@ import org.springframework.stereotype.Repository;
 public interface StockRepository extends JpaRepository<Stock, Long> {
     @Query("SELECT s FROM Stock s WHERE s.product.id = :prodId")
     public Stock findByProdID(Long prodId);
+
+//    public Stock updateStock(Stock stock);
+
+//    Stock updateStock(Long storeId, Long productId, int quantity);
 }
