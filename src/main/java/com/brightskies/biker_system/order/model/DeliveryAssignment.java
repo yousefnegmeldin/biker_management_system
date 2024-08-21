@@ -27,7 +27,7 @@ public class DeliveryAssignment {
     @Column
     private LocalDate deliveredAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "biker_id" , nullable = false)
     private Biker biker;
 
