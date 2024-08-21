@@ -1,10 +1,11 @@
 package com.brightskies.biker_system.order.model;
 
 import com.brightskies.biker_system.biker.model.Biker;
+import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -21,12 +22,12 @@ public class DeliveryAssignment {
     private Order order;
 
     @Column(nullable = false)
-    private Date assignedAt;
+    private LocalDate assignedAt;
 
-    @Column(nullable = false)
-    private Date deliveredAt;
+    @Column
+    private LocalDate deliveredAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "biker_id" , nullable = false)
     private Biker biker;
 
@@ -34,5 +35,15 @@ public class DeliveryAssignment {
     private Long expectedTime;
 
     @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private AssignmentStatus status;
+
+    public DeliveryAssignment(Order order, LocalDate assignedAt, Biker biker, Long expectedTime) {
+        this.order = order;
+        this.assignedAt = assignedAt;
+        this.deliveredAt = null;
+        this.biker = biker;
+        this.expectedTime = expectedTime;
+        this.status = AssignmentStatus.pending;
+    }
 }

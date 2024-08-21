@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.order.model;
 
+import com.brightskies.biker_system.store.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +14,16 @@ public class OrderHistory
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long orderId;
-    @Column(nullable = false)
-    Long productId;
-    @Column(nullable = false)
-    int quantity;
+    private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id" , nullable = false)
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id" , nullable = false)
+    private Product product;
+
+    @Column(nullable = false)
+    private Integer quantity;
 }
