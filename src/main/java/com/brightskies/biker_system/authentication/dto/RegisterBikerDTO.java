@@ -1,6 +1,5 @@
 package com.brightskies.biker_system.authentication.dto;
 
-
 import com.brightskies.biker_system.generalmodels.UserRole;
 
 public record RegisterBikerDTO(String firstName,
