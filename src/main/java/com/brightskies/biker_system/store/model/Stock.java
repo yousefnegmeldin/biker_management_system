@@ -22,4 +22,21 @@ public class Stock {
 
     @Column(name = "quantity")
     private int quantity;
+
+    // Ensure StockId is properly initialized
+    public void setStore(Store store) {
+        this.store = store;
+        if (this.id == null) {
+            this.id = new StockId();
+        }
+        this.id.setStoreId(store.getId());
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+        if (this.id == null) {
+            this.id = new StockId();
+        }
+        this.id.setProductId(product.getId());
+    }
 }

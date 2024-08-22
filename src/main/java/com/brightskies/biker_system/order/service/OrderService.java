@@ -20,7 +20,7 @@ public class OrderService {
     }
 
     public Order createOrder(Order order) {
-        Customer customer = customerRepo.findByCustomerId(order.getCustomer().getId());
+        Customer customer = customerRepo.findById(order.getCustomer().getId()).orElse(null);
         order.setCustomer(customer);
         order = orderRepository.save(order);
         return order;

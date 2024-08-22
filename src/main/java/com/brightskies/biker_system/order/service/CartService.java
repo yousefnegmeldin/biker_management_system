@@ -32,19 +32,20 @@ public class CartService {
     }
 
     public List<CartItem> getAllCartItems() {
-        Long currentCustomerId = SecurityUtils.getCurrentUserId();
-        List<CartItem> items = cartRepository.findAll(currentCustomerId);
-        if (items != null) {
-            return items;
-        } else {
-            throw new NullPointerException();
-        }
+//        Long currentCustomerId = SecurityUtils.getCurrentUserId();
+//        List<CartItem> items = cartRepository.findAll(currentCustomerId);
+//        if (items != null) {
+//            return items;
+//        } else {
+//            throw new NullPointerException();
+//        }
+        return cartRepository.findAll();
     }
 
     public CartItem addCartItem(Long prodId, Long quantity) {
 
         Long currentCustomerId = SecurityUtils.getCurrentUserId();
-        Customer customer = customerRepository.findByCustomerId(currentCustomerId);
+        Customer customer = customerRepository.findById(currentCustomerId).orElse(null);
         Product product = productRepository.selectById(prodId);
         if(product == null) {
             throw new NullPointerException();
