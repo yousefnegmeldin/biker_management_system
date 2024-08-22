@@ -28,6 +28,7 @@ public class SecurityConfiguration {
             "/product/**",
             "/store/**",
             "/stock/**",
+            "/cart/**",
     };
 
     @Autowired

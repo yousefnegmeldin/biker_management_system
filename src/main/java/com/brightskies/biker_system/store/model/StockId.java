@@ -30,7 +30,7 @@ public class StockId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StockId stockId = (StockId) o;
-        return storeId == stockId.storeId && productId == stockId.productId;
+        return Objects.equals(storeId, stockId.storeId) && Objects.equals(productId, stockId.productId);
     }
 
     @Override

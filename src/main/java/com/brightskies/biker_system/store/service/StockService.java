@@ -7,6 +7,8 @@ import com.brightskies.biker_system.store.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
+
 @Service
 public class StockService {
 
@@ -21,7 +23,15 @@ public class StockService {
     }
 
     public Stock addStock(Stock stock) {
-        Stock stock2 = stockRepository.save(stock);
+        Stock stock2 = null;
+        try{
+            stock2 = stockRepository.save(stock);
+            return stock2;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
         return stock2;
     }
 
