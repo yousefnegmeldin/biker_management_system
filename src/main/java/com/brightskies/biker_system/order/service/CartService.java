@@ -7,7 +7,9 @@ import com.brightskies.biker_system.order.repository.CartRepository;
 import com.brightskies.biker_system.store.model.Product;
 import com.brightskies.biker_system.store.repository.ProductRepository;
 import com.brightskies.biker_system.store.service.StockService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -32,24 +34,18 @@ public class CartService {
     }
 
     public List<CartItem> getAllCartItems() {
-//        Long currentCustomerId = SecurityUtils.getCurrentUserId();
-//        List<CartItem> items = cartRepository.findAll(currentCustomerId);
-//        if (items != null) {
-//            return items;
-//        } else {
-//            throw new NullPointerException();
-//        }
-        return cartRepository.findAll();
+        Long currentCustomerId = SecurityUtils.getCurrentUserId();
+        List<CartItem> items = cartRepository.findByCustomerId(currentCustomerId);
+        if (items.isEmpty()) {
+            throw new EntityNotFoundException("Cart is empty.");
+        }
+        return items;
     }
 
     public CartItem addCartItem(Long prodId, Long quantity) {
-
         Long currentCustomerId = SecurityUtils.getCurrentUserId();
         Customer customer = customerRepository.findById(currentCustomerId).orElse(null);
-        Product product = productRepository.selectById(prodId);
-        if(product == null) {
-            throw new NullPointerException();
-        }
+        Product product = productRepository.findById(prodId).orElseThrow( () -> new EntityNotFoundException("Product not found."));
         CartItem cartItem = new CartItem(customer, product, quantity);
         cartItem = cartRepository.save(cartItem);
         return cartItem;
@@ -57,29 +53,46 @@ public class CartService {
 
     public String deleteCartitem(Long cartItemId) {
         try {
-            cartRepository.deleteSpecific(cartItemId);
+            cartRepository.deleteById(cartItemId);
             return "Cart item deleted";
-        }catch (Exception e) {
-            throw new NullPointerException("Cart item could not be deleted");
+        }catch (EmptyResultDataAccessException e) {
+            throw new EntityNotFoundException("Cart item could not be deleted");
         }
     }
 
-    public CartItem updateCartItem (Long cartItemId, int incdec) {
-       Optional <CartItem> cartItem = cartRepository.findById(cartItemId);
-        if(cartItem.isPresent()) {
-            int stockQuantity = stockService.getProductQuantity(cartItem.get());
 
-            if(cartItem.get().getQuantity() == 1 && incdec == -1) {
-                cartRepository.deleteSpecific(cartItemId);
-                stockService.setProductQuantity(cartItem.get(), stockQuantity+1);
-                return new CartItem();
-            }else if(stockQuantity > cartItem.get().getQuantity()) {
-                cartItem.get().setQuantity(cartItem.get().getQuantity() + incdec);
-                cartRepository.save(cartItem.get());
-                stockService.setProductQuantity(cartItem.get(), stockQuantity+incdec);
-                return cartItem.get();
+    public CartItem increaseCartItemAmount(Long cartItemId, int inc) {
+        Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
+        if(updatableItem.isPresent()) {
+            int stockQuantity = stockService.getProductQuantity(updatableItem.get());
+
+            if(stockQuantity > 0) {
+                updatableItem.get().setQuantity(updatableItem.get().getQuantity() + inc);
+                cartRepository.save(updatableItem.get());
+                stockService.setProductQuantity(updatableItem.get(), stockQuantity-inc);
+                return updatableItem.get();
             }
         }
-        return null;
+
+        throw new EntityNotFoundException("Item not in cart or stock limit reached");
+    }
+
+    public CartItem decreaseCartItemAmount(Long cartItemId, int dec) {
+        Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
+        if(updatableItem.isPresent()) {
+            int stockQuantity = stockService.getProductQuantity(updatableItem.get());
+
+            if(updatableItem.get().getQuantity() > 0) {
+                updatableItem.get().setQuantity(updatableItem.get().getQuantity() - dec);
+                if(updatableItem.get().getQuantity() == 0) {
+                    cartRepository.deleteById(cartItemId);
+                    throw new NullPointerException();
+                }else {
+                    cartRepository.save(updatableItem.get());
+                    stockService.setProductQuantity(updatableItem.get(), stockQuantity+dec);
+                }
+            }
+        }
+        return updatableItem.orElseThrow(() -> new EntityNotFoundException ("Item not in cart"));
     }
 }
