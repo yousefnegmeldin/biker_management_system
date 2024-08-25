@@ -16,6 +16,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:name%")
     List<Product> findProductsByName(@Param("name") String name);
 
-    void deleteByname(String name);
+    void deleteByName(String name);
 }
 
