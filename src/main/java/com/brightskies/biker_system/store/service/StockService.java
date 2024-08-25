@@ -35,11 +35,20 @@ public class StockService {
         return stock2;
     }
 
+
+    // you have to specify a store here
+    //
+
+    ///
     public int getProductQuantity (CartItem cartItem) {
         return stockRepository.findByProdID(
                         productRepository.selectById(cartItem.getProduct().getId())
                                 .getId())
                 .getQuantity();
+    }
+
+    public int getProductQuantity (Long productId) {
+        return stockRepository.findByProdID(productId).getQuantity();
     }
 
     public void setProductQuantity(CartItem cartItem, int incdec) {
