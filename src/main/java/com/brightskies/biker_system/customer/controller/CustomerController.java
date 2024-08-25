@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.management.InstanceNotFoundException;
 
 @RestController
+@RequestMapping("/customer")
 public class CustomerController {
     private AddressService addressService;
 
@@ -19,12 +20,12 @@ public class CustomerController {
         this.addressService = addressService;
     }
 
-    @PostMapping("/address/add")
+    @PostMapping("/address")
     public ResponseEntity<?> addAddress(@RequestBody AddressDTO addressDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressService.addAddress(addressDTO));
     }
 
-    @DeleteMapping("/address/delete/{label}")
+    @DeleteMapping("/address/{label}")
     public ResponseEntity<?> deleteAddress(@PathVariable String label) {
         try {
             addressService.removeAddress(label);
@@ -35,7 +36,7 @@ public class CustomerController {
         }
     }
 
-    @PatchMapping("address/update/{label}")
+    @PatchMapping("/address/{label}")
     public ResponseEntity<?> updateAddressDetails(@PathVariable String label, @RequestBody UpdateAddressDTO addressDTO) {
         try {
             addressService.updateAddressDetails(label, addressDTO);

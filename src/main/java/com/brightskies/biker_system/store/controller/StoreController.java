@@ -35,7 +35,7 @@ public class StoreController
         return ResponseEntity.ok(newDto);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable Long id)
     {
         storeService.deleteStore(id);

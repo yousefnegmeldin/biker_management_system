@@ -57,6 +57,14 @@ public class SearchService {
         return bikerRepository.findBikersByName(name);
     }
 
+    public List<Product> searchForProductsByCategory(String category){
+        return productRepository.findByCategory(category);
+    }
+
+    public Product searchForProductByBarcode(String barcode){
+        return productRepository.findByBarcode(barcode);
+    }
+
     public Optional<Customer> findCustomerById(Long id){
         return customerRepository.findById(id);
     }
