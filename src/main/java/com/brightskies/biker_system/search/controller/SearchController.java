@@ -114,4 +114,9 @@ public class SearchController {
     public ResponseEntity<List<Store>> getStoresByZone(@RequestParam Zone zone) {
         return ResponseEntity.ok(searchService.getStoresByZone(zone));
     }
+
+    @GetMapping("/stores/id/{id}")
+    public ResponseEntity<Store> getStoreById(@PathVariable Long id) {
+        return ResponseEntity.of(Optional.ofNullable(searchService.getStoreById(id)));
+    }
 }

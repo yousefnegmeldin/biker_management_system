@@ -116,5 +116,9 @@ public class SearchService {
     public List<Store> getStoresByZone(Zone zone){
         return storeRepository.findStoresByZone(String.valueOf(zone));
     }
+
+    public Store getStoreById(Long id){
+        return storeRepository.findById(id).orElse(null);
+    }
     
 }
