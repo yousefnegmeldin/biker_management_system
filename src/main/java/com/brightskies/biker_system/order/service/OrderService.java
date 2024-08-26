@@ -26,6 +26,9 @@ public class OrderService {
     public OrderDto createOrder(OrderDto orderDto) {
         Order order = orderMapper.mapToOrder(orderDto);
         Customer customer = customerRepo.findById(order.getCustomer().getId()).orElse(null);
+        if(customer == null) {
+            // throw exception
+        }
         order.setCustomer(customer);
         order = orderRepository.save(order);
         return orderMapper.mapToDto(order);

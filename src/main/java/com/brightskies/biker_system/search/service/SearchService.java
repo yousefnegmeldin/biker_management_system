@@ -89,7 +89,7 @@ public class SearchService {
     }
 
     public int findQuantityOfProductInStock(Long productId, Long store_id){
-        return stockService.getProductQuantity(productId);
+        return stockService.getProductQuantity(productId, store_id);
     }
 
     //search by status for order and biker
