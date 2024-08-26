@@ -19,12 +19,12 @@ public class CustomerController {
         this.addressService = addressService;
     }
 
-    @PostMapping("/address")
+    @PostMapping("/customer/address")
     public ResponseEntity<?> addAddress(@RequestBody AddressDTO addressDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressService.addAddress(addressDTO));
     }
 
-    @DeleteMapping("/address/{id}")
+    @DeleteMapping("customer/address/{id}")
     public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
         try {
             addressService.removeAddress(id);
@@ -35,7 +35,7 @@ public class CustomerController {
         }
     }
 
-    @PatchMapping("address/{id}")
+    @PatchMapping("/customer/address/{id}")
     public ResponseEntity<?> updateAddressDetails(@PathVariable Long id, @RequestBody UpdateAddressDTO addressDTO) {
         try {
             addressService.updateAddressDetails(id, addressDTO);

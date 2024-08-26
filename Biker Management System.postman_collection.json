@@ -448,7 +448,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "delete store",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -473,7 +473,7 @@
 			"name": "stock",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "add stock",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -561,7 +561,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/customer/address/home",
+							"raw": "http://localhost:8081/customer/address/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -601,7 +601,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/customer/address/home",
+							"raw": "http://localhost:8081/customer/address/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
