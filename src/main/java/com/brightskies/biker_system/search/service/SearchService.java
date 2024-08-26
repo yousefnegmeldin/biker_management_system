@@ -42,6 +42,7 @@ public class SearchService {
         this.storeRepository = storeRepository;
         this.customerRepository = customerRepository;
         this.stockService = stockService;
+        this.bikerRepository = bikerRepository;
     }
 
     public List<User> searchForUsersByName(String name) {
