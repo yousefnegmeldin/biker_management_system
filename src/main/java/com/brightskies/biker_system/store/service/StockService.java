@@ -29,16 +29,7 @@ public class StockService {
     }
 
     public Stock addStock(Stock stock) {
-        Stock stock2 = null;
-        try{
-            stock2 = stockRepository.save(stock);
-            return stock2;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-        return stock2;
+            return stockRepository.save(stock);
     }
 
     public int getProductQuantity (Long productId, Long storeId) {

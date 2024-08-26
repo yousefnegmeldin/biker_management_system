@@ -38,14 +38,14 @@ public class AuthController {
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     @PostMapping("/signup/biker")
     public ResponseEntity<UserDTO> registerBiker(@RequestBody RegisterBikerDTO registerBikerDto) {
         User registeredUser = authenticationService.signUpBiker(registerBikerDto);
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/signup/manager")
     public ResponseEntity<UserDTO> registerManager(@RequestBody RegisterManagerDTO registerManagerDto) {
         User registeredUser = authenticationService.signUpManager(registerManagerDto);
@@ -55,7 +55,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginUserDTO loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
-        if(authenticatedUser.getRole() == UserRole.customer)
+        if (authenticatedUser.getRole() == UserRole.customer)
             customerService.updateLastLogin(authenticatedUser);
         String jwtToken = jwtService.generateToken(authenticatedUser);
         LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, jwtService.getExpirationTime());
