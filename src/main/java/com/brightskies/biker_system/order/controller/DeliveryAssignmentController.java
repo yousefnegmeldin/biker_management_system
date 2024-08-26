@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceNotFoundException;
 
+@RequestMapping("/delivery-assignment")
 @RestController
 public class DeliveryAssignmentController {
     private DeliveryAssignmentService deliveryAssignmentService;
@@ -18,7 +19,7 @@ public class DeliveryAssignmentController {
         this.deliveryAssignmentService = deliveryAssignmentService;
     }
 
-    @PostMapping("/delivery-assignment")
+    @PostMapping()
     public ResponseEntity<?> addDeliveryAssignment(@RequestBody DeliveryAssignmentDTO deliveryAssignmentDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(deliveryAssignmentService.addDeliveryAssignment(deliveryAssignmentDTO));
@@ -31,7 +32,7 @@ public class DeliveryAssignmentController {
         }
     }
 
-    @PatchMapping("/delivery-assignment/status/{id}")
+    @PatchMapping("/status/{id}")
     public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @RequestParam String status) {
         try {
             deliveryAssignmentService.changeStatus(id,status);

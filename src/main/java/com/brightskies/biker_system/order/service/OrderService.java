@@ -1,6 +1,8 @@
 package com.brightskies.biker_system.order.service;
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
+import com.brightskies.biker_system.order.dto.OrderDto;
+import com.brightskies.biker_system.order.dto.OrderMapper;
 import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,18 +14,21 @@ public class OrderService {
 
     OrderRepository orderRepository;
     CustomerRepository customerRepo;
+    OrderMapper orderMapper;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository ,CustomerRepository customerRepo) {
+    public OrderService(OrderRepository orderRepository ,CustomerRepository customerRepo, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.customerRepo = customerRepo;
+        this.orderMapper = orderMapper;
     }
 
-    public Order createOrder(Order order) {
+    public OrderDto createOrder(OrderDto orderDto) {
+        Order order = orderMapper.mapToOrder(orderDto);
         Customer customer = customerRepo.findById(order.getCustomer().getId()).orElse(null);
         order.setCustomer(customer);
         order = orderRepository.save(order);
-        return order;
+        return orderMapper.mapToDto(order);
     }
 
     public String deleteOrder(Long orderId) {

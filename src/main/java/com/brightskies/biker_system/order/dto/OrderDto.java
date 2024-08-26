@@ -1,14 +1,10 @@
 package com.brightskies.biker_system.order.dto;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 public record OrderDto(
-        Long id,
-
-        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-        LocalDateTime orderDate,
+        LocalDate orderDate,
 
         String address,
 
@@ -16,18 +12,9 @@ public record OrderDto(
 
         String paymentMethod,
 
-        Long customerId,
-
-        String bikerName,
-
-        String bikerPhone
+        Long customerId
 
 ) {
-    public OrderDto {
-      id = (long) -1;
-      bikerName = null;
-      bikerPhone = null;
-    }
 }
 
 
