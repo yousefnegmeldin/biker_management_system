@@ -54,9 +54,9 @@ public class CartController {
     }
 
     @PatchMapping("/inc")
-    public ResponseEntity<?> increaseCartItemAmount(@RequestParam Long cartItemId, @RequestParam int inc) {
+    public ResponseEntity<?> increaseCartItemAmount(@RequestParam Long cartItemId) {
         try{
-            return new ResponseEntity<>(CartItemDtoMapper.map(cartService.increaseCartItemAmount(cartItemId,inc)),HttpStatus.OK);
+            return new ResponseEntity<>(CartItemDtoMapper.map(cartService.increaseCartItemAmount(cartItemId)),HttpStatus.OK);
         }
         catch(EntityNotFoundException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
@@ -64,9 +64,9 @@ public class CartController {
     }
 
     @PatchMapping("/dec")
-    public ResponseEntity<?> decreaseCartItemAmount(@RequestParam Long cartItemId, @RequestParam int dec) {
+    public ResponseEntity<?> decreaseCartItemAmount(@RequestParam Long cartItemId) {
         try{
-            return new ResponseEntity<>(CartItemDtoMapper.map(cartService.decreaseCartItemAmount(cartItemId,dec)),HttpStatus.OK);
+            return new ResponseEntity<>(CartItemDtoMapper.map(cartService.decreaseCartItemAmount(cartItemId)),HttpStatus.OK);
         }
         catch(EntityNotFoundException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);

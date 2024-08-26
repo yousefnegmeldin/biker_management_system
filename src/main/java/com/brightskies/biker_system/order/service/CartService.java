@@ -77,17 +77,17 @@ public class CartService {
         }
     }
 
-    public CartItem increaseCartItemAmount(Long cartItemId, int inc) {
+    public CartItem increaseCartItemAmount(Long cartItemId) {
         Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
         if(updatableItem.isPresent()) {
             Long storeId = updatableItem.get().getStore().getId();
             int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(), storeId);
 
             if(stockQuantity > 0) {
-                updatableItem.get().setQuantity(updatableItem.get().getQuantity() + inc);
+                updatableItem.get().setQuantity(updatableItem.get().getQuantity() + 1);
                 cartRepository.save(updatableItem.get());
                 stockService.setProductQuantity(updatableItem.get().getProduct().getId(),
-                        stockQuantity-inc, storeId);
+                        stockQuantity-1, storeId);
                 return updatableItem.get();
             }
         }
@@ -95,19 +95,19 @@ public class CartService {
         throw new EntityNotFoundException("Item not in cart or stock limit reached");
     }
 
-    public CartItem decreaseCartItemAmount(Long cartItemId, int dec) {
+    public CartItem decreaseCartItemAmount(Long cartItemId) {
         Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
         if(updatableItem.isPresent()) {
             int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(), updatableItem.get().getStore().getId());
 
             if(updatableItem.get().getQuantity() > 0) {
-                updatableItem.get().setQuantity(updatableItem.get().getQuantity() - dec);
+                updatableItem.get().setQuantity(updatableItem.get().getQuantity() - 1);
                 if(updatableItem.get().getQuantity() == 0) {
                     cartRepository.deleteById(cartItemId);
                     throw new NullPointerException();
                 }else {
                     cartRepository.save(updatableItem.get());
-                    stockService.setProductQuantity(updatableItem.get().getProduct().getId(), stockQuantity+dec, updatableItem.get().getStore().getId());
+                    stockService.setProductQuantity(updatableItem.get().getProduct().getId(), stockQuantity+1, updatableItem.get().getStore().getId());
                 }
             }
         }
