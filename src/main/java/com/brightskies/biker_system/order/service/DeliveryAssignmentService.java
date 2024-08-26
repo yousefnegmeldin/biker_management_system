@@ -57,7 +57,9 @@ public class DeliveryAssignmentService {
     public void changeStatus(Long id, String status) throws Exception {
         if(deliveryAssignmentRepository.existsById(id)) {
             try {
-                deliveryAssignmentRepository.findById(id).get().setStatus(AssignmentStatus.valueOf(status));
+                DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id).get();
+                deliveryAssignment.setStatus(AssignmentStatus.valueOf(status));
+                deliveryAssignmentRepository.save(deliveryAssignment);
             }
             catch (IllegalArgumentException exception) {
                 throw new IllegalArgumentException("Invalid delivery assignment status.");

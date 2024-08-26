@@ -6,6 +6,7 @@ import com.brightskies.biker_system.authentication.service.AuthenticationService
 import com.brightskies.biker_system.authentication.service.JwtService;
 import com.brightskies.biker_system.customer.service.CustomerService;
 import com.brightskies.biker_system.generalmodels.User;
+import com.brightskies.biker_system.generalmodels.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class AuthController {
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     @PostMapping("/signup/biker")
     public ResponseEntity<UserDTO> registerBiker(@RequestBody RegisterBikerDTO registerBikerDto) {
         User registeredUser = authenticationService.signUpBiker(registerBikerDto);
@@ -54,7 +55,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginUserDTO loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
-        customerService.updateLastLogin(authenticatedUser);
+        if(authenticatedUser.getRole() == UserRole.customer)
+            customerService.updateLastLogin(authenticatedUser);
         String jwtToken = jwtService.generateToken(authenticatedUser);
         LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, jwtService.getExpirationTime());
         return ResponseEntity.ok(loginResponse);
