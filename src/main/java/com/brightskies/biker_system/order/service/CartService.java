@@ -5,7 +5,9 @@ import com.brightskies.biker_system.customer.repository.CustomerRepository;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.repository.CartRepository;
 import com.brightskies.biker_system.store.model.Product;
+import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.repository.ProductRepository;
+import com.brightskies.biker_system.store.repository.StoreRepository;
 import com.brightskies.biker_system.store.service.StockService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +23,22 @@ public class CartService {
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
     private final StockService stockService;
+    private final StoreRepository storeRepository;
 
     @Autowired
     public CartService(CartRepository cartRepository,
                        ProductRepository productRepository,
                        CustomerRepository customerRepository,
-                       StockService stockService) {
+                       StockService stockService, StoreRepository storeRepository) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.customerRepository = customerRepository;
         this.stockService = stockService;
+        this.storeRepository = storeRepository;
     }
 
     public List<CartItem> getAllCartItems() {
+
         Long currentCustomerId = SecurityUtils.getCurrentUserId();
         List<CartItem> items = cartRepository.findByCustomerId(currentCustomerId);
         if (items.isEmpty()) {
@@ -42,17 +47,29 @@ public class CartService {
         return items;
     }
 
-    public CartItem addCartItem(Long prodId, Long quantity) {
+    public CartItem addCartItem(Long prodId, int quantity,Long storeId) {
+
         Long currentCustomerId = SecurityUtils.getCurrentUserId();
-        Customer customer = customerRepository.findById(currentCustomerId).orElse(null);
+        Customer customer = customerRepository.findById(currentCustomerId).orElseThrow(() -> new EntityNotFoundException("Customer not found."));
         Product product = productRepository.findById(prodId).orElseThrow( () -> new EntityNotFoundException("Product not found."));
-        CartItem cartItem = new CartItem(customer, product, quantity);
-        cartItem = cartRepository.save(cartItem);
-        return cartItem;
+        Store store = storeRepository.findById(storeId).orElseThrow( () -> new EntityNotFoundException("Store not found."));
+        int stockQuantity = stockService.getProductQuantity(product.getId(),storeId);
+        if(stockQuantity - quantity >= 0) {
+            stockService.setProductQuantity(product.getId(), stockQuantity - quantity,storeId);
+            CartItem cartItem = new CartItem(customer, product, quantity,store);
+            cartItem = cartRepository.save(cartItem);
+            return cartItem;
+        }else {
+            throw new EntityNotFoundException("Requested quantity is greater than product stock quantity.");
+        }
     }
 
     public String deleteCartitem(Long cartItemId) {
         try {
+            CartItem cartItem = cartRepository.findById(cartItemId).orElseThrow( () -> new EntityNotFoundException("Cart item not found."));
+            Store store = storeRepository.findById(cartItem.getStore().getId()).orElseThrow( () -> new EntityNotFoundException("Store not found."));
+            int stockQuantity = stockService.getProductQuantity(cartItem.getProduct().getId(),store.getId());
+            stockService.setProductQuantity(cartItem.getProduct().getId(),stockQuantity+cartItem.getQuantity(),store.getId());
             cartRepository.deleteById(cartItemId);
             return "Cart item deleted";
         }catch (EmptyResultDataAccessException e) {
@@ -60,16 +77,17 @@ public class CartService {
         }
     }
 
-
     public CartItem increaseCartItemAmount(Long cartItemId, int inc) {
         Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
         if(updatableItem.isPresent()) {
-            int stockQuantity = stockService.getProductQuantity(updatableItem.get());
+            Long storeId = updatableItem.get().getStore().getId();
+            int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(), storeId);
 
             if(stockQuantity > 0) {
                 updatableItem.get().setQuantity(updatableItem.get().getQuantity() + inc);
                 cartRepository.save(updatableItem.get());
-                stockService.setProductQuantity(updatableItem.get(), stockQuantity-inc);
+                stockService.setProductQuantity(updatableItem.get().getProduct().getId(),
+                        stockQuantity-inc, storeId);
                 return updatableItem.get();
             }
         }
@@ -80,7 +98,7 @@ public class CartService {
     public CartItem decreaseCartItemAmount(Long cartItemId, int dec) {
         Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
         if(updatableItem.isPresent()) {
-            int stockQuantity = stockService.getProductQuantity(updatableItem.get());
+            int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(), updatableItem.get().getStore().getId());
 
             if(updatableItem.get().getQuantity() > 0) {
                 updatableItem.get().setQuantity(updatableItem.get().getQuantity() - dec);
@@ -89,7 +107,7 @@ public class CartService {
                     throw new NullPointerException();
                 }else {
                     cartRepository.save(updatableItem.get());
-                    stockService.setProductQuantity(updatableItem.get(), stockQuantity+dec);
+                    stockService.setProductQuantity(updatableItem.get().getProduct().getId(), stockQuantity+dec, updatableItem.get().getStore().getId());
                 }
             }
         }

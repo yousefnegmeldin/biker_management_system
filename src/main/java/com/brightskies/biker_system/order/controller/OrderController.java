@@ -1,7 +1,7 @@
 package com.brightskies.biker_system.order.controller;
 
 import com.brightskies.biker_system.order.dto.OrderDto;
-import com.brightskies.biker_system.order.dto.DtoMapper;
+import com.brightskies.biker_system.order.dto.OrderDtoMapper;
 import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class OrderController {
 
     @PostMapping("/create")
     public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
-        Order order = DtoMapper.mapToOrder(orderDto);
-        return (new ResponseEntity<> (DtoMapper.mapToDto(orderService.createOrder(order)), HttpStatus.OK));
+        Order order = OrderDtoMapper.mapToOrder(orderDto);
+        return (new ResponseEntity<> (OrderDtoMapper.mapToDto(orderService.createOrder(order)), HttpStatus.OK));
     }
 
     @DeleteMapping("delete/{orderId}")

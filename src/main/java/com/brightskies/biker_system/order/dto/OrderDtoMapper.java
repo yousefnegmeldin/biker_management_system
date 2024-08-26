@@ -1,7 +1,7 @@
 package com.brightskies.biker_system.order.dto;
 import com.brightskies.biker_system.order.model.Order;
 
-public class DtoMapper {
+public class OrderDtoMapper {
 
     public static OrderDto mapToDto (Order order) {
         return new OrderDto(
