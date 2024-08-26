@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
-    @Query("SELECT a.label FROM Address a WHERE a.customer.id = :customer")
+    /*@Query("SELECT a.label FROM Address a WHERE a.customer.id = :customer")
     List<String> findAllLabelsByCustomer(@Param("customer") Long customer);
 
     @Modifying
@@ -23,5 +23,5 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     void deleteByCustomerAndLabel(@Param("customer") Long customer, @Param("label") String label);
 
     @Query("SELECT a FROM Address a WHERE a.customer.id = :customer AND a.label = :label")
-    Optional<Address> findAddressByCustomerAndLabel(@Param("customer") Long customer, @Param("label") String label);
+    Optional<Address> findAddressByCustomerAndLabel(@Param("customer") Long customer, @Param("label") String label);*/
 }

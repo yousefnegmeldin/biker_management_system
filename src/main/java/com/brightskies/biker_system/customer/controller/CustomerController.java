@@ -19,15 +19,15 @@ public class CustomerController {
         this.addressService = addressService;
     }
 
-    @PostMapping("/address/add")
+    @PostMapping("/address")
     public ResponseEntity<?> addAddress(@RequestBody AddressDTO addressDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressService.addAddress(addressDTO));
     }
 
-    @DeleteMapping("/address/delete/{label}")
-    public ResponseEntity<?> deleteAddress(@PathVariable String label) {
+    @DeleteMapping("/address/{id}")
+    public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
         try {
-            addressService.removeAddress(label);
+            addressService.removeAddress(id);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         catch(InstanceNotFoundException exception) {
@@ -35,10 +35,10 @@ public class CustomerController {
         }
     }
 
-    @PatchMapping("address/update/{label}")
-    public ResponseEntity<?> updateAddressDetails(@PathVariable String label, @RequestBody UpdateAddressDTO addressDTO) {
+    @PatchMapping("address/{id}")
+    public ResponseEntity<?> updateAddressDetails(@PathVariable Long id, @RequestBody UpdateAddressDTO addressDTO) {
         try {
-            addressService.updateAddressDetails(label, addressDTO);
+            addressService.updateAddressDetails(id, addressDTO);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         catch(InstanceNotFoundException exception) {

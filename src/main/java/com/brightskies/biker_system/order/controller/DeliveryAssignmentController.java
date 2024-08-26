@@ -18,7 +18,7 @@ public class DeliveryAssignmentController {
         this.deliveryAssignmentService = deliveryAssignmentService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/delivery-assignment")
     public ResponseEntity<?> addDeliveryAssignment(@RequestBody DeliveryAssignmentDTO deliveryAssignmentDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(deliveryAssignmentService.addDeliveryAssignment(deliveryAssignmentDTO));
@@ -31,7 +31,7 @@ public class DeliveryAssignmentController {
         }
     }
 
-    @PatchMapping("/update/status/{id}")
+    @PatchMapping("/delivery-assignment/status/{id}")
     public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @RequestParam String status) {
         try {
             deliveryAssignmentService.changeStatus(id,status);

@@ -14,7 +14,7 @@ public class Address {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-    @Column
+    @Column(unique = true, nullable = false)
     private String label;
     @Column(nullable = false)
     private String city;
