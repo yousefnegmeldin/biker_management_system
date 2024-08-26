@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
-    @Query("SELECT s FROM Stock s WHERE s.product.id = :prodId")
-    public Stock findByProdID(Long prodId);
+
+    @Query("SELECT s FROM Stock s WHERE s.product.id = :prodId AND s.store.id = :storeId")
+    public Stock findByProdIdAndStoreId(Long prodId , Long storeId);
 
 //    public Stock updateStock(Stock stock);
 

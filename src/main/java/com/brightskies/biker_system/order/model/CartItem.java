@@ -22,28 +22,25 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(nullable = false)
-    private Long quantity;
+    private int quantity;
 
-    //**** to be implemented ****///
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "store_id", nullable = false)
-//    private Store store;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
 
-
-
-    public CartItem(Customer customer, Product product, Long quantity) {
+    public CartItem(Customer customer, Product product, int quantity,Store store) {
         this.customer = customer;
         this.product = product;
         this.quantity = quantity;
-        //this.store = store;
+        this.store = store;
     }
 }
