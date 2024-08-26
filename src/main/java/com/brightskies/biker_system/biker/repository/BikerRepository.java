@@ -14,7 +14,7 @@ public interface BikerRepository extends JpaRepository<Biker, Long> {
     List<Biker> findBikersByName(String name);
     @Query("SELECT b FROM Biker b WHERE b.status = :status")
     List<Biker> findBikersByStatus(String status);
-    @Query("SELECT b FROM Biker b WHERE b.zone = :status")
+    @Query("SELECT b FROM Biker b WHERE b.zone = :zone")
     List<Biker> findBikersByZone(String zone);
 
     Biker findByPhone(String phone);

@@ -91,8 +91,8 @@ public class SearchController {
     }
 
     @GetMapping("/bikers/zone")
-    public ResponseEntity<List<Biker>> getBikersByZone(@RequestParam Zone zone) {
-        return ResponseEntity.ok(searchService.getBikersByZone(zone));
+    public ResponseEntity<?> getBikersByZone(@RequestParam Zone zone) {
+        return (ResponseEntity<?>) ResponseEntity.ok();
     }
 
     @GetMapping("/customers")
@@ -111,8 +111,8 @@ public class SearchController {
     }
 
     @GetMapping("/stores/zone")
-    public ResponseEntity<List<Store>> getStoresByZone(@RequestParam Zone zone) {
-        return ResponseEntity.ok(searchService.getStoresByZone(zone));
+    public ResponseEntity<List<Store>> getStoresByZone(@RequestParam String area) {
+        return ResponseEntity.ok(searchService.getStoresByZone(area));
     }
 
     @GetMapping("/stores/id/{id}")

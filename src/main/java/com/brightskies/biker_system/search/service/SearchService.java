@@ -97,9 +97,9 @@ public class SearchService {
         return bikerRepository.findBikersByStatus(status);
     }
 
-    public List<Biker> getBikersByZone(Zone zone){
-        return bikerRepository.findBikersByZone(String.valueOf(zone));
-    }
+//    public List<Biker> getBikersByZone(Zone zone){
+//        return bikerRepository.findBikersByZone(String.valueOf(zone));
+//    }
 
     public List<Customer> getAllCustomers(){
         return customerRepository.findAll();
@@ -113,8 +113,8 @@ public class SearchService {
         return storeRepository.findAll();
     }
 
-    public List<Store> getStoresByZone(Zone zone){
-        return storeRepository.findStoresByZone(String.valueOf(zone));
+    public List<Store> getStoresByZone(String area){
+        return storeRepository.findStoresByArea(area);
     }
 
     public Store getStoreById(Long id){
