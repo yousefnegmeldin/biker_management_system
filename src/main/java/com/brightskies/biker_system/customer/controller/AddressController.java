@@ -1,6 +1,7 @@
 package com.brightskies.biker_system.customer.controller;
 
 import com.brightskies.biker_system.customer.dto.AddressDTO;
+import com.brightskies.biker_system.customer.dto.AddressMapper;
 import com.brightskies.biker_system.customer.dto.UpdateAddressDTO;
 import com.brightskies.biker_system.customer.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,21 @@ import javax.management.InstanceNotFoundException;
 
 @RequestMapping("/customer/address")
 @RestController
-public class CustomerController {
+public class AddressController {
     private AddressService addressService;
 
     @Autowired
-    public CustomerController(AddressService addressService) {
+    public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
 
     @PostMapping()
     public ResponseEntity<?> addAddress(@RequestBody AddressDTO addressDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.addAddress(addressDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                AddressMapper.toDTO(
+                        addressService.addAddress(addressDTO)
+                )
+        );
     }
 
     @DeleteMapping("/{id}")
@@ -42,7 +47,7 @@ public class CustomerController {
             addressService.updateAddressDetails(id, addressDTO);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
-        catch(InstanceNotFoundException exception) {
+        catch(Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
         }
     }
