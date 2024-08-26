@@ -26,7 +26,7 @@ public class ProductService
 
     public void deleteProductByName(String name)
     {
-        productRepository.deleteByname(name);
+        productRepository.deleteByName(name);
     }
 
 }
