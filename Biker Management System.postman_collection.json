@@ -338,7 +338,48 @@
 		},
 		{
 			"name": "cart",
-			"item": []
+			"item": [
+				{
+					"name": "add to cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDU3ODYzMSwiZXhwIjoxNzI0NTgyMjMxfQ.6iVQMFChO7L3qTzn4TKLeZDF-EFV7xfEolh8-KrPo_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/cart/additem?prodId=1&quantity=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"cart",
+								"additem"
+							],
+							"query": [
+								{
+									"key": "prodId",
+									"value": "1"
+								},
+								{
+									"key": "quantity",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "products",
@@ -405,6 +446,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/store/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"store",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -437,6 +498,134 @@
 								"add"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "add address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY1NjUzOCwiZXhwIjoxNzI0NjYwMTM4fQ.0ONrDs2aimMYTFQqq6QOVK-XEkRH4EpAXeFoCMFYA9U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"label\":\"home\",\r\n    \"city\":\"zayed\",\r\n    \"street\":\"6th street\",\r\n    \"apartment\":\"31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/customer/address",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customer",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDU3ODYzMSwiZXhwIjoxNzI0NTgyMjMxfQ.6iVQMFChO7L3qTzn4TKLeZDF-EFV7xfEolh8-KrPo_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/customer/address/home",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customer",
+								"address",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY1NjUzOCwiZXhwIjoxNzI0NjYwMTM4fQ.0ONrDs2aimMYTFQqq6QOVK-XEkRH4EpAXeFoCMFYA9U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"zayed\",\r\n    \"street\": \"7th street\",\r\n    \"apartment\": \"31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/customer/address/home",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customer",
+								"address",
+								"home"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"item": [
+				{
+					"name": "search products",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}

@@ -79,9 +79,8 @@ public class SearchService {
         return customerRepository.findById(id);
     }
 
-
     public int findQuantityOfProductInStock(Long productId, Long store_id){
-        return stockService.getProductQuantity(productId)
+        return stockService.getProductQuantity(productId);
     }
     
 }
