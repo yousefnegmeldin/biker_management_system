@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface StoreRepository extends JpaRepository<Store,Long> {
-    @Query("SELECT s FROM Store s WHERE s.name LIKE %:name%")
-    List<Store> findStoreByName(String name);
+    Store findStoreByName(String name);
+    @Query("SELECT s FROM Store s WHERE s.zone = :zone")
+    List<Store> findStoresByZone(String zone);
 }

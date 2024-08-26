@@ -52,7 +52,7 @@ public class SearchService {
         return productRepository.findProductsByName(name);
     }
 
-    public List<Store> searchForStore(String name){
+    public Store searchForStore(String name){
         return storeRepository.findStoreByName(name);
     }
 
@@ -109,6 +109,12 @@ public class SearchService {
         return productRepository.findAll();
     }
 
+    public List<Store> getAllStores(){
+        return storeRepository.findAll();
+    }
 
+    public List<Store> getStoresByZone(Zone zone){
+        return storeRepository.findStoresByZone(String.valueOf(zone));
+    }
     
 }
