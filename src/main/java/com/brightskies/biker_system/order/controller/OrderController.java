@@ -26,7 +26,7 @@ public class OrderController {
         return (new ResponseEntity<> (DtoMapper.mapToDto(orderService.createOrder(order)), HttpStatus.OK));
     }
 
-    @DeleteMapping("delete/{orderId}")
+    @DeleteMapping("/delete/{orderId}")
     public ResponseEntity<String> deleteOrder(@PathVariable Long orderId) {
         return (new ResponseEntity<>(orderService.deleteOrder(orderId), HttpStatus.OK));
     }

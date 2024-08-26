@@ -12,4 +12,10 @@ import java.util.List;
 public interface BikerRepository extends JpaRepository<Biker, Long> {
     @Query("SELECT b FROM Biker b WHERE b.name LIKE %:name%")
     List<Biker> findBikersByName(String name);
+    @Query("SELECT b FROM Biker b WHERE b.status = :status")
+    List<Biker> findBikersByStatus(String status);
+    @Query("SELECT b FROM Biker b WHERE b.zone = :status")
+    List<Biker> findBikersByZone(String zone);
+
+    Biker findByPhone(String phone);
 }

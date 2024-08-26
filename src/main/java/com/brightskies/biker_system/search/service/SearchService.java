@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.search.service;
 
+import com.brightskies.biker_system.biker.enums.Zone;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Customer;
@@ -63,6 +64,14 @@ public class SearchService {
         return bikerRepository.findBikersByName(name);
     }
 
+    public Biker getBikerById(Long id){
+        return bikerRepository.findById(id).orElse(null);
+    }
+
+    public Biker getBikerByPhone(String phone){
+        return bikerRepository.findByPhone(phone);
+    }
+
     public List<Product> searchForProductsByCategory(String category){
         return productRepository.findByCategory(category);
     }
@@ -82,5 +91,24 @@ public class SearchService {
     public int findQuantityOfProductInStock(Long productId, Long store_id){
         return stockService.getProductQuantity(productId);
     }
+
+    //search by status for order and biker
+    public List<Biker> getBikersByStatus(String status){
+        return bikerRepository.findBikersByStatus(status);
+    }
+
+    public List<Biker> getBikersByZone(Zone zone){
+        return bikerRepository.findBikersByZone(String.valueOf(zone));
+    }
+
+    public List<Customer> getAllCustomers(){
+        return customerRepository.findAll();
+    }
+
+    public List<Product> getAllProducts(){
+        return productRepository.findAll();
+    }
+
+
     
 }

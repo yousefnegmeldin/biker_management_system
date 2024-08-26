@@ -67,6 +67,8 @@ public class AuthenticationService {
         biker.setPhone(input.phone());
         biker.setRole(input.role());
         biker.setJoinedAt(LocalDate.now());
+        biker.setStatus(input.status());
+        biker.setZone(input.zone());
         return userRepository.save(biker);
     }
 
