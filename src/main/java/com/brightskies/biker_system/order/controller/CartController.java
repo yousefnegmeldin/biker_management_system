@@ -2,6 +2,7 @@ package com.brightskies.biker_system.order.controller;
 
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.service.CartService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,47 +17,60 @@ public class CartController {
     private final CartService cartService;
 
     @Autowired
-    public CartController( CartService cartService) {
+    public CartController(CartService cartService) {
         this.cartService = cartService;
     }
 
     @GetMapping("/showall")
-    public ResponseEntity<List<CartItem>> showAll() {
+    public ResponseEntity<?> showAll() {
         try {
             List<CartItem> items = cartService.getAllCartItems();
             return new ResponseEntity<>(items, HttpStatus.OK);
         }
-        catch(NullPointerException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        catch(EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/additem/{prodId}/{quantity}")
-    public ResponseEntity<CartItem> addCartItem(@PathVariable Long prodId, @PathVariable Long quantity) {
+    @PostMapping("/additem")
+    public ResponseEntity<?> addCartItem(@RequestParam Long prodId, @RequestParam Long quantity) {
         try{
             return new ResponseEntity<>(cartService.addCartItem(prodId, quantity), HttpStatus.OK);
         }
-        catch(NullPointerException e){
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        catch(EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
     @DeleteMapping("/deleteitem")
-    public ResponseEntity<String> deleteCartItem(@PathVariable Long prodId) {
+    public ResponseEntity<String> deleteCartItem(@RequestParam Long prodId) {
         try {
             return new ResponseEntity<>(cartService.deleteCartitem(prodId), HttpStatus.OK);
-        }catch (NullPointerException e){
+        }catch (EntityNotFoundException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping ("/update")
-    public ResponseEntity<CartItem> updateCartItem(@PathVariable Long prodId, @PathVariable int incdec) {
+    @PutMapping ("/update/inc")
+    public ResponseEntity<?> increaseCartItemAmount(@RequestParam Long cartItemId, @RequestParam int inc) {
         try{
-            return new ResponseEntity<>(cartService.updateCartItem(prodId,incdec),HttpStatus.OK);
+            return new ResponseEntity<>(cartService.increaseCartItemAmount(cartItemId,inc),HttpStatus.OK);
         }
-        catch(NullPointerException e){
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        catch(EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_MODIFIED);
+        }
+    }
+
+    @PutMapping ("/update/dec")
+    public ResponseEntity<?> decreaseCartItemAmount(@RequestParam Long cartItemId, @RequestParam int dec) {
+        try{
+            return new ResponseEntity<>(cartService.decreaseCartItemAmount(cartItemId,dec),HttpStatus.OK);
+        }
+        catch(EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_MODIFIED);
+        }
+        catch (NullPointerException e) {
+            return new ResponseEntity<>("Item deleted from cart.",HttpStatus.NOT_FOUND);
         }
     }
 }
