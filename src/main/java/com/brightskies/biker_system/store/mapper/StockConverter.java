@@ -40,7 +40,7 @@ public class StockConverter {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         stock.setProduct(product);
 
-        Store store = storeRepository.findById(dto.productId())
+        Store store = storeRepository.findById(dto.storeId())
                 .orElseThrow(() -> new RuntimeException("Store not found"));
         stock.setStore(store);
 
