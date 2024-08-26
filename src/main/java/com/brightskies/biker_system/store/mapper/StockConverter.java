@@ -21,28 +21,30 @@ public class StockConverter {
         this.storeRepository = storeRepository;
     }
 
-    public StockDTO toDTO(Stock stock) {
-        StockDTO dto = new StockDTO();
-        dto.setId(stock.getId());
-        dto.setProductId(stock.getProduct().getId());
-        dto.setStoreId(stock.getStore().getId());
-        dto.setQuantity(stock.getQuantity());
-        return dto;
+    public StockDTO toDTO(Stock stock)
+    {
+        return new StockDTO
+                (
+                        stock.getId(),
+                        stock.getStore().getId(),
+                        stock.getProduct().getId(),
+                        stock.getQuantity()
+                );
     }
 
     public Stock toEntity(StockDTO dto) {
         Stock stock = new Stock();
-        stock.setId(dto.getId());
+        stock.setId(dto.id());
 
-        Product product = productRepository.findById(dto.getProductId())
+        Product product = productRepository.findById(dto.productId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         stock.setProduct(product);
 
-        Store store = storeRepository.findById(dto.getStoreId())
+        Store store = storeRepository.findById(dto.storeId())
                 .orElseThrow(() -> new RuntimeException("Store not found"));
         stock.setStore(store);
 
-        stock.setQuantity(dto.getQuantity());
+        stock.setQuantity(dto.quantity());
         return stock;
     }
 }
