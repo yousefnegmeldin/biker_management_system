@@ -16,16 +16,11 @@ import com.brightskies.biker_system.order.model.OrderHistory;
 import com.brightskies.biker_system.order.repository.CartRepository;
 import com.brightskies.biker_system.order.repository.OrderHistoryRepository;
 import com.brightskies.biker_system.order.repository.OrderRepository;
-import com.brightskies.biker_system.store.model.Product;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -105,6 +100,7 @@ public class OrderService {
 
         if (order.getBiker() == null) {
             orderRepository.deleteById(orderId);
+            orderHistoryRepository.deleteByOrderId(orderId);
             return "Order has been cancelled successfully.";
         }
         else {
