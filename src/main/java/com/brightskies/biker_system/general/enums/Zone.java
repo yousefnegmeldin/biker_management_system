@@ -1,4 +1,4 @@
-package com.brightskies.biker_system.biker.enums;
+package com.brightskies.biker_system.general.enums;
 
 public enum Zone {
     SheikhZayed("sheikh zayed"),

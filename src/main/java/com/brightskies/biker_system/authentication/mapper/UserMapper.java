@@ -1,6 +1,6 @@
 package com.brightskies.biker_system.authentication.mapper;
 import com.brightskies.biker_system.authentication.dto.UserDTO;
-import com.brightskies.biker_system.generalmodels.User;
+import com.brightskies.biker_system.general.models.User;
 
 
 public class UserMapper {

@@ -1,6 +1,6 @@
 package com.brightskies.biker_system.admin.dto;
 
-import com.brightskies.biker_system.generalmodels.UserRole;
+import com.brightskies.biker_system.general.enums.UserRole;
 
 import java.time.LocalDate;
 

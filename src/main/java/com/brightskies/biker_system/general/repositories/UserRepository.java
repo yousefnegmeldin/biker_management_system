@@ -1,7 +1,6 @@
-package com.brightskies.biker_system.generalrepositories;
+package com.brightskies.biker_system.general.repositories;
 
-import com.brightskies.biker_system.generalmodels.User;
-import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.general.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

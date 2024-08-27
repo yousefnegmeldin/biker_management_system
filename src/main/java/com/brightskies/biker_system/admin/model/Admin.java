@@ -1,7 +1,7 @@
 package com.brightskies.biker_system.admin.model;
 
-import com.brightskies.biker_system.generalmodels.User;
-import com.brightskies.biker_system.generalmodels.UserRole;
+import com.brightskies.biker_system.general.models.User;
+import com.brightskies.biker_system.general.enums.UserRole;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;

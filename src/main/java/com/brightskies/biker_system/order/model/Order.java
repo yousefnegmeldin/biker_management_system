@@ -2,11 +2,9 @@ package com.brightskies.biker_system.order.model;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.customer.model.Address;
 import com.brightskies.biker_system.customer.model.Customer;
-import com.brightskies.biker_system.generalmodels.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

@@ -5,6 +5,7 @@ import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.AddressRepository;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
+import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
 import com.brightskies.biker_system.order.dto.OrderDto;
 import com.brightskies.biker_system.order.dto.OrderMapper;
@@ -26,12 +27,12 @@ import java.util.List;
 public class OrderService {
 
     private final BikerRepository bikerRepository;
-    OrderRepository orderRepository;
-    CustomerRepository customerRepo;
-    AddressRepository addressRepo;
-    CartRepository cartRepository;
-    CartService cartService;
-    DeliveryAssignmentService deliveryAssignmentService;;
+    private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepo;
+    private final AddressRepository addressRepo;
+    private final CartRepository cartRepository;
+    private final CartService cartService;
+    private final DeliveryAssignmentService deliveryAssignmentService;;
 
     @Autowired
     public OrderService(OrderRepository orderRepository,
@@ -92,7 +93,11 @@ public class OrderService {
     }
 
     public List<Order> getAllOrders() {
-        return  orderRepository.findAllFreeOrders();
+        return orderRepository.findAllFreeOrders();
+    }
+
+    public List<Order> getOrdersInZone(Zone zone) {
+        return orderRepository.findAllFreeOrdersInZone(zone);
     }
 
     public DeliveryAssignment selectOrder(Long orderId) throws Exception {

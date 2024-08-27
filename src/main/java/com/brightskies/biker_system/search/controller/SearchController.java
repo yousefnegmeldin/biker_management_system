@@ -1,9 +1,9 @@
 package com.brightskies.biker_system.search.controller;
 
-import com.brightskies.biker_system.biker.enums.Zone;
+import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.customer.model.Customer;
-import com.brightskies.biker_system.generalmodels.User;
+import com.brightskies.biker_system.general.models.User;
 import com.brightskies.biker_system.search.service.SearchService;
 import com.brightskies.biker_system.store.model.Product;
 import com.brightskies.biker_system.store.model.Store;

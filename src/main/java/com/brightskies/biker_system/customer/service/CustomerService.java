@@ -2,7 +2,7 @@ package com.brightskies.biker_system.customer.service;
 
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
-import com.brightskies.biker_system.generalmodels.User;
+import com.brightskies.biker_system.general.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

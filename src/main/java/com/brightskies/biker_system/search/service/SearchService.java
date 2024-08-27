@@ -1,12 +1,11 @@
 package com.brightskies.biker_system.search.service;
 
-import com.brightskies.biker_system.biker.enums.Zone;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
-import com.brightskies.biker_system.generalmodels.User;
-import com.brightskies.biker_system.generalrepositories.UserRepository;
+import com.brightskies.biker_system.general.models.User;
+import com.brightskies.biker_system.general.repositories.UserRepository;
 import com.brightskies.biker_system.store.model.Product;
 import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.repository.ProductRepository;

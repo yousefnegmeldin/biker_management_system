@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.order.controller;
 
+import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.order.dto.OrderDto;
 import com.brightskies.biker_system.order.dto.OrderMapper;
 import com.brightskies.biker_system.order.model.Order;
@@ -54,6 +55,11 @@ public class OrderController {
         }
 
         return new ResponseEntity<>(orderDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/zone")
+    public ResponseEntity<?> getAllOrdersInZone(@RequestParam Zone zone) {
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.getOrdersInZone(zone));
     }
 
     //Biker and manager only api
