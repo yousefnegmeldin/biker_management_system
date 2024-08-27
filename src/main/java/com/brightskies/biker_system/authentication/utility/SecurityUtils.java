@@ -1,10 +1,9 @@
 package com.brightskies.biker_system.authentication.utility;
 
-import com.brightskies.biker_system.generalmodels.User;
-import com.brightskies.biker_system.generalrepositories.UserRepository;
+import com.brightskies.biker_system.general.models.User;
+import com.brightskies.biker_system.general.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component

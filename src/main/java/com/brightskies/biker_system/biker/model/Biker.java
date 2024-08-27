@@ -1,9 +1,9 @@
 package com.brightskies.biker_system.biker.model;
 
 import com.brightskies.biker_system.biker.enums.BikerStatus;
-import com.brightskies.biker_system.generalmodels.UserRole;
-import com.brightskies.biker_system.biker.enums.Zone;
-import com.brightskies.biker_system.generalmodels.User;
+import com.brightskies.biker_system.general.enums.UserRole;
+import com.brightskies.biker_system.general.enums.Zone;
+import com.brightskies.biker_system.general.models.User;
 import com.brightskies.biker_system.order.model.Order;
 import jakarta.persistence.*;
 import lombok.Data;

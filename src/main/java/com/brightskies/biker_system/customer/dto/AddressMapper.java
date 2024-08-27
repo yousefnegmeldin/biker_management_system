@@ -6,6 +6,7 @@ public class AddressMapper {
     public static AddressDTO toDTO (Address address) {
         return new AddressDTO(
                 address.getLabel(),
+                address.getZone(),
                 address.getCity(),
                 address.getStreet(),
                 address.getApartment()

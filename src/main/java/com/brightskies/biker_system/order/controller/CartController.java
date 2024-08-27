@@ -59,7 +59,8 @@ public class CartController {
     @DeleteMapping("/deleteitem")
     public ResponseEntity<String> deleteCartItem(@RequestParam Long prodId) {
         try {
-            return new ResponseEntity<>(cartService.deleteCartitem(prodId), HttpStatus.OK);
+            cartService.deleteCartitem(prodId);
+            return new ResponseEntity<>("Cart is Deleted!", HttpStatus.OK);
         }catch (EntityNotFoundException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
         }

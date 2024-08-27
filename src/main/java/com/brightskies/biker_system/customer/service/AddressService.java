@@ -28,6 +28,7 @@ public class AddressService {
         Address address = new Address(
                 customerRepository.findById(customerID).get(),
                 addressDTO.label(),
+                addressDTO.zone(),
                 addressDTO.city(),
                 addressDTO.street(),
                 addressDTO.apartment()

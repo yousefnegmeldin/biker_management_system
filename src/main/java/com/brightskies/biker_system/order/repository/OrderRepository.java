@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.order.repository;
 
+import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.order.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,4 +24,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 
     @Query("SELECT o FROM Order o WHERE o.biker IS NULL")
     List<Order> findAllFreeOrders();
+
+    @Query("SELECT o FROM Order o WHERE o.biker IS NULL AND o.address.zone = :zone")
+    List<Order> findAllFreeOrdersInZone(@Param("zone") Zone zone);
 }

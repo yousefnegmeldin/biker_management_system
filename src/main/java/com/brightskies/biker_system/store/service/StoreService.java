@@ -3,6 +3,7 @@ package com.brightskies.biker_system.store.service;
 import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.repository.StockRepository;
 import com.brightskies.biker_system.store.repository.StoreRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,10 @@ public class StoreService
         return storeRepository.save(store);
     }
 
-    public void deleteStore(Long id) {
+    public void deleteStore(Long id)
+    {
+        Store store = storeRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("Store not found"));
         storeRepository.deleteById(id);
     }
 

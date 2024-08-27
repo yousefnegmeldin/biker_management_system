@@ -1,5 +1,5 @@
 package com.brightskies.biker_system.authentication.service;
-import com.brightskies.biker_system.generalmodels.User;
+import com.brightskies.biker_system.general.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
