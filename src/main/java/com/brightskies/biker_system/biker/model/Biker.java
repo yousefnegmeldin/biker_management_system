@@ -23,7 +23,7 @@ public class Biker extends User {
     @Enumerated(EnumType.STRING)
     private BikerStatus status;
     @Column
-    private Integer rating;
+    private double rating;
 
     @OneToMany(mappedBy = "biker", fetch = FetchType.LAZY)
     private List<Order> orders;

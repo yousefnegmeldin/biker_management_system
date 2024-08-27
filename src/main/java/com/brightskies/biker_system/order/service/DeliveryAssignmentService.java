@@ -48,6 +48,8 @@ public class DeliveryAssignmentService {
                 biker,
                 50L
         );
+        order.setBiker(biker);
+        orderRepository.save(order);
         return deliveryAssignmentRepository.save(deliveryAssignment);
     }
 
@@ -57,6 +59,9 @@ public class DeliveryAssignmentService {
     public void changeStatus(Long id, AssignmentStatus status) throws Exception {
         DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
                 .orElseThrow(() -> new Exception("Order with the specified ID does not exist."));
+        if(deliveryAssignment.getStatus() == status) {
+            throw new IllegalArgumentException("Delivery assignment already has the requested status as the current one.");
+        }
         deliveryAssignment.setStatus(status);
         deliveryAssignmentRepository.save(deliveryAssignment);
     }
