@@ -45,7 +45,7 @@ public class OrderController {
     public ResponseEntity<?> getAllOrders() {
         List<OrderDto> orderDtos = new ArrayList<>();
 
-        for (Order order : orderService.getAllOrders()) {
+        for (Order order : orderService.getAllFreeOrders()) {
             orderDtos.add(OrderMapper.mapToDto(order));
         }
 

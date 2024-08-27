@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.management.InstanceNotFoundException;
 
@@ -25,6 +26,12 @@ public class DeliveryAssignmentService {
         this.deliveryAssignmentRepository = deliveryAssignmentRepository;
         this.orderRepository = orderRepository;
         this.bikerRepository = bikerRepository;
+    }
+
+    public void setDeliveryTime(Long deliveryAssignmentId,LocalDate date){
+        DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(deliveryAssignmentId).get();
+        deliveryAssignment.setDeliveredAt(date);
+        deliveryAssignmentRepository.save(deliveryAssignment);
     }
 
     public DeliveryAssignment addDeliveryAssignment(DeliveryAssignmentDTO deliveryAssignmentDTO) throws Exception {
@@ -44,6 +51,9 @@ public class DeliveryAssignmentService {
         return deliveryAssignmentRepository.save(deliveryAssignment);
     }
 
+
+    //have to check for safety that the delivery assignment id is assigned to same biker id when
+    //they change
     public void changeStatus(Long id, AssignmentStatus status) throws Exception {
         DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
                 .orElseThrow(() -> new Exception("Order with the specified ID does not exist."));

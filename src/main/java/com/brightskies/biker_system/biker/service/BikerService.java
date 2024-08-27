@@ -1,18 +1,34 @@
 package com.brightskies.biker_system.biker.service;
 
+import com.brightskies.biker_system.authentication.utility.SecurityUtils;
 import com.brightskies.biker_system.biker.dto.BikerDto;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
+import com.brightskies.biker_system.customer.model.Address;
+import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
+import com.brightskies.biker_system.order.enums.AssignmentStatus;
+import com.brightskies.biker_system.order.model.CartItem;
+import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BikerService {
     BikerRepository bikerRepository;
+    BikerService bikerService;
+    DeliveryAssignmentService deliveryAssignmentService;
+
 
     @Autowired
-    public BikerService(BikerRepository bikerRepository){
+    public BikerService(BikerRepository bikerRepository,
+                        BikerService bikerService,
+                        DeliveryAssignmentService deliveryAssignmentService) {
         this.bikerRepository = bikerRepository;
+        this.bikerService = bikerService;
+        this.deliveryAssignmentService = deliveryAssignmentService;
     }
 
     public void updateBiker(Long id, BikerDto bikerDTO){
@@ -29,6 +45,34 @@ public class BikerService {
 
     public void deleteBiker(Long id){
         bikerRepository.deleteById(id);
+    }
+
+    public List<Order> getAllFreeOrders(){
+        return bikerService.getAllFreeOrders();
+    }
+
+    public void acceptOrder(Order order) throws Exception {
+        Long orderId = order.getId();
+        Long bikerId = SecurityUtils.getCurrentUserId();
+        DeliveryAssignmentDTO deliveryAssignmentDTO = new DeliveryAssignmentDTO(orderId, bikerId, 50L);
+        deliveryAssignmentService.addDeliveryAssignment(deliveryAssignmentDTO);
+    }
+
+    public Address getCustomerAddress(Long orderId){
+        return bikerService.getCustomerAddress(orderId);
+    }
+
+    public void updateAssignmentStatus(Long deliveryAssignmentId, AssignmentStatus status) throws Exception {
+        deliveryAssignmentService.changeStatus(deliveryAssignmentId, status);
+    }
+
+//    public List<CartItem> getCartItemsForUser(Long orderId){
+//        return bikerService.getCartItems(orderId);
+//    }
+
+    public void deliverOrder() throws Exception {
+        updateAssignmentStatus(SecurityUtils.getCurrentUserId(), AssignmentStatus.delivered);
+
     }
 
 
