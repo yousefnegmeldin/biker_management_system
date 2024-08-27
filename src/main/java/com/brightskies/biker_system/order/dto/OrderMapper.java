@@ -43,7 +43,7 @@ public class OrderMapper {
         return orders.stream()
                 .map(order -> new OrderDto(
                         order.getOrderDate(),
-                        order.getAddress(),
+                        order.getAddress().getId(),
                         order.getAmount(),
                         order.getPaymentMethod(),
                         order.getCustomer().getId() // assuming Address has a label field

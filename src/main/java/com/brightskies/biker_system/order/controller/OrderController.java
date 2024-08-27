@@ -51,7 +51,7 @@ public class OrderController {
         }
 
         if(orderDtos.isEmpty()) {
-            return new ResponseEntity<> ("There are no available orders currently",HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("There are no available orders currently.", HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(orderDtos, HttpStatus.OK);
@@ -59,7 +59,11 @@ public class OrderController {
 
     @GetMapping("/zone")
     public ResponseEntity<?> getAllOrdersInZone(@RequestParam Zone zone) {
-        return ResponseEntity.status(HttpStatus.OK).body(orderService.getOrdersInZone(zone));
+        List<OrderDto> orderDTOs = OrderMapper.toDTOList(orderService.getOrdersInZone(zone));
+        if(orderDTOs.isEmpty()) {
+            return new ResponseEntity<>("There are no available orders in that zone currently.", HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
     }
 
     //Biker and manager only api
