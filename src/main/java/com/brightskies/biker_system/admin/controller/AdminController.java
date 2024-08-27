@@ -2,7 +2,6 @@ package com.brightskies.biker_system.admin.controller;
 
 import com.brightskies.biker_system.order.controller.CartController;
 import com.brightskies.biker_system.order.dto.CartItemDtoMapper;
-import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.service.CartService;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import com.brightskies.biker_system.order.service.OrderService;
@@ -76,8 +75,8 @@ public class AdminController
         return ResponseEntity.ok("Product added");
     }
 
-    @DeleteMapping("/deleteproduct")
-    public ResponseEntity<?> deleteProduct(Long id)
+    @DeleteMapping("/deleteproduct/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id)
     {
         productService.deleteProductById(id);
         return ResponseEntity.ok("Product is deleted");
@@ -92,15 +91,16 @@ public class AdminController
         return ResponseEntity.ok("Stock added");
     }
 
-    @DeleteMapping("/deletecart")
-    public ResponseEntity<?> deleteCartItem(Long cartItemId)
+    @DeleteMapping("/deletecartitem/{cartItemId}")
+    public ResponseEntity<?> deleteCartItem(@PathVariable Long cartItemId)
     {
        cartService.deleteCartitem(cartItemId);
        return new ResponseEntity<>("Cart Item is Deleted!", HttpStatus.OK);
     }
 
-    @PatchMapping("/status/{id}")
-    public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @RequestParam AssignmentStatus status) throws Exception {
+    @PatchMapping("/status/{id}/{status}")
+    public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @PathVariable String status)
+    {
         deliveryAssignmentService.changeStatus(id,status);
         return ResponseEntity.ok("Delivery status is updated");
     }

@@ -66,7 +66,7 @@ public class OrderService {
             order.setItems(items);
             cartService.deleteAll();
             double total = items.stream()
-                    .mapToDouble(item -> item.getProduct().getPrice())
+                    .mapToDouble(item -> item.getProduct().getPrice()*item.getQuantity())
                     .sum();
             order.setAmount(total);
         }else {
