@@ -5,6 +5,7 @@ import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.AddressRepository;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
+import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
 import com.brightskies.biker_system.order.dto.OrderDto;
 import com.brightskies.biker_system.order.dto.OrderMapper;
 import com.brightskies.biker_system.order.model.CartItem;
@@ -30,6 +31,7 @@ public class OrderService {
     AddressRepository addressRepo;
     CartRepository cartRepository;
     CartService cartService;
+    DeliveryAssignmentService deliveryAssignmentService;;
 
     @Autowired
     public OrderService(OrderRepository orderRepository,
@@ -37,13 +39,15 @@ public class OrderService {
                         AddressRepository addressRepo,
                         CartService cartService,
                         BikerRepository bikerRepository,
-                        CartRepository cartRepository) {
+                        CartRepository cartRepository,
+                        DeliveryAssignmentService deliveryAssignmentService) {
         this.orderRepository = orderRepository;
         this.customerRepo = customerRepo;
         this.addressRepo = addressRepo;
         this.cartService = cartService;
         this.bikerRepository = bikerRepository;
         this.cartRepository = cartRepository;
+        this.deliveryAssignmentService = deliveryAssignmentService;
     }
 
     public OrderDto createOrder(Long addressId, String paymentMethod) {
@@ -58,6 +62,7 @@ public class OrderService {
 
         List<CartItem> items = cartRepository.findByCustomerId(currentCustomerId);
         if(!items.isEmpty()) {
+            order.setItems(items);
             cartService.deleteAll();
             double total = items.stream()
                     .mapToDouble(item -> item.getProduct().getPrice())
@@ -90,17 +95,16 @@ public class OrderService {
         return  orderRepository.findAllFreeOrders();
     }
 
-    public DeliveryAssignment selectOrder(Long orderId) {
+    public DeliveryAssignment selectOrder(Long orderId) throws Exception {
         Long currentBikerId = SecurityUtils.getCurrentUserId();
         Order order = orderRepository.findById(orderId).
                 orElseThrow(() -> new EntityNotFoundException("Order not found"));
         Biker biker = bikerRepository.findById(currentBikerId).
                 orElseThrow(() -> new EntityNotFoundException("biker not found"));
-        return new DeliveryAssignment(
-                order,
-                LocalDate.now(),
-                biker,
+        return deliveryAssignmentService.addDeliveryAssignment(new DeliveryAssignmentDTO(
+                order.getId(),
+                biker.getId(),
                 30L
-        );
+        ));
     }
 }

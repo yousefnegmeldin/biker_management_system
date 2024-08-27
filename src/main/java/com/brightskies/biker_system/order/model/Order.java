@@ -41,5 +41,6 @@ public class Order {
     @JoinColumn(name = "customer_id",nullable = false)
     private Customer customer;
 
-
+    @Transient
+    List<CartItem> items;
 }
