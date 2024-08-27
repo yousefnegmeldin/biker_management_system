@@ -786,6 +786,81 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "feedback",
+			"item": [
+				{
+					"name": "all biker feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY3MjQzMiwiZXhwIjoxNzI0Njc2MDMyfQ.ELKcCJQVMtJkChjHyoa433Fk8K99xxT9LYWIvlutSKM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/feedback/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"feedback",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY3MjQzMiwiZXhwIjoxNzI0Njc2MDMyfQ.ELKcCJQVMtJkChjHyoa433Fk8K99xxT9LYWIvlutSKM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order\": 1,\r\n    \"rating\": 3,\r\n    \"text\": \"good\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/customer/feedback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customer",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
