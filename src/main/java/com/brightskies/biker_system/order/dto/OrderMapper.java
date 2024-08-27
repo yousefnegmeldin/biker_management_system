@@ -1,9 +1,11 @@
 package com.brightskies.biker_system.order.dto;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
+import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +58,8 @@ public class OrderMapper {
                         order.getAddress().getId(),
                         order.getAmount(),
                         order.getPaymentMethod(),
-                        order.getCustomer().getId() // assuming Address has a label field
+                        order.getCustomer().getId(),
+                        new ArrayList<CartItem>()// assuming Address has a label field
                 ))
                 .collect(Collectors.toList());
     }
