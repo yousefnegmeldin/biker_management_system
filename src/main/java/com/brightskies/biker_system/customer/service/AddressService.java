@@ -73,7 +73,7 @@ public class AddressService {
 
     public void updateAddressDetails(Long id, UpdateAddressDTO newAddressDTO) throws Exception {
         Address address = addressRepository.findById(id)
-                .orElseThrow(() -> new Exception("Address instance does not exist"));
+                .orElseThrow(() -> new Exception("Address instance does not exist."));
         address.setCity(newAddressDTO.city());
         address.setStreet(newAddressDTO.street());
         address.setApartment(newAddressDTO.apartment());
