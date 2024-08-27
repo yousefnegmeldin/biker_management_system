@@ -1,7 +1,6 @@
 package com.brightskies.biker_system.store.mapper;
 
 import com.brightskies.biker_system.store.DTO.StoreDTO;
-import com.brightskies.biker_system.store.model.Product;
 import com.brightskies.biker_system.store.model.Store;
 import org.springframework.stereotype.Component;
 
@@ -10,21 +9,22 @@ public class StoreConverter
 {
     public StoreDTO toDTO(Store store)
     {
-        StoreDTO dto= new StoreDTO();
-        dto.setId(store.getId());
-        dto.setName(store.getName());
-        dto.setArea(store.getArea());
-        dto.setStatus(store.isStatus());
-        return dto;
+        return new StoreDTO
+                (
+                        store.getId(),
+                        store.getName(),
+                        store.getArea(),
+                        store.isStatus()
+                );
     }
 
     public Store toEntity(StoreDTO dto)
     {
         Store store = new Store();
-        store.setId(dto.getId());
-        store.setName(dto.getName());
-        store.setArea(dto.getArea());
-        store.setStatus(dto.isStatus());
+        store.setId(dto.id());
+        store.setName(dto.name());
+        store.setArea(dto.area());
+        store.setStatus(dto.status());
         return store;
     }
 }

@@ -2,6 +2,8 @@ package com.brightskies.biker_system.order.service;
 import com.brightskies.biker_system.authentication.utility.SecurityUtils;
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
+import com.brightskies.biker_system.order.dto.CartItemDto;
+import com.brightskies.biker_system.order.dto.CartResultDto;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.repository.CartRepository;
 import com.brightskies.biker_system.store.model.Product;
@@ -13,6 +15,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,14 +41,21 @@ public class CartService {
         this.storeRepository = storeRepository;
     }
 
-    public List<CartItem> getAllCartItems() {
+    public CartResultDto getAllCartItems() {
 
         Long currentCustomerId = SecurityUtils.getCurrentUserId();
         List<CartItem> items = cartRepository.findByCustomerId(currentCustomerId);
         if (items.isEmpty()) {
             throw new EntityNotFoundException("Cart is empty.");
         }
-        return items;
+        List< CartItemDto> cartItemDtos = new ArrayList<>();
+        double totalPrice = 0;
+        for(CartItem item : items) {
+            CartItemDto cartItemDto = new CartItemDto(item.getProduct(), item.getQuantity(), item.getStore());
+            cartItemDtos.add(cartItemDto);
+            totalPrice += item.getProduct().getPrice();
+        }
+        return new CartResultDto(cartItemDtos, totalPrice);
     }
 
     public CartItem addCartItem(Long prodId, int quantity,Long storeId) {
@@ -80,14 +91,17 @@ public class CartService {
     public CartItem increaseCartItemAmount(Long cartItemId) {
         Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
         if(updatableItem.isPresent()) {
-            Long storeId = updatableItem.get().getStore().getId();
-            int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(), storeId);
+            int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(),
+                    updatableItem.get().getStore().getId());
 
             if(stockQuantity > 0) {
                 updatableItem.get().setQuantity(updatableItem.get().getQuantity() + 1);
                 cartRepository.save(updatableItem.get());
-                stockService.setProductQuantity(updatableItem.get().getProduct().getId(),
-                        stockQuantity-1, storeId);
+                stockService.setProductQuantity(
+                        updatableItem.get().getProduct().getId(),
+                        stockQuantity-1,
+                        updatableItem.get().getStore().getId());
+
                 return updatableItem.get();
             }
         }
@@ -98,7 +112,8 @@ public class CartService {
     public CartItem decreaseCartItemAmount(Long cartItemId) {
         Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
         if(updatableItem.isPresent()) {
-            int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(), updatableItem.get().getStore().getId());
+            int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(),
+                    updatableItem.get().getStore().getId());
 
             if(updatableItem.get().getQuantity() > 0) {
                 updatableItem.get().setQuantity(updatableItem.get().getQuantity() - 1);
@@ -107,10 +122,30 @@ public class CartService {
                     throw new NullPointerException();
                 }else {
                     cartRepository.save(updatableItem.get());
-                    stockService.setProductQuantity(updatableItem.get().getProduct().getId(), stockQuantity+1, updatableItem.get().getStore().getId());
+                    stockService.setProductQuantity(
+                            updatableItem.get().getProduct().getId(),
+                            stockQuantity+1,
+                            updatableItem.get().getStore().getId());
                 }
             }
         }
         return updatableItem.orElseThrow(() -> new EntityNotFoundException ("Item not in cart"));
+    }
+
+    public void deleteAll() {
+        Long currentCustomerId = SecurityUtils.getCurrentUserId();
+        Customer customer = customerRepository.findById(currentCustomerId).
+                orElseThrow(() -> new EntityNotFoundException("Customer not found."));
+
+
+        for(CartItem cartItem : cartRepository.findByCustomerId(currentCustomerId)) {
+            int stockQuantity = stockService.getProductQuantity(cartItem.getProduct().getId(),
+                    cartItem.getStore().getId());
+            stockService.setProductQuantity(
+                    cartItem.getProduct().getId(),
+                    stockQuantity+cartItem.getQuantity(),
+                    cartItem.getStore().getId());
+            cartRepository.deleteById(cartItem.getId());
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.brightskies.biker_system.order.controller;
 
 import com.brightskies.biker_system.order.dto.CartItemDtoMapper;
+import com.brightskies.biker_system.order.dto.CartResultDto;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.service.CartService;
 import com.brightskies.biker_system.store.repository.StoreRepository;
@@ -26,12 +27,23 @@ public class CartController {
     @GetMapping("/showall")
     public ResponseEntity<?> showAll() {
         try {
-            List<CartItem> items = cartService.getAllCartItems();
-            return new ResponseEntity<>(items.stream().map(CartItemDtoMapper::map), HttpStatus.OK);
+            return new ResponseEntity<>(cartService.getAllCartItems(), HttpStatus.OK);
         }
         catch(EntityNotFoundException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
+    }
+
+
+
+    @DeleteMapping("/deleteall")
+    public ResponseEntity<String> deleteAll() {
+        try {
+            cartService.deleteAll();
+        }catch(EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("All items have been removed from cart",HttpStatus.OK);
     }
 
     @PostMapping("/additem")

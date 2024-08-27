@@ -23,7 +23,7 @@ public class AddressService {
         this.customerRepository = customerRepository;
     }
 
-    public AddressDTO addAddress(AddressDTO addressDTO){
+    public Address addAddress(AddressDTO addressDTO){
         Long customerID = SecurityUtils.getCurrentUserId();
         Address address = new Address(
                 customerRepository.findById(customerID).get(),
@@ -33,7 +33,7 @@ public class AddressService {
                 addressDTO.apartment()
         );
         addressRepository.save(address);
-        return new AddressDTO(address.getLabel(), address.getCity(), address.getStreet(), address.getApartment());
+        return address;
     }
 
     /*public void removeAddress(String label) throws InstanceNotFoundException {
@@ -71,16 +71,12 @@ public class AddressService {
         }
     }*/
 
-    public void updateAddressDetails(Long id, UpdateAddressDTO newAddressDTO) throws InstanceNotFoundException {
-        if(addressRepository.findById(id).isPresent()) {
-            Address address = addressRepository.findById(id).get();
-            address.setCity(newAddressDTO.city());
-            address.setStreet(newAddressDTO.street());
-            address.setApartment(newAddressDTO.apartment());
-            addressRepository.save(address);
-        }
-        else {
-            throw new InstanceNotFoundException("Address instance does not exist");
-        }
+    public void updateAddressDetails(Long id, UpdateAddressDTO newAddressDTO) throws Exception {
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new Exception("Address instance does not exist"));
+        address.setCity(newAddressDTO.city());
+        address.setStreet(newAddressDTO.street());
+        address.setApartment(newAddressDTO.apartment());
+        addressRepository.save(address);
     }
 }

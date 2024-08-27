@@ -1,17 +1,12 @@
 package com.brightskies.biker_system.store.controller;
 
-import com.brightskies.biker_system.store.DTO.StockDTO;
 import com.brightskies.biker_system.store.DTO.StoreDTO;
 import com.brightskies.biker_system.store.mapper.StoreConverter;
-import com.brightskies.biker_system.store.model.Stock;
 import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.service.StoreService;
-import jakarta.websocket.server.ServerEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/store")
