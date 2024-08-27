@@ -20,7 +20,8 @@ public class OrderMapper {
                 order.getAddress().getId(),
                 order.getAmount(),
                 order.getPaymentMethod(),
-                order.getCustomer().getId()
+                order.getCustomer().getId(),
+                order.getItems()
                 );
     }
 
