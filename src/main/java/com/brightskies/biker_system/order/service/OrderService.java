@@ -75,6 +75,12 @@ public class OrderService {
         return OrderMapper.mapToDto(order);
     }
 
+    public List<CartItem> getCartItemsForCurrentOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId).
+                orElseThrow(() -> new EntityNotFoundException("Order not found"));
+        return order.getItems();
+    }
+
     public String cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId).
                 orElseThrow(() -> new EntityNotFoundException("Order not found"));

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeliveryAssignmentRepository extends JpaRepository<DeliveryAssignment,Long> {
-    DeliveryAssignment updateDeliveryAssignment(DeliveryAssignment deliveryAssignment);
+
 }

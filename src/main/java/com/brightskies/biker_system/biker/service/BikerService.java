@@ -10,6 +10,7 @@ import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
+import com.brightskies.biker_system.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +19,15 @@ import java.util.List;
 @Service
 public class BikerService {
     BikerRepository bikerRepository;
-    BikerService bikerService;
     DeliveryAssignmentService deliveryAssignmentService;
+    OrderService orderService;
 
 
     @Autowired
     public BikerService(BikerRepository bikerRepository,
-                        BikerService bikerService,
-                        DeliveryAssignmentService deliveryAssignmentService) {
+                        DeliveryAssignmentService deliveryAssignmentService,
+                        OrderService orderService) {
         this.bikerRepository = bikerRepository;
-        this.bikerService = bikerService;
         this.deliveryAssignmentService = deliveryAssignmentService;
     }
 
@@ -48,31 +48,24 @@ public class BikerService {
     }
 
     public List<Order> getAllFreeOrders(){
-        return bikerService.getAllFreeOrders();
+        return orderService.getAllFreeOrders();
     }
 
     public void acceptOrder(Order order) throws Exception {
-        Long orderId = order.getId();
-        Long bikerId = SecurityUtils.getCurrentUserId();
-        DeliveryAssignmentDTO deliveryAssignmentDTO = new DeliveryAssignmentDTO(orderId, bikerId, 50L);
-        deliveryAssignmentService.addDeliveryAssignment(deliveryAssignmentDTO);
+        orderService.selectOrder(order.getId());
     }
 
-    public Address getCustomerAddress(Long orderId){
-        return bikerService.getCustomerAddress(orderId);
-    }
 
     public void updateAssignmentStatus(Long deliveryAssignmentId, AssignmentStatus status) throws Exception {
         deliveryAssignmentService.changeStatus(deliveryAssignmentId, status);
     }
 
-//    public List<CartItem> getCartItemsForUser(Long orderId){
-//        return bikerService.getCartItems(orderId);
-//    }
+    public List<CartItem> getCartItemsForUser(Long orderId){
+        return orderService.getCartItemsForCurrentOrder(orderId);
+    }
 
     public void deliverOrder() throws Exception {
         updateAssignmentStatus(SecurityUtils.getCurrentUserId(), AssignmentStatus.delivered);
-
     }
 
 
