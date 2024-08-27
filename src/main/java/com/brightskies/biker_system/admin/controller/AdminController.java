@@ -105,10 +105,10 @@ public class AdminController
         return ResponseEntity.ok("Delivery status is updated");
     }
 
-    @DeleteMapping("/{orderId}")
+    @DeleteMapping("/deleteorder/{orderId}")
     public ResponseEntity<?> deleteOrder(@PathVariable Long orderId)
     {
-        orderService.deleteOrder(orderId);
+        orderService.cancelOrder(orderId);
         return ResponseEntity.ok("Order is Deleted");
     }
 
