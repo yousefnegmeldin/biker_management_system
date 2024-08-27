@@ -2,6 +2,7 @@ package com.brightskies.biker_system.admin.controller;
 
 import com.brightskies.biker_system.order.controller.CartController;
 import com.brightskies.biker_system.order.dto.CartItemDtoMapper;
+import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.service.CartService;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import com.brightskies.biker_system.order.service.OrderService;
@@ -99,8 +100,7 @@ public class AdminController
     }
 
     @PatchMapping("/status/{id}/{status}")
-    public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @PathVariable String status)
-    {
+    public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @PathVariable AssignmentStatus status) throws Exception {
         deliveryAssignmentService.changeStatus(id,status);
         return ResponseEntity.ok("Delivery status is updated");
     }

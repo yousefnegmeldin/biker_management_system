@@ -23,10 +23,20 @@ public class OrderMapper {
                 order.getAddress().getId(),
                 order.getAmount(),
                 order.getPaymentMethod(),
-                order.getCustomer().getId()
+                order.getCustomer().getId(),
+                order.getItems()
                 );
     }
 
+//    public Order mapToEntity (OrderDto orderdto) {
+//        Order order = new Order();
+//        order.setOrderDate(orderdto.orderDate());
+//        order.setAddress(orderdto.address());
+//        order.setAmount(orderdto.amount());
+//        order.setPaymentMethod(orderdto.getPaymentMethod());
+//        order.setCustomer(customerRepository.findById(orderdto.getCustomerId()).orElseThrow(() -> new RuntimeException("Customer not found")));
+//        return order;
+//    }
     /*public Order mapToOrder (OrderDto orderdto) {
         return new Order(
                 (long) -1,

@@ -21,7 +21,7 @@ public class Order {
     @Column(nullable = false)
     private LocalDate orderDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -31,11 +31,11 @@ public class Order {
     @Column(nullable = false)
     private String paymentMethod;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "biker_id")
     private Biker biker;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id",nullable = false)
     private Customer customer;
 

@@ -1,7 +1,10 @@
 package com.brightskies.biker_system.order.dto;
 
 
+import com.brightskies.biker_system.order.model.CartItem;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public record OrderDto(
         LocalDate orderDate ,
@@ -12,8 +15,9 @@ public record OrderDto(
 
         String paymentMethod,
 
-        Long customerId
+        Long customerId,
 
+        List<CartItem> items
 ) {
 }
 
