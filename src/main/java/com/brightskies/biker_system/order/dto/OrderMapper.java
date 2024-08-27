@@ -24,16 +24,14 @@ public class OrderMapper {
                 );
     }
 
-//    public Order mapToOrder (OrderDto orderdto) {
-//        return new Order(
-//                (long) -1,
-//                orderdto.orderDate(),
-//                orderdto.address(),
-//                orderdto.amount(),
-//                orderdto.paymentMethod(),
-//                null,
-//                customerRepository.findById(orderdto.customerId()).orElseThrow(() -> new RuntimeException("Customer does not exist"))
-//        );
+//    public Order mapToEntity (OrderDto orderdto) {
+//        Order order = new Order();
+//        order.setOrderDate(orderdto.orderDate());
+//        order.setAddress(orderdto.address());
+//        order.setAmount(orderdto.amount());
+//        order.setPaymentMethod(orderdto.getPaymentMethod());
+//        order.setCustomer(customerRepository.findById(orderdto.getCustomerId()).orElseThrow(() -> new RuntimeException("Customer not found")));
+//        return order;
 //    }
 
 }

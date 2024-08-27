@@ -8,13 +8,16 @@ import com.brightskies.biker_system.customer.model.Address;
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.CartItem;
+import com.brightskies.biker_system.order.model.DeliveryAssignment;
 import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import com.brightskies.biker_system.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BikerService {
@@ -29,6 +32,7 @@ public class BikerService {
                         OrderService orderService) {
         this.bikerRepository = bikerRepository;
         this.deliveryAssignmentService = deliveryAssignmentService;
+        this.orderService = orderService;
     }
 
     public void updateBiker(Long id, BikerDto bikerDTO){
@@ -51,8 +55,8 @@ public class BikerService {
         return orderService.getAllFreeOrders();
     }
 
-    public void acceptOrder(Order order) throws Exception {
-        orderService.selectOrder(order.getId());
+    public void acceptOrder(Long orderId) throws Exception {
+        orderService.selectOrder(orderId);
     }
 
 
@@ -65,8 +69,16 @@ public class BikerService {
     }
 
     public void deliverOrder() throws Exception {
+        Optional<DeliveryAssignment> deliveryAssignment = deliveryAssignmentService.getDeliveryAssignmentForBiker(SecurityUtils.getCurrentUserId());
+        if(deliveryAssignment.isEmpty()){
+            throw new Exception("No delivery assignment found for biker");
+        }
         updateAssignmentStatus(SecurityUtils.getCurrentUserId(), AssignmentStatus.delivered);
+        deliveryAssignmentService.setDeliveryTime(deliveryAssignment.get().getId(), LocalDate.now());
     }
 
-
+    public double getBikerRating(){
+        Biker biker = bikerRepository.findById(SecurityUtils.getCurrentUserId()).get();
+        return biker.getRating();
+    }
 }

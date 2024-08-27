@@ -25,7 +25,7 @@ public class Biker extends User {
     @Column
     private double rating;
 
-    @OneToMany(mappedBy = "biker", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "biker", fetch = FetchType.EAGER)
     private List<Order> orders;
 
     public Biker(String name, String email, String phone, String password, LocalDate joinedAt, UserRole role, Zone zone, BikerStatus status) {

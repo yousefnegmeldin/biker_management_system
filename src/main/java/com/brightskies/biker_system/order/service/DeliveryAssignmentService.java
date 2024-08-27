@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 import javax.management.InstanceNotFoundException;
 
@@ -64,6 +65,10 @@ public class DeliveryAssignmentService {
         }
         deliveryAssignment.setStatus(status);
         deliveryAssignmentRepository.save(deliveryAssignment);
+    }
+
+    public Optional<DeliveryAssignment> getDeliveryAssignmentForBiker(Long bikerId){
+        return deliveryAssignmentRepository.findByBikerId(bikerId);
     }
 
 }
