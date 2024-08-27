@@ -26,4 +26,10 @@ public class OrderHistory
 
     @Column(nullable = false)
     private Integer quantity;
+
+    public OrderHistory(Order order, Product product, Integer quantity) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+    }
 }

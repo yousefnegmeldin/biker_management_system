@@ -12,8 +12,11 @@ import com.brightskies.biker_system.order.dto.OrderMapper;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.DeliveryAssignment;
 import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.order.model.OrderHistory;
 import com.brightskies.biker_system.order.repository.CartRepository;
+import com.brightskies.biker_system.order.repository.OrderHistoryRepository;
 import com.brightskies.biker_system.order.repository.OrderRepository;
+import com.brightskies.biker_system.store.model.Product;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -32,7 +36,8 @@ public class OrderService {
     private final AddressRepository addressRepo;
     private final CartRepository cartRepository;
     private final CartService cartService;
-    private final DeliveryAssignmentService deliveryAssignmentService;;
+    private final OrderHistoryRepository orderHistoryRepository;
+    private final DeliveryAssignmentService deliveryAssignmentService;
 
     @Autowired
     public OrderService(OrderRepository orderRepository,
@@ -41,6 +46,7 @@ public class OrderService {
                         CartService cartService,
                         BikerRepository bikerRepository,
                         CartRepository cartRepository,
+                        OrderHistoryRepository orderHistoryRepository,
                         DeliveryAssignmentService deliveryAssignmentService) {
         this.orderRepository = orderRepository;
         this.customerRepo = customerRepo;
@@ -48,7 +54,15 @@ public class OrderService {
         this.cartService = cartService;
         this.bikerRepository = bikerRepository;
         this.cartRepository = cartRepository;
+        this.orderHistoryRepository = orderHistoryRepository;
         this.deliveryAssignmentService = deliveryAssignmentService;
+    }
+
+    public void addToOrderHistory(List<CartItem> items, Order order) {
+        for(CartItem item : items) {
+            OrderHistory orderHistory = new OrderHistory(order, item.getProduct(), item.getQuantity());
+            orderHistoryRepository.save(orderHistory);
+        }
     }
 
     public OrderDto createOrder(Long addressId, String paymentMethod) {
@@ -75,6 +89,7 @@ public class OrderService {
 
         order.setPaymentMethod(paymentMethod);
         order = orderRepository.save(order);
+        addToOrderHistory(items, order);
         return OrderMapper.mapToDto(order);
     }
 
