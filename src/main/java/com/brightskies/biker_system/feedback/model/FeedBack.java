@@ -1,11 +1,9 @@
-package com.brightskies.biker_system.generalmodels;
+package com.brightskies.biker_system.feedback.model;
 
 import com.brightskies.biker_system.order.model.Order;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Entity
 @Data
@@ -19,7 +17,7 @@ public class FeedBack
     @JoinColumn(name="order_id")
     private Order order;
     @Column(nullable = false)
-    private int rating;
+    private Integer rating;
     @Column(nullable = false)
     private String text;
 

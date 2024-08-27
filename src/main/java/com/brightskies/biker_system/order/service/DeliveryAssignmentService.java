@@ -41,6 +41,8 @@ public class DeliveryAssignmentService {
                 biker,
                 50L
         );
+        order.setBiker(biker);
+        orderRepository.save(order);
         return deliveryAssignmentRepository.save(deliveryAssignment);
     }
 
