@@ -31,10 +31,10 @@ public class ProductController
         return ResponseEntity.ok(newDto);
     }
 
-    @DeleteMapping("/delete/{name}")
-    public ResponseEntity<?> deleteProductByName(@PathVariable String name)
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProductByName(@PathVariable Long id)
     {
-        productService.deleteProductByName(name);
+        productService.deleteProductById(id);
         return ResponseEntity.ok("Product is deleted");
     }
 
