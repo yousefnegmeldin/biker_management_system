@@ -1,17 +1,11 @@
 package com.brightskies.biker_system.order.controller;
-
 import com.brightskies.biker_system.order.dto.CartItemDtoMapper;
-import com.brightskies.biker_system.order.dto.CartResultDto;
-import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.service.CartService;
-import com.brightskies.biker_system.store.repository.StoreRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
@@ -33,8 +27,6 @@ public class CartController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
-
-
 
     @DeleteMapping("/deleteall")
     public ResponseEntity<String> deleteAll() {

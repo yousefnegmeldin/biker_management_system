@@ -20,7 +20,7 @@ public class OrderMapper {
     public static OrderDto mapToDto (Order order) {
         return new OrderDto(
                 order.getOrderDate(),
-                order.getAddress(),
+                order.getAddress().getId(),
                 order.getAmount(),
                 order.getPaymentMethod(),
                 order.getCustomer().getId()
