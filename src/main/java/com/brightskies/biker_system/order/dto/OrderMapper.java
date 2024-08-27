@@ -20,13 +20,18 @@ public class OrderMapper {
     }
 
     public static OrderDto mapToDto (Order order) {
+        List<CartItem> cartItems = order.getItems();
+        List<CartItemDto> cartItemDtos = new ArrayList<>();
+        for (CartItem item : cartItems) {
+            cartItemDtos.add(CartItemDtoMapper.map(item));
+        }
         return new OrderDto(
                 order.getOrderDate(),
                 order.getAddress().getId(),
                 order.getAmount(),
                 order.getPaymentMethod(),
                 order.getCustomer().getId(),
-                order.getItems()
+                cartItemDtos
                 );
     }
 
@@ -59,7 +64,7 @@ public class OrderMapper {
                         order.getAmount(),
                         order.getPaymentMethod(),
                         order.getCustomer().getId(),
-                        new ArrayList<CartItem>()// assuming Address has a label field
+                        new ArrayList<CartItemDto>()// assuming Address has a label field
                 ))
                 .collect(Collectors.toList());
     }

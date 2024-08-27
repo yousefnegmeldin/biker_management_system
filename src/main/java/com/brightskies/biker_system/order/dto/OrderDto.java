@@ -17,7 +17,7 @@ public record OrderDto(
 
         Long customerId,
 
-        List<CartItem> items
+        List<CartItemDto> items
 ) {
 }
 

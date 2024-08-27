@@ -71,6 +71,7 @@ public class OrderService {
                 orElseThrow(() -> new EntityNotFoundException("Address not found")));
 
         List<CartItem> items = cartRepository.findByCustomerId(currentCustomerId);
+
         if(!items.isEmpty()) {
             order.setItems(items);
             cartService.deleteAll();
