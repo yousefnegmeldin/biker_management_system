@@ -137,7 +137,6 @@ public class CartService {
         Customer customer = customerRepository.findById(currentCustomerId).
                 orElseThrow(() -> new EntityNotFoundException("Customer not found."));
 
-
         for(CartItem cartItem : cartRepository.findByCustomerId(currentCustomerId)) {
             int stockQuantity = stockService.getProductQuantity(cartItem.getProduct().getId(),
                     cartItem.getStore().getId());

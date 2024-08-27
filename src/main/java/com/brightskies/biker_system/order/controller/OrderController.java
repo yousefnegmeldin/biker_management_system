@@ -63,6 +63,8 @@ public class OrderController {
             return new ResponseEntity<>(orderService.selectOrder(orderId), HttpStatus.OK);
         }catch(EntityNotFoundException e){
             return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 }
