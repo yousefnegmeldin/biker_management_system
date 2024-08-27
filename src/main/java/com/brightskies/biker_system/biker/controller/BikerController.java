@@ -8,6 +8,7 @@ import com.brightskies.biker_system.order.dto.OrderMapper;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +21,13 @@ import java.util.List;
 public class BikerController {
     private FeedBackService feedBackService;
     private BikerService bikerService;
+    private OrderService orderService;
 
     @Autowired
-    public BikerController(FeedBackService feedBackService, BikerService bikerService) {
+    public BikerController(FeedBackService feedBackService, BikerService bikerService, OrderService orderService) {
         this.feedBackService = feedBackService;
+        this.bikerService = bikerService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/feedback/{bikerId}")
@@ -44,8 +48,8 @@ public class BikerController {
 
     //should be orderDTO
     @GetMapping("/orders/free")
-    public ResponseEntity<List<Order>> getAllFreeOrders() {
-        return ResponseEntity.ok(bikerService.getAllFreeOrders());
+    public ResponseEntity<?> getAllFreeOrders() {
+        return ResponseEntity.ok(orderService.getAllFreeOrders());
     }
 
     @PostMapping("/orders/accept/{orderId}")

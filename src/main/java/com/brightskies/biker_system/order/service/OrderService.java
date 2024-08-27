@@ -99,7 +99,7 @@ public class OrderService {
     }
 
     public List<Order> getAllFreeOrders() {
-        return  orderRepository.findAllFreeOrders();
+        return orderRepository.findAllFreeOrders();
     }
 
     public List<Order> getOrdersInZone(Zone zone) {
