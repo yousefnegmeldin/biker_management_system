@@ -1,0 +1,1214 @@
+{
+	"info": {
+		"_postman_id": "2d193519-a563-4c51-85cc-ed4f8a9508da",
+		"name": "Biker Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28915688"
+	},
+	"item": [
+		{
+			"name": "login requests",
+			"item": [
+				{
+					"name": "login as customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"yousef@gmail.com\",\r\n    \"password\": \"yousef\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login as biker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"saeed@gmail.com\",\r\n    \"password\": \"saeed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login as manager",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"manager@gmail.com\",\r\n    \"password\": \"john\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login as admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sign up requests",
+			"item": [
+				{
+					"name": "sign up as customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"yousef\",\r\n    \"lastName\":\"goat\",\r\n    \"email\":\"yousef@gmail.com\",\r\n    \"phone\":\"01243\",\r\n    \"password\":\"yousef\",\r\n    \"role\":\"customer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/signup/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"signup",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign up as biker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"biker\",\r\n    \"lastName\":\"saeed\",\r\n    \"email\":\"saeed@gmail.com\",\r\n    \"phone\":\"2\",\r\n    \"password\":\"saeed\",\r\n    \"role\":\"biker\",\r\n    \"status\":\"available\",\r\n    \"zone\":\"Maadi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/signup/biker",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"signup",
+								"biker"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign up as manager",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"manager\",\r\n    \"lastName\":\"john\",\r\n    \"email\":\"manager@gmail.com\",\r\n    \"phone\":\"123\",\r\n    \"password\":\"john\",\r\n    \"role\":\"manager\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/signup/manager",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"signup",
+								"manager"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test roles",
+			"item": [
+				{
+					"name": "test admin role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/test/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"test",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test biker role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYmlrZXIiLCJzdWIiOiJzYWVlZEBnbWFpbC5jb20iLCJpYXQiOjE3MjQxNDA3MjAsImV4cCI6MTcyNDE0NDMyMH0.wF9TcbKFm-3lubeXCRacbfqrKzv-qZZ1qyIeHbgqc5M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/test/biker",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"test",
+								"biker"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test customer role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJzdWIiOiJ5b3Vzc3Nzc2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDEzOTcyMSwiZXhwIjoxNzI0MTQzMzIxfQ.hnjBbKw4pO8SB52-v3l50Z4Z7DKm6AuSS2ik-7JQRmY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/test/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"test",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test manager role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/test/manager",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"test",
+								"manager"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "add to cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1ODQwNCwiZXhwIjoxNzI0NzYyMDA0fQ.L4kNCU6SqMWHOwRfysfKmSAqCwz90ab5kjbsKW7M7jA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/cart/additem?prodId=1&quantity=5&storeId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"cart",
+								"additem"
+							],
+							"query": [
+								{
+									"key": "prodId",
+									"value": "1"
+								},
+								{
+									"key": "quantity",
+									"value": "5"
+								},
+								{
+									"key": "storeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1MTQyMywiZXhwIjoxNzI0NzU1MDIzfQ.WD-ms5nAWHnedxhG9-lAIJEH1Wqy0kn76P-4khEACvk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/cart/inc?cartItemId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"cart",
+								"inc"
+							],
+							"query": [
+								{
+									"key": "cartItemId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1MjI1MiwiZXhwIjoxNzI0NzU1ODUyfQ.lEdbopqAWcwutq880zTHpPG32kj_SwmaHbRoXe6cNFo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/cart/showall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"cart",
+								"showall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dec",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/cart/dec?cartItemId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"cart",
+								"dec"
+							],
+							"query": [
+								{
+									"key": "cartItemId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/cart/deleteitem?prodId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"cart",
+								"deleteitem"
+							],
+							"query": [
+								{
+									"key": "prodId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1MTQyMywiZXhwIjoxNzI0NzU1MDIzfQ.WD-ms5nAWHnedxhG9-lAIJEH1Wqy0kn76P-4khEACvk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/cart/deleteall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"cart",
+								"deleteall"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "add product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"normal milk\",\r\n    \"description\":\"cow milk\",\r\n    \"barcode\":\"235336436\",\r\n    \"category\":\"diary\",\r\n    \"price\":\"20.00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/product/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"product",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "store",
+			"item": [
+				{
+					"name": "create store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"seoudi\",\r\n    \"area\":\"zayed\",\r\n    \"status\":\"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/store/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"store",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/store/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"store",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stock",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"storeId\":\"1\",\r\n    \"productId\":\"2\",\r\n    \"quantity\":\"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/stock/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"stock",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "add address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1NzA0NCwiZXhwIjoxNzI0NzYwNjQ0fQ.wiA_wNXsjGFXvLW0tyt9n10tWXlypHlUURsqM4-mkEI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"label\":\"home 22\",\r\n    \"city\":\"zayed\",\r\n    \"street\":\"6th street\",\r\n    \"apartment\":\"31\",\r\n    \"zone\":\"Rehab\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/customer/address",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customer",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDU3ODYzMSwiZXhwIjoxNzI0NTgyMjMxfQ.6iVQMFChO7L3qTzn4TKLeZDF-EFV7xfEolh8-KrPo_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/customer/address/home",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customer",
+								"address",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY1NjUzOCwiZXhwIjoxNzI0NjYwMTM4fQ.0ONrDs2aimMYTFQqq6QOVK-XEkRH4EpAXeFoCMFYA9U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"zayed\",\r\n    \"street\": \"7th street\",\r\n    \"apartment\": \"31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/customer/address/home",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customer",
+								"address",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1ODQwNCwiZXhwIjoxNzI0NzYyMDA0fQ.L4kNCU6SqMWHOwRfysfKmSAqCwz90ab5kjbsKW7M7jA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order\":\"1\",\r\n    \"rating\":\"5\",\r\n    \"text\":\"amazing delivery!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/customer/feedback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customer",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"item": [
+				{
+					"name": "search products",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "manager",
+			"item": [
+				{
+					"name": "get all available bikers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoibWFuYWdlciIsImlkIjoyLCJzdWIiOiJtYW5hZ2VyQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY3NDg4NywiZXhwIjoxNzI0Njc4NDg3fQ.mK6w2GGlF9bFBMdAwaWtz_xINjkmFURi4fWVSCWWZHs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/manager/available-bikers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"manager",
+								"available-bikers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "biker",
+			"item": [
+				{
+					"name": "get biker feed back should be in manager",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/feedback/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"feedback",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update biker should be in manager",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all free orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYmlrZXIiLCJpZCI6Miwic3ViIjoic2FlZWRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzU4Nzc4LCJleHAiOjE3MjQ3NjIzNzh9.nTDVKVIgWUr-GNGCm01gRm0c_s3FIdzmHOaq_VvUeso",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/orders/free",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"orders",
+								"free"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ACCEPT ORDER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYmlrZXIiLCJpZCI6Miwic3ViIjoic2FlZWRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzU5MTE1LCJleHAiOjE3MjQ3NjI3MTV9.B2Q2aZMeAuk8UXOeLJR6CrEERgOowNUFV51-dlz7-pE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/orders/accept/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"orders",
+								"accept",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update assignment status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/assignment/1/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"assignment",
+								"1",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get cart items for order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYmlrZXIiLCJpZCI6Miwic3ViIjoic2FlZWRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzU1Mzg1LCJleHAiOjE3MjQ3NTg5ODV9.KwnK_xvR6axjYgx9hYoBCLsp5aaMk3GKO92owu2xQkA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/orders/1/cart-items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"orders",
+								"1",
+								"cart-items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deliver order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYmlrZXIiLCJpZCI6Miwic3ViIjoic2FlZWRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzU4Nzc4LCJleHAiOjE3MjQ3NjIzNzh9.nTDVKVIgWUr-GNGCm01gRm0c_s3FIdzmHOaq_VvUeso",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/orders/deliver",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"orders",
+								"deliver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get biker rating",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYmlrZXIiLCJpZCI6Miwic3ViIjoic2FlZWRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzU2OTE0LCJleHAiOjE3MjQ3NjA1MTR9.itEw1GMpXJd2l3XqD2s-WewLVhGLg0Ac1lAqOwdi7oc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/biker/rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"biker",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "create order as customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1ODQwNCwiZXhwIjoxNzI0NzYyMDA0fQ.L4kNCU6SqMWHOwRfysfKmSAqCwz90ab5kjbsKW7M7jA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/order/create?addressId=1&paymentMethod=cash",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"order",
+								"create"
+							],
+							"query": [
+								{
+									"key": "addressId",
+									"value": "1"
+								},
+								{
+									"key": "paymentMethod",
+									"value": "cash"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYmlrZXIiLCJpZCI6Miwic3ViIjoic2FlZWRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzUyMjEwLCJleHAiOjE3MjQ3NTU4MTB9.XQebFHhgQkFZLidHYR47SiM4vhsLXfnNOiC-U4m3q6A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/order/getall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"order",
+								"getall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1NzA0NCwiZXhwIjoxNzI0NzYwNjQ0fQ.wiA_wNXsjGFXvLW0tyt9n10tWXlypHlUURsqM4-mkEI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/order/cancel?orderId=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"order",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all orders in zone",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpZCI6MSwic3ViIjoieW91c2VmQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1NzA0NCwiZXhwIjoxNzI0NzYwNjQ0fQ.wiA_wNXsjGFXvLW0tyt9n10tWXlypHlUURsqM4-mkEI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/order/zone?zone=SheikhZayed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"order",
+								"zone"
+							],
+							"query": [
+								{
+									"key": "zone",
+									"value": "SheikhZayed"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
