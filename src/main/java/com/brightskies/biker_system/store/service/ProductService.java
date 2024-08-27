@@ -1,11 +1,11 @@
 package com.brightskies.biker_system.store.service;
 
 import com.brightskies.biker_system.store.model.Product;
+import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductService
@@ -23,10 +23,11 @@ public class ProductService
         return productRepository.save(product);
     }
 
-
-    public void deleteProductByName(String name)
+    public void deleteProductById(Long id)
     {
-        productRepository.deleteByName(name);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Store not found"));
+        productRepository.deleteById(id);
     }
 
 }

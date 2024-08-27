@@ -7,6 +7,7 @@ import com.brightskies.biker_system.order.model.*;
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
 import com.brightskies.biker_system.order.repository.DeliveryAssignmentRepository;
 import com.brightskies.biker_system.order.repository.OrderRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,4 +57,20 @@ public class DeliveryAssignmentService {
         deliveryAssignmentRepository.save(deliveryAssignment);
     }
 
+    public void changeStatus(Long id, String status)
+    {
+        if(deliveryAssignmentRepository.existsById(id)) {
+            try {
+                DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id).get();
+                deliveryAssignment.setStatus(AssignmentStatus.valueOf(status));
+                deliveryAssignmentRepository.save(deliveryAssignment);
+            }
+            catch (IllegalArgumentException exception) {
+                throw new IllegalArgumentException("Invalid delivery assignment status.");
+            }
+        }
+        else {
+            throw new EntityNotFoundException("Order with the specified ID does not exist.");
+        }
+    }
 }

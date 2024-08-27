@@ -75,14 +75,13 @@ public class CartService {
         }
     }
 
-    public String deleteCartitem(Long cartItemId) {
+    public void deleteCartitem(Long cartItemId) {
         try {
             CartItem cartItem = cartRepository.findById(cartItemId).orElseThrow( () -> new EntityNotFoundException("Cart item not found."));
             Store store = storeRepository.findById(cartItem.getStore().getId()).orElseThrow( () -> new EntityNotFoundException("Store not found."));
             int stockQuantity = stockService.getProductQuantity(cartItem.getProduct().getId(),store.getId());
             stockService.setProductQuantity(cartItem.getProduct().getId(),stockQuantity+cartItem.getQuantity(),store.getId());
             cartRepository.deleteById(cartItemId);
-            return "Cart item deleted";
         }catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException("Cart item could not be deleted");
         }
