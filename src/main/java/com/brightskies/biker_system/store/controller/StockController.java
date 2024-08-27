@@ -1,11 +1,8 @@
 package com.brightskies.biker_system.store.controller;
 
-import com.brightskies.biker_system.store.DTO.ProductDTO;
 import com.brightskies.biker_system.store.DTO.StockDTO;
 import com.brightskies.biker_system.store.mapper.StockConverter;
-import com.brightskies.biker_system.store.model.Product;
 import com.brightskies.biker_system.store.model.Stock;
-import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

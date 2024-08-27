@@ -27,46 +27,28 @@ public class DeliveryAssignmentService {
         this.bikerRepository = bikerRepository;
     }
 
-    public DeliveryAssignmentDTO addDeliveryAssignment(DeliveryAssignmentDTO deliveryAssignmentDTO) throws Exception {
-        if (orderRepository.existsById(deliveryAssignmentDTO.order())) {
-            if (orderRepository.findFreeOrderById(deliveryAssignmentDTO.order()).isPresent()) {
-                if(bikerRepository.findById(deliveryAssignmentDTO.biker()).isPresent()) {
-                    orderRepository.assignBikerToOrder(deliveryAssignmentDTO.biker(), deliveryAssignmentDTO.order());
-                    DeliveryAssignment deliveryAssignment = new DeliveryAssignment(
-                            orderRepository.findById(deliveryAssignmentDTO.order()).get(),
-                            LocalDate.now(),
-                            bikerRepository.findById(deliveryAssignmentDTO.biker()).get(),
-                            50L
-                    );
-                    deliveryAssignmentRepository.save(deliveryAssignment);
-                    return new DeliveryAssignmentDTO(deliveryAssignment.getId(), deliveryAssignment.getBiker().getId(), deliveryAssignmentDTO.expectedTime());
-                }
-                else {
-                    throw new InstanceNotFoundException("Biker with specified ID does not exist.");
-                }
-            }
-            else {
-                throw new IllegalArgumentException("Order has already been assigned a biker");
-            }
+    public DeliveryAssignment addDeliveryAssignment(DeliveryAssignmentDTO deliveryAssignmentDTO) throws Exception {
+        Order order = orderRepository.findById(deliveryAssignmentDTO.order())
+                .orElseThrow(() -> new Exception("Order with the specified ID does not exist."));
+        if (orderRepository.findFreeOrderById(deliveryAssignmentDTO.order()).isEmpty()) {
+            throw new IllegalArgumentException("Order has already been assigned a biker.");
         }
-        else {
-            throw new Exception("Order with the specified ID does not exist.");
-        }
+        Biker biker = bikerRepository.findById(deliveryAssignmentDTO.biker())
+                .orElseThrow(() -> new InstanceNotFoundException("Biker with specified ID does not exist."));
+        DeliveryAssignment deliveryAssignment = new DeliveryAssignment(
+                order,
+                LocalDate.now(),
+                biker,
+                50L
+        );
+        return deliveryAssignmentRepository.save(deliveryAssignment);
     }
 
-    public void changeStatus(Long id, String status) throws Exception {
-        if(deliveryAssignmentRepository.existsById(id)) {
-            try {
-                DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id).get();
-                deliveryAssignment.setStatus(AssignmentStatus.valueOf(status));
-                deliveryAssignmentRepository.save(deliveryAssignment);
-            }
-            catch (IllegalArgumentException exception) {
-                throw new IllegalArgumentException("Invalid delivery assignment status.");
-            }
-        }
-        else {
-            throw new Exception("Order with the specified ID does not exist.");
-        }
+    public void changeStatus(Long id, AssignmentStatus status) throws Exception {
+        DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
+                .orElseThrow(() -> new Exception("Order with the specified ID does not exist."));
+        deliveryAssignment.setStatus(status);
+        deliveryAssignmentRepository.save(deliveryAssignment);
     }
+
 }

@@ -1,6 +1,8 @@
 package com.brightskies.biker_system.order.controller;
 
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
+import com.brightskies.biker_system.order.dto.DeliveryAssignmentMapper;
+import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,11 @@ public class DeliveryAssignmentController {
     @PostMapping()
     public ResponseEntity<?> addDeliveryAssignment(@RequestBody DeliveryAssignmentDTO deliveryAssignmentDTO) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(deliveryAssignmentService.addDeliveryAssignment(deliveryAssignmentDTO));
+            return ResponseEntity.status(HttpStatus.CREATED).body(
+                    DeliveryAssignmentMapper.toDTO(
+                            deliveryAssignmentService.addDeliveryAssignment(deliveryAssignmentDTO)
+                    )
+            );
         }
         catch(IllegalArgumentException exception) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
@@ -33,9 +39,9 @@ public class DeliveryAssignmentController {
     }
 
     @PatchMapping("/status/{id}")
-    public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @RequestParam String status) {
+    public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @RequestParam AssignmentStatus status) {
         try {
-            deliveryAssignmentService.changeStatus(id,status);
+            deliveryAssignmentService.changeStatus(id, status);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
         catch (Exception exception) {
