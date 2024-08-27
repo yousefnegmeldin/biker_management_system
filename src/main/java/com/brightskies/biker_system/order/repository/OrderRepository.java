@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,4 +20,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Transactional
     @Query("UPDATE Order o SET o.biker.id = :biker WHERE o.id = :id")
     void assignBikerToOrder(@Param("biker") Long biker, @Param("id") Long id);
+
+    @Query("SELECT o FROM Order o WHERE o.biker IS NULL")
+    List<Order> findAllFreeOrders();
 }

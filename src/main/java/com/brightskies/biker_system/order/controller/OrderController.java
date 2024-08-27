@@ -4,10 +4,14 @@ import com.brightskies.biker_system.order.dto.OrderDto;
 import com.brightskies.biker_system.order.dto.OrderMapper;
 import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.service.OrderService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/order")
 @RestController
@@ -20,13 +24,47 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping()
-    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
-        return (new ResponseEntity<> (orderService.createOrder(orderDto), HttpStatus.OK));
+    @PostMapping("/create")
+    public ResponseEntity<?> createOrder (@RequestParam Long addressId , @RequestParam String paymentMethod) {
+       try {
+           return (new ResponseEntity<> (orderService.createOrder(addressId,paymentMethod), HttpStatus.OK));
+       }catch (EntityNotFoundException e) {
+           return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+       }catch (NullPointerException e) {
+           return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+       }
     }
 
-    @DeleteMapping("/{orderId}")
-    public ResponseEntity<String> deleteOrder(@PathVariable Long orderId) {
-        return (new ResponseEntity<>(orderService.deleteOrder(orderId), HttpStatus.OK));
+    @DeleteMapping("/cancel")
+    public ResponseEntity<String> cancelOrder(@RequestParam Long orderId) {
+        return (new ResponseEntity<>(orderService.cancelOrder(orderId), HttpStatus.OK));
+    }
+
+    //Biker and manager only api
+    @GetMapping("/getall")
+    public ResponseEntity<?> getAllOrders() {
+        List<OrderDto> orderDtos = new ArrayList<>();
+
+        for (Order order : orderService.getAllOrders()) {
+            orderDtos.add(OrderMapper.mapToDto(order));
+        }
+
+        if(orderDtos.isEmpty()) {
+            return new ResponseEntity<> ("There are no available orders currently",HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(orderDtos, HttpStatus.OK);
+    }
+
+    //Biker and manager only api
+    @PostMapping("/selectorder")
+    public ResponseEntity<?> selectOrder(@RequestParam Long orderId) {
+        try {
+            return new ResponseEntity<>(orderService.selectOrder(orderId), HttpStatus.OK);
+        }catch(EntityNotFoundException e){
+            return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 }

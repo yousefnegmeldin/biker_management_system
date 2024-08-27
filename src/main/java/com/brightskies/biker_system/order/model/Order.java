@@ -1,9 +1,13 @@
 package com.brightskies.biker_system.order.model;
 import com.brightskies.biker_system.biker.model.Biker;
+import com.brightskies.biker_system.customer.model.Address;
 import com.brightskies.biker_system.customer.model.Customer;
+import com.brightskies.biker_system.generalmodels.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,8 +23,9 @@ public class Order {
     @Column(nullable = false)
     private LocalDate orderDate;
 
-    @Column(nullable = false)
-    private String address;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Column(nullable = false)
     private double amount;
@@ -36,4 +41,6 @@ public class Order {
     @JoinColumn(name = "customer_id",nullable = false)
     private Customer customer;
 
+    @Transient
+    List<CartItem> items;
 }

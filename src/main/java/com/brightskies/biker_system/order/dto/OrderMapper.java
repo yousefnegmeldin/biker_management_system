@@ -14,7 +14,7 @@ public class OrderMapper {
         this.customerRepository = customerRepository;
     }
 
-    public OrderDto mapToDto (Order order) {
+    public static OrderDto mapToDto (Order order) {
         return new OrderDto(
                 order.getOrderDate(),
                 order.getAddress(),
@@ -24,16 +24,16 @@ public class OrderMapper {
                 );
     }
 
-    public Order mapToOrder (OrderDto orderdto) {
-        return new Order(
-                (long) -1,
-                orderdto.orderDate(),
-                orderdto.address(),
-                orderdto.amount(),
-                orderdto.paymentMethod(),
-                null,
-                customerRepository.findById(orderdto.customerId()).orElseThrow(() -> new RuntimeException("Customer does not exist"))
-        );
-    }
+//    public Order mapToOrder (OrderDto orderdto) {
+//        return new Order(
+//                (long) -1,
+//                orderdto.orderDate(),
+//                orderdto.address(),
+//                orderdto.amount(),
+//                orderdto.paymentMethod(),
+//                null,
+//                customerRepository.findById(orderdto.customerId()).orElseThrow(() -> new RuntimeException("Customer does not exist"))
+//        );
+//    }
 
 }
