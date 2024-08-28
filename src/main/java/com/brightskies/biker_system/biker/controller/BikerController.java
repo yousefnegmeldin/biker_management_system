@@ -34,7 +34,7 @@ public class BikerController {
     //should be orderDTO
     @GetMapping("/orders/free")
     public ResponseEntity<?> getAllFreeOrders() {
-        return ResponseEntity.ok(orderService.getAllFreeOrders());
+        return ResponseEntity.ok(OrderMapper.toDTOList(bikerService.getOrdersInZone()));
     }
 
     @PostMapping("/orders/accept/{orderId}")

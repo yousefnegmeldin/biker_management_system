@@ -5,13 +5,17 @@ import com.brightskies.biker_system.biker.dto.BikerDto;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Address;
+import com.brightskies.biker_system.customer.model.Customer;
+import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.DeliveryAssignment;
 import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.order.repository.OrderRepository;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import com.brightskies.biker_system.order.service.OrderService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +28,18 @@ public class BikerService {
     BikerRepository bikerRepository;
     DeliveryAssignmentService deliveryAssignmentService;
     OrderService orderService;
+    OrderRepository orderRepository;
 
 
     @Autowired
     public BikerService(BikerRepository bikerRepository,
                         DeliveryAssignmentService deliveryAssignmentService,
-                        OrderService orderService) {
+                        OrderService orderService,
+                        OrderRepository orderRepository) {
         this.bikerRepository = bikerRepository;
         this.deliveryAssignmentService = deliveryAssignmentService;
         this.orderService = orderService;
+        this.orderRepository = orderRepository;
     }
 
     public void updateBiker(Long id, BikerDto bikerDTO){
@@ -76,6 +83,13 @@ public class BikerService {
 
         updateAssignmentStatus(deliveryAssignment.get().getId(), AssignmentStatus.delivered);
         deliveryAssignmentService.setDeliveryTime(deliveryAssignment.get().getId(), LocalDate.now());
+    }
+
+    public List<Order> getOrdersInZone() {
+        Long bikerId = SecurityUtils.getCurrentUserId();
+        Biker biker = bikerRepository.findById(bikerId).
+                orElseThrow(() -> new EntityNotFoundException("biker not found"));
+        return orderRepository.findAllFreeOrdersInZone(biker.getZone());
     }
 
     public double getBikerRating(){
