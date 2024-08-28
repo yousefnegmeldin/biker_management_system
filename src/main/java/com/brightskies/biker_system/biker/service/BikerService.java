@@ -64,9 +64,9 @@ public class BikerService {
         deliveryAssignmentService.changeStatus(deliveryAssignmentId, status);
     }
 
-    public List<CartItem> getCartItemsForUser(Long orderId){
-        return orderService.getCartItemsForCurrentOrder(orderId);
-    }
+//    public List<CartItem> getCartItemsForUser(Long orderId){
+//        return orderService.getCartItemsForCurrentOrder(orderId);
+//    }
 
     public void deliverOrder() throws Exception {
         Optional<DeliveryAssignment> deliveryAssignment = deliveryAssignmentService.getDeliveryAssignmentForBiker(SecurityUtils.getCurrentUserId());

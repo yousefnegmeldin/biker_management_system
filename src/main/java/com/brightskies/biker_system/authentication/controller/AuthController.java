@@ -58,4 +58,10 @@ public class AuthController {
         LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, jwtService.getExpirationTime());
         return ResponseEntity.ok(loginResponse);
     }
+
+    @PostMapping("/singup/admin")
+    public ResponseEntity<UserDTO> registerAdmin(@RequestBody RegisterManagerDTO registerManagerDto) {
+        User registeredUser = authenticationService.signUpManager(registerManagerDto);
+        return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
+    }
 }

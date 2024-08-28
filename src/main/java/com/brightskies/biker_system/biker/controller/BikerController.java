@@ -49,10 +49,10 @@ public class BikerController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/orders/{orderId}/cart-items")
-    public ResponseEntity<List<CartItem>> getCartItemsForOrder(@PathVariable Long orderId) {
-        return ResponseEntity.ok(bikerService.getCartItemsForUser(orderId));
-    }
+//    @GetMapping("/orders/{orderId}/cart-items")
+//    public ResponseEntity<List<CartItem>> getCartItemsForOrder(@PathVariable Long orderId) {
+//        return ResponseEntity.ok(bikerService.getCartItemsForUser(orderId));
+//    }
 
     @PutMapping("/orders/deliver")
     public ResponseEntity<Void> deliverOrder() throws Exception {
