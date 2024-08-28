@@ -97,8 +97,6 @@ public class SearchController {
         return ResponseEntity.ok(searchService.findQuantityOfProductInStock(productId, storeId));
     }
 
-
-
     @GetMapping("/customers")
     public ResponseEntity<List<Customer>> getAllCustomers() {
         return ResponseEntity.ok(searchService.getAllCustomers());

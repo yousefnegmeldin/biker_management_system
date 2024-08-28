@@ -19,15 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/biker")
 public class BikerController {
-    private FeedBackService feedBackService;
     private BikerService bikerService;
     private OrderService orderService;
 
     @Autowired
-    public BikerController(FeedBackService feedBackService, BikerService bikerService, OrderService orderService) {
-        this.feedBackService = feedBackService;
+    public BikerController( BikerService bikerService) {
         this.bikerService = bikerService;
-        this.orderService = orderService;
     }
 
 
