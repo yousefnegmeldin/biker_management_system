@@ -6,6 +6,7 @@ import com.brightskies.biker_system.biker.mapper.BikerMapper;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.service.BikerService;
 import com.brightskies.biker_system.feedback.service.FeedBackService;
+import com.brightskies.biker_system.manager.service.ManagerService;
 import com.brightskies.biker_system.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.MergedAnnotations;
@@ -22,12 +23,18 @@ public class ManagerController {
     SearchService searchService;
     BikerService bikerService;
     FeedBackService feedBackService;
+    ManagerService managerService;
 
     @Autowired
-    public ManagerController(SearchService searchService, BikerService bikerService, FeedBackService feedBackService) {
+    public ManagerController(SearchService searchService,
+                             BikerService bikerService,
+                             FeedBackService feedBackService,
+                             ManagerService managerService
+                             ) {
         this.searchService = searchService;
         this.bikerService = bikerService;
         this.feedBackService = feedBackService;
+        this.managerService = managerService;
     }
 
     @GetMapping("/available-bikers")
@@ -49,7 +56,7 @@ public class ManagerController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/biker/{id}")
     public ResponseEntity<?> deleteBiker(@PathVariable Long id){
         bikerService.deleteBiker(id);
         return ResponseEntity.noContent().build();
@@ -62,6 +69,16 @@ public class ManagerController {
         }
         catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+        }
+    }
+
+    @PostMapping("/assign-biker")
+    public ResponseEntity<?> assignBikerToOrder(@RequestParam Long bikerId, @RequestParam Long orderId) {
+        try {
+            managerService.assignBikerToOrder(bikerId, orderId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
