@@ -13,8 +13,7 @@ public class StoreConverter
                 (
                         store.getId(),
                         store.getName(),
-                        store.getArea(),
-                        store.isStatus()
+                        store.getArea()
                 );
     }
 
@@ -24,7 +23,6 @@ public class StoreConverter
         store.setId(dto.id());
         store.setName(dto.name());
         store.setArea(dto.area());
-        store.setStatus(dto.status());
         return store;
     }
 }

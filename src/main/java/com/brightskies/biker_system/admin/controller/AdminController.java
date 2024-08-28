@@ -51,6 +51,7 @@ public class AdminController
         this.orderService= orderService;
     }
 
+    //we can just put the role of admin on existing api
     @PostMapping("/addstore")
     public ResponseEntity<?> addStore(@RequestBody StoreDTO storeDTO)
     {
@@ -60,13 +61,15 @@ public class AdminController
         return ResponseEntity.ok("Store added");
     }
 
-    @DeleteMapping("/deletestore/{id}")
+
+    @DeleteMapping("/store/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable Long id)
     {
         storeService.deleteStore(id);
         return ResponseEntity.ok("Store is deleted");
     }
 
+    //we can just put the role of admin on existing api
     @PostMapping("/addproduct")
     public ResponseEntity<?> addProduct(@RequestBody ProductDTO productDTO)
     {
@@ -83,6 +86,7 @@ public class AdminController
         return ResponseEntity.ok("Product is deleted");
     }
 
+    //we can just put the role of admin on existing api
     @PostMapping("/addstock")
     public ResponseEntity<?> addStock(@RequestBody StockDTO stockDTO)
     {
@@ -99,11 +103,13 @@ public class AdminController
        return new ResponseEntity<>("Cart Item is Deleted!", HttpStatus.OK);
     }
 
+    //put role of admin on existing api
     @PatchMapping("/status/{id}/{status}")
     public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @PathVariable AssignmentStatus status) throws Exception {
         deliveryAssignmentService.changeStatus(id,status);
         return ResponseEntity.ok("Delivery status is updated");
     }
+
 
     @DeleteMapping("/deleteorder/{orderId}")
     public ResponseEntity<?> deleteOrder(@PathVariable Long orderId)

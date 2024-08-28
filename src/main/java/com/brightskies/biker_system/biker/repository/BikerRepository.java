@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.biker.repository;
 
+import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.store.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +14,7 @@ public interface BikerRepository extends JpaRepository<Biker, Long> {
     @Query("SELECT b FROM Biker b WHERE b.name LIKE %:name%")
     List<Biker> findBikersByName(String name);
     @Query("SELECT b FROM Biker b WHERE b.status = :status")
-    List<Biker> findBikersByStatus(String status);
+    List<Biker> findBikersByStatus(BikerStatus status);
     @Query("SELECT b FROM Biker b WHERE b.zone = :zone")
     List<Biker> findBikersByZone(String zone);
 

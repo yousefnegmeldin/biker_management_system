@@ -4,8 +4,7 @@ public record StoreDTO
         (
                 Long id,
                 String name,
-                String area,
-                boolean status
+                String area
         )
 {
 }

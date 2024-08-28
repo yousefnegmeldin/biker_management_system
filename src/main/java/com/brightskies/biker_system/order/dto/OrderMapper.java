@@ -22,6 +22,9 @@ public class OrderMapper {
     public static OrderDto mapToDto (Order order) {
         List<CartItem> cartItems = order.getItems();
         List<CartItemDto> cartItemDtos = new ArrayList<>();
+        if(cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
         for (CartItem item : cartItems) {
             cartItemDtos.add(CartItemDtoMapper.map(item));
         }

@@ -73,7 +73,8 @@ public class BikerService {
         if(deliveryAssignment.isEmpty()){
             throw new Exception("No delivery assignment found for biker");
         }
-        updateAssignmentStatus(SecurityUtils.getCurrentUserId(), AssignmentStatus.delivered);
+
+        updateAssignmentStatus(deliveryAssignment.get().getId(), AssignmentStatus.delivered);
         deliveryAssignmentService.setDeliveryTime(deliveryAssignment.get().getId(), LocalDate.now());
     }
 

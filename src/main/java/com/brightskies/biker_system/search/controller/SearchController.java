@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.search.controller;
 
+import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.customer.model.Customer;
@@ -50,14 +51,25 @@ public class SearchController {
         return ResponseEntity.ok(searchService.getBikerByName(name));
     }
 
-    @GetMapping("/bikers/id/{id}")
-    public ResponseEntity<Biker> getBikerById(@PathVariable Long id) {
-        return ResponseEntity.of(Optional.ofNullable(searchService.getBikerById(id)));
-    }
 
     @GetMapping("/bikers/phone")
     public ResponseEntity<Biker> getBikerByPhone(@RequestParam String phone) {
         return ResponseEntity.ok(searchService.getBikerByPhone(phone));
+    }
+
+    @GetMapping("/bikers/status")
+    public ResponseEntity<List<Biker>> getBikersByStatus(@RequestParam BikerStatus status) {
+        return ResponseEntity.ok(searchService.getBikersByStatus(status));
+    }
+
+    @GetMapping("/bikers/zone")
+    public ResponseEntity<?> getBikersByZone(@RequestParam Zone zone) {
+        return (ResponseEntity<?>) ResponseEntity.ok();
+    }
+
+    @GetMapping("/bikers/{id}")
+    public ResponseEntity<Biker> getBikerById(@PathVariable Long id) {
+        return ResponseEntity.of(Optional.ofNullable(searchService.getBikerById(id)));
     }
 
     @GetMapping("/products/category")
@@ -70,7 +82,7 @@ public class SearchController {
         return ResponseEntity.ok(searchService.searchForProductByBarcode(barcode));
     }
 
-    @GetMapping("/products/id/{id}")
+    @GetMapping("/products/{id}")
     public ResponseEntity<Optional<Product>> findProductById(@PathVariable Long id) {
         return ResponseEntity.ok(searchService.findProductById(id));
     }
@@ -85,15 +97,7 @@ public class SearchController {
         return ResponseEntity.ok(searchService.findQuantityOfProductInStock(productId, storeId));
     }
 
-    @GetMapping("/bikers/status")
-    public ResponseEntity<List<Biker>> getBikersByStatus(@RequestParam String status) {
-        return ResponseEntity.ok(searchService.getBikersByStatus(status));
-    }
 
-    @GetMapping("/bikers/zone")
-    public ResponseEntity<?> getBikersByZone(@RequestParam Zone zone) {
-        return (ResponseEntity<?>) ResponseEntity.ok();
-    }
 
     @GetMapping("/customers")
     public ResponseEntity<List<Customer>> getAllCustomers() {

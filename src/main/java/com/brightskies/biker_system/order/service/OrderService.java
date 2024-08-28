@@ -100,8 +100,9 @@ public class OrderService {
                 orElseThrow(() -> new EntityNotFoundException("Order not found"));
 
         if (order.getBiker() == null) {
-            orderRepository.deleteById(orderId);
             orderHistoryRepository.deleteByOrderId(orderId);
+            orderRepository.deleteById(orderId);
+
             return "Order has been cancelled successfully.";
         }
         else {

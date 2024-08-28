@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.search.service;
 
+import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Customer;
@@ -93,7 +94,7 @@ public class SearchService {
     }
 
     //search by status for order and biker
-    public List<Biker> getBikersByStatus(String status){
+    public List<Biker> getBikersByStatus(BikerStatus status){
         return bikerRepository.findBikersByStatus(status);
     }
 

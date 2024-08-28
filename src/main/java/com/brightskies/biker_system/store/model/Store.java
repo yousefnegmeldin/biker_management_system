@@ -17,15 +17,12 @@ public class Store {
     private String name;
     @Column(nullable = false)
     private String area;
-    @Column(nullable = false)
-    private boolean status;
 
     public Store() {
     }
 
-    public Store(String name, String area, boolean status){
+    public Store(String name, String area){
         this.name = name;
         this.area = area;
-        this.status = status;
     }
 }

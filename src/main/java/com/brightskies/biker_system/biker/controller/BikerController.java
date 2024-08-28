@@ -30,21 +30,6 @@ public class BikerController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/feedback/{bikerId}")
-    public ResponseEntity<?> getFeedback(@PathVariable Long bikerId) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(feedBackService.allBikerFeedback(bikerId));
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateBiker(@PathVariable Long id, @RequestBody BikerDto bikerDto) {
-        bikerService.updateBiker(id, bikerDto);
-        return ResponseEntity.ok().build();
-    }
 
     //should be orderDTO
     @GetMapping("/orders/free")
