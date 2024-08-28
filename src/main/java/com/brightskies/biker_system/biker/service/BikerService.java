@@ -11,8 +11,10 @@ import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.DeliveryAssignment;
 import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.model.OrderHistory;
+import com.brightskies.biker_system.order.repository.OrderRepository;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import com.brightskies.biker_system.order.service.OrderService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +26,19 @@ import java.util.Optional;
 public class BikerService {
     BikerRepository bikerRepository;
     DeliveryAssignmentService deliveryAssignmentService;
+    OrderRepository orderRepository;
     OrderService orderService;
 
 
     @Autowired
     public BikerService(BikerRepository bikerRepository,
                         DeliveryAssignmentService deliveryAssignmentService,
+                        OrderRepository orderRepository,
                         OrderService orderService) {
         this.bikerRepository = bikerRepository;
         this.deliveryAssignmentService = deliveryAssignmentService;
         this.orderService = orderService;
+        this.orderRepository = orderRepository;
     }
 
     public void updateBiker(Long id, BikerDto bikerDTO){
@@ -82,5 +87,12 @@ public class BikerService {
     public double getBikerRating(){
         Biker biker = bikerRepository.findById(SecurityUtils.getCurrentUserId()).get();
         return biker.getRating();
+    }
+
+    public List<Order> getOrdersInZone() {
+        Long bikerId = SecurityUtils.getCurrentUserId();
+        Biker biker = bikerRepository.findById(bikerId).
+                orElseThrow(() -> new EntityNotFoundException("biker not found"));
+        return orderRepository.findAllFreeOrdersInZone(biker.getZone());
     }
 }
