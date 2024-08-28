@@ -69,7 +69,7 @@ public class OrderMapper {
                         order.getAmount(),
                         order.getPaymentMethod(),
                         order.getCustomer().getId(),
-                        new ArrayList<CartItemDto>()// assuming Address has a label field
+                        new ArrayList<CartItemDto>()
                 ))
                 .collect(Collectors.toList());
     }

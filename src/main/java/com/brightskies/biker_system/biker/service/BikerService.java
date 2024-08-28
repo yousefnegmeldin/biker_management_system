@@ -10,6 +10,7 @@ import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.DeliveryAssignment;
 import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.order.model.OrderHistory;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import com.brightskies.biker_system.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class BikerService {
         deliveryAssignmentService.changeStatus(deliveryAssignmentId, status);
     }
 
-    public List<CartItem> getCartItemsForUser(Long orderId){
+    public List<OrderHistory> getCartItemsForUser(Long orderId){
         return orderService.getCartItemsForCurrentOrder(orderId);
     }
 
