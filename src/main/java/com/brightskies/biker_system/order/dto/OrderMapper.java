@@ -29,6 +29,7 @@ public class OrderMapper {
             cartItemDtos.add(CartItemDtoMapper.map(item));
         }
         return new OrderDto(
+                order.getId(),
                 order.getOrderDate(),
                 order.getAddress().getId(),
                 order.getAmount(),
@@ -62,6 +63,7 @@ public class OrderMapper {
     public static List<OrderDto> toDTOList(List<Order> orders) {
         return orders.stream()
                 .map(order -> new OrderDto(
+                        order.getId(),
                         order.getOrderDate(),
                         order.getAddress().getId(),
                         order.getAmount(),

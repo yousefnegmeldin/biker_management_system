@@ -28,6 +28,7 @@ public class StockService {
         this.storeRepository = storeRepository;
     }
 
+    //add code to update quantity and not upsert it
     public Stock addStock(Stock stock) {
             return stockRepository.save(stock);
     }
