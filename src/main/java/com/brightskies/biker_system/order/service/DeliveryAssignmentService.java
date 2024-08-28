@@ -59,7 +59,7 @@ public class DeliveryAssignmentService {
     //they change
     public void changeStatus(Long id, AssignmentStatus status) throws Exception {
         DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
-                .orElseThrow(() -> new Exception("Order with the specified ID does not exist."));
+                .orElseThrow(() -> new Exception("Delivery assignment with the specified ID does not exist."));
         if(deliveryAssignment.getStatus() == status) {
             throw new IllegalArgumentException("Delivery assignment already has the requested status as the current one.");
         }
@@ -71,4 +71,9 @@ public class DeliveryAssignmentService {
         return deliveryAssignmentRepository.findByBikerId(bikerId);
     }
 
+    public void deleteDeliveryAssignment(Long id) throws Exception {
+        DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
+                .orElseThrow(() -> new Exception("Delivery assignment with the specified ID does not exist."));
+        deliveryAssignmentRepository.deleteById(id);
+    }
 }
