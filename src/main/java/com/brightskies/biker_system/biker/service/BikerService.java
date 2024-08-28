@@ -5,13 +5,12 @@ import com.brightskies.biker_system.biker.dto.BikerDto;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Address;
-import com.brightskies.biker_system.customer.model.Customer;
-import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.DeliveryAssignment;
 import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.order.model.OrderHistory;
 import com.brightskies.biker_system.order.repository.OrderRepository;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import com.brightskies.biker_system.order.service.OrderService;
@@ -27,15 +26,15 @@ import java.util.Optional;
 public class BikerService {
     BikerRepository bikerRepository;
     DeliveryAssignmentService deliveryAssignmentService;
-    OrderService orderService;
     OrderRepository orderRepository;
+    OrderService orderService;
 
 
     @Autowired
     public BikerService(BikerRepository bikerRepository,
                         DeliveryAssignmentService deliveryAssignmentService,
-                        OrderService orderService,
-                        OrderRepository orderRepository) {
+                        OrderRepository orderRepository,
+                        OrderService orderService) {
         this.bikerRepository = bikerRepository;
         this.deliveryAssignmentService = deliveryAssignmentService;
         this.orderService = orderService;
@@ -71,9 +70,9 @@ public class BikerService {
         deliveryAssignmentService.changeStatus(deliveryAssignmentId, status);
     }
 
-//    public List<CartItem> getCartItemsForUser(Long orderId){
-//        return orderService.getCartItemsForCurrentOrder(orderId);
-//    }
+    public List<OrderHistory> getCartItemsForUser(Long orderId){
+        return orderService.getCartItemsForCurrentOrder(orderId);
+    }
 
     public void deliverOrder() throws Exception {
         Optional<DeliveryAssignment> deliveryAssignment = deliveryAssignmentService.getDeliveryAssignmentForBiker(SecurityUtils.getCurrentUserId());
@@ -85,15 +84,15 @@ public class BikerService {
         deliveryAssignmentService.setDeliveryTime(deliveryAssignment.get().getId(), LocalDate.now());
     }
 
+    public double getBikerRating(){
+        Biker biker = bikerRepository.findById(SecurityUtils.getCurrentUserId()).get();
+        return biker.getRating();
+    }
+
     public List<Order> getOrdersInZone() {
         Long bikerId = SecurityUtils.getCurrentUserId();
         Biker biker = bikerRepository.findById(bikerId).
                 orElseThrow(() -> new EntityNotFoundException("biker not found"));
         return orderRepository.findAllFreeOrdersInZone(biker.getZone());
-    }
-
-    public double getBikerRating(){
-        Biker biker = bikerRepository.findById(SecurityUtils.getCurrentUserId()).get();
-        return biker.getRating();
     }
 }

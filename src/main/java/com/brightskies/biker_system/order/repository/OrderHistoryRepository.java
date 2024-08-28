@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface OrderHistoryRepository extends JpaRepository<OrderHistory,Long>
 {
-
+    @Query("SELECT o FROM OrderHistory o WHERE o.order.id = :orderId")
     List<OrderHistory> findByOrderId(Long orderId);
     @Modifying
     @Transactional
