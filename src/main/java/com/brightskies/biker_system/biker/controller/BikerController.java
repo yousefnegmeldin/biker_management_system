@@ -34,20 +34,20 @@ public class BikerController {
 
     //should be orderDTO
     @GetMapping("/orders/free")
-    public ResponseEntity<?> getAllFreeOrders() {
+    public ResponseEntity<List<OrderDto>> getAllFreeOrders() {
         return ResponseEntity.ok(OrderMapper.toDTOList(bikerService.getOrdersInZone()));
     }
 
     @PostMapping("/orders/accept/{orderId}")
-    public ResponseEntity<Void> acceptOrder(@PathVariable long orderId) throws Exception {
+    public ResponseEntity<?> acceptOrder(@PathVariable long orderId) throws Exception {
         bikerService.acceptOrder(orderId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Order accepted successfully.");
     }
 
     @PutMapping("/assignment/{deliveryAssignmentId}/status")
-    public ResponseEntity<Void> updateAssignmentStatus(@PathVariable Long deliveryAssignmentId, @RequestParam AssignmentStatus status) throws Exception {
+    public ResponseEntity<?> updateAssignmentStatus(@PathVariable Long deliveryAssignmentId, @RequestParam AssignmentStatus status) throws Exception {
         bikerService.updateAssignmentStatus(deliveryAssignmentId, status);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Updated assignment status successfully.");
     }
 
     @GetMapping("/orders/{orderId}/cart-items")
@@ -60,9 +60,9 @@ public class BikerController {
     }
 
     @PutMapping("/orders/deliver")
-    public ResponseEntity<Void> deliverOrder(@RequestParam Long deliveryAssignmentId) throws Exception {
+    public ResponseEntity<?> deliverOrder(@RequestParam Long deliveryAssignmentId) throws Exception {
         bikerService.deliverOrder(deliveryAssignmentId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Delivered order successfully!");
     }
 
     @GetMapping("/rating")

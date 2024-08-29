@@ -51,7 +51,7 @@ public class CartService {
         List< CartItemDto> cartItemDtos = new ArrayList<>();
         double totalPrice = 0;
         for(CartItem item : items) {
-            CartItemDto cartItemDto = new CartItemDto(item.getId(), item.getProduct(), item.getQuantity(), item.getStore());
+            CartItemDto cartItemDto = new CartItemDto(item.getId(), item.getProduct().getId(), item.getQuantity(), item.getStore().getId());
             cartItemDtos.add(cartItemDto);
             totalPrice += item.getProduct().getPrice()*item.getQuantity();
         }
@@ -143,6 +143,16 @@ public class CartService {
                     cartItem.getProduct().getId(),
                     stockQuantity+cartItem.getQuantity(),
                     cartItem.getStore().getId());
+            cartRepository.deleteById(cartItem.getId());
+        }
+    }
+
+    public void deleteAllCartItemsAfterCreatingOrder(){
+        Long currentCustomerId = SecurityUtils.getCurrentUserId();
+        Customer customer = customerRepository.findById(currentCustomerId).
+                orElseThrow(() -> new EntityNotFoundException("Customer not found."));
+
+        for(CartItem cartItem : cartRepository.findByCustomerId(currentCustomerId)) {
             cartRepository.deleteById(cartItem.getId());
         }
     }

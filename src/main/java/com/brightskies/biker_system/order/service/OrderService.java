@@ -74,7 +74,7 @@ public class OrderService {
 
         if(!items.isEmpty()) {
             order.setItems(items);
-            cartService.deleteAll();
+            cartService.deleteAllCartItemsAfterCreatingOrder();
             double total = items.stream()
                     .mapToDouble(item -> item.getProduct().getPrice()*item.getQuantity())
                     .sum();
@@ -90,8 +90,7 @@ public class OrderService {
     }
 
     public List<OrderHistory> getCartItemsForCurrentOrder(Long orderId) {
-        List<OrderHistory> orderHistory = orderHistoryRepository.findByOrderId(orderId);
-        return orderHistory;
+        return orderHistoryRepository.findByOrderId(orderId);
     }
 
     public String cancelOrder(Long orderId) {
