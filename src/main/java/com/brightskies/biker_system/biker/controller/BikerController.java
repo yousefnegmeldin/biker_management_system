@@ -3,10 +3,7 @@ package com.brightskies.biker_system.biker.controller;
 import com.brightskies.biker_system.biker.dto.BikerDto;
 import com.brightskies.biker_system.biker.service.BikerService;
 import com.brightskies.biker_system.feedback.service.FeedBackService;
-import com.brightskies.biker_system.order.dto.OrderDto;
-import com.brightskies.biker_system.order.dto.OrderHistoryDTO;
-import com.brightskies.biker_system.order.dto.OrderHistoryMapper;
-import com.brightskies.biker_system.order.dto.OrderMapper;
+import com.brightskies.biker_system.order.dto.*;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.Order;
@@ -24,7 +21,6 @@ import java.util.List;
 @RequestMapping("/biker")
 public class BikerController {
     private BikerService bikerService;
-    private OrderService orderService;
 
     @Autowired
     public BikerController( BikerService bikerService) {
@@ -32,7 +28,6 @@ public class BikerController {
     }
 
 
-    //should be orderDTO
     @GetMapping("/orders/free")
     public ResponseEntity<List<OrderDto>> getAllFreeOrders() {
         return ResponseEntity.ok(OrderMapper.toDTOList(bikerService.getOrdersInZone()));
@@ -40,8 +35,7 @@ public class BikerController {
 
     @PostMapping("/orders/accept/{orderId}")
     public ResponseEntity<?> acceptOrder(@PathVariable long orderId) throws Exception {
-        bikerService.acceptOrder(orderId);
-        return ResponseEntity.ok("Order accepted successfully.");
+        return ResponseEntity.ok(DeliveryAssignmentMapper.toDTO(bikerService.acceptOrder(orderId)));
     }
 
     @PutMapping("/assignment/{deliveryAssignmentId}/status")

@@ -67,14 +67,14 @@ public class OrderController {
     }
 
     //Biker and manager only api
-    @PostMapping("/selectorder")
-    public ResponseEntity<?> selectOrder(@RequestParam Long orderId) {
-        try {
-            return new ResponseEntity<>(orderService.selectOrder(orderId), HttpStatus.OK);
-        }catch(EntityNotFoundException e){
-            return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-        }
-    }
+//    @PostMapping("/selectorder")
+//    public ResponseEntity<?> selectOrder(@RequestParam Long orderId) {
+//        try {
+//            return new ResponseEntity<>(orderService.selectOrder(orderId), HttpStatus.OK);
+//        }catch(EntityNotFoundException e){
+//            return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_FOUND);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+//        }
+//    }
 }

@@ -124,6 +124,7 @@ public class OrderService {
         Biker biker = bikerRepository.findById(currentBikerId).
                 orElseThrow(() -> new EntityNotFoundException("biker not found"));
         return deliveryAssignmentService.addDeliveryAssignment(new DeliveryAssignmentDTO(
+                0L,
                 order.getId(),
                 biker.getId(),
                 30L
