@@ -74,7 +74,7 @@ public class OrderService {
 
         if(!items.isEmpty()) {
             order.setItems(items);
-            cartService.deleteAll();
+            cartService.deleteAllCartItemsAfterCreatingOrder();
             double total = items.stream()
                     .mapToDouble(item -> item.getProduct().getPrice()*item.getQuantity())
                     .sum();
@@ -90,8 +90,7 @@ public class OrderService {
     }
 
     public List<OrderHistory> getCartItemsForCurrentOrder(Long orderId) {
-        List<OrderHistory> orderHistory = orderHistoryRepository.findByOrderId(orderId);
-        return orderHistory;
+        return orderHistoryRepository.findByOrderId(orderId);
     }
 
     public String cancelOrder(Long orderId) {
@@ -125,6 +124,7 @@ public class OrderService {
         Biker biker = bikerRepository.findById(currentBikerId).
                 orElseThrow(() -> new EntityNotFoundException("biker not found"));
         return deliveryAssignmentService.addDeliveryAssignment(new DeliveryAssignmentDTO(
+                0L,
                 order.getId(),
                 biker.getId(),
                 30L

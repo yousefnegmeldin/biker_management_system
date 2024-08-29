@@ -5,6 +5,8 @@ import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.biker.mapper.BikerMapper;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.service.BikerService;
+import com.brightskies.biker_system.feedback.dto.FeedBackDTO;
+import com.brightskies.biker_system.feedback.dto.ViewFeedBackDTO;
 import com.brightskies.biker_system.feedback.service.FeedBackService;
 import com.brightskies.biker_system.manager.service.ManagerService;
 import com.brightskies.biker_system.search.service.SearchService;
@@ -39,7 +41,6 @@ public class ManagerController {
 
     @GetMapping("/available-bikers")
     public ResponseEntity<List<BikerDto>> getAvailableBikers(){
-
         List<Biker> bikers = searchService.getBikersByStatus(BikerStatus.available);
 
         List<BikerDto> bikerDtos = bikers
@@ -50,6 +51,7 @@ public class ManagerController {
         return ResponseEntity.ok(bikerDtos);
     }
 
+    //add validation for updating fields, like email
     @PatchMapping("/biker/{id}")
     public ResponseEntity<?> updateBiker(@PathVariable Long id, @RequestBody BikerDto bikerDTO){
         bikerService.updateBiker(id, bikerDTO);

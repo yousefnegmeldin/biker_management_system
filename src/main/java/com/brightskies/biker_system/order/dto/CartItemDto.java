@@ -5,7 +5,7 @@ import com.brightskies.biker_system.store.model.Store;
 
 public record CartItemDto(
         Long id,
-        Product product,
+        Long productId,
         int quantity,
-        Store store) {
+        Long storeId) {
 }

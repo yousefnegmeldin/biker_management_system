@@ -6,8 +6,8 @@ public class CartItemDtoMapper {
     public static CartItemDto map (CartItem cartItem) {
         return new CartItemDto(
                 cartItem.getId(),
-                cartItem.getProduct(),
+                cartItem.getProduct().getId(),
                 cartItem.getQuantity(),
-                cartItem.getStore());
+                cartItem.getStore().getId());
     }
 }

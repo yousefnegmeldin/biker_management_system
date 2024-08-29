@@ -6,6 +6,7 @@ import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Address;
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
+import com.brightskies.biker_system.order.dto.DeliveryAssignmentMapper;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.DeliveryAssignment;
@@ -62,8 +63,8 @@ public class BikerService {
         return orderService.getAllFreeOrders();
     }
 
-    public void acceptOrder(Long orderId) throws Exception {
-        orderService.selectOrder(orderId);
+    public DeliveryAssignment acceptOrder(Long orderId) throws Exception {
+        return orderService.selectOrder(orderId);
     }
 
 
