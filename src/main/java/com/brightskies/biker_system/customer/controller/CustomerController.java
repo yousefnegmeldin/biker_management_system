@@ -23,14 +23,10 @@ public class CustomerController {
 
     @PostMapping("/feedback")
     public ResponseEntity<?> addFeedback(@RequestBody FeedBackDTO feedbackDTO) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(
-                    FeedBackMapper.toDTO(
-                            feedbackService.addFeedback(feedbackDTO)
-                    )
-            );
-        } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                FeedBackMapper.toDTO(
+                        feedbackService.addFeedback(feedbackDTO)
+                )
+        );
     }
 }
