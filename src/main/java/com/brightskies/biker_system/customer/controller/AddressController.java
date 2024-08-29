@@ -32,23 +32,13 @@ public class AddressController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
-        try {
-            addressService.removeAddress(id);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        catch(InstanceNotFoundException exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
-        }
+        addressService.removeAddress(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateAddressDetails(@PathVariable Long id, @RequestBody UpdateAddressDTO addressDTO) {
-        try {
-            addressService.updateAddressDetails(id, addressDTO);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        catch(Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
-        }
+        addressService.updateAddressDetails(id, addressDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

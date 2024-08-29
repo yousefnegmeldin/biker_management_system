@@ -6,11 +6,11 @@ import com.brightskies.biker_system.customer.dto.UpdateAddressDTO;
 import com.brightskies.biker_system.customer.model.Address;
 import com.brightskies.biker_system.customer.repository.AddressRepository;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
+import com.brightskies.biker_system.exception.model.AddressNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceNotFoundException;
-import java.util.List;
 
 @Service
 public class AddressService {
@@ -48,12 +48,12 @@ public class AddressService {
         }
     }*/
 
-    public void removeAddress(Long id) throws InstanceNotFoundException {
+    public void removeAddress(Long id) throws AddressNotFoundException {
         if(addressRepository.findById(id).isPresent()) {
             addressRepository.deleteById(id);
         }
         else {
-            throw new InstanceNotFoundException("Address instance does not exist");
+            throw new AddressNotFoundException(id);
         }
     }
 
@@ -72,9 +72,9 @@ public class AddressService {
         }
     }*/
 
-    public void updateAddressDetails(Long id, UpdateAddressDTO newAddressDTO) throws Exception {
+    public void updateAddressDetails(Long id, UpdateAddressDTO newAddressDTO) throws AddressNotFoundException {
         Address address = addressRepository.findById(id)
-                .orElseThrow(() -> new Exception("Address instance does not exist."));
+                .orElseThrow(() -> new AddressNotFoundException(id));
         address.setCity(newAddressDTO.city());
         address.setStreet(newAddressDTO.street());
         address.setApartment(newAddressDTO.apartment());

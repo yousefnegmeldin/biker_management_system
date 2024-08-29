@@ -1,11 +1,6 @@
 package com.brightskies.biker_system.store.model;
-
-
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Data

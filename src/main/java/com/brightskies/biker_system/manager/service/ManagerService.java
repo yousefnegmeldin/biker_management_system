@@ -19,7 +19,7 @@ public class ManagerService {
     }
 
 
-    public void assignBikerToOrder(Long bikerId, Long orderId) throws Exception {
+    public void assignBikerToOrder(Long bikerId, Long orderId){
         // Assign the biker to the order
         deliveryAssignmentService.addDeliveryAssignment(new DeliveryAssignmentDTO(0L,orderId,bikerId,30L));
     }

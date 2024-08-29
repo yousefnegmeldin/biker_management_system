@@ -2,6 +2,10 @@ package com.brightskies.biker_system.order.service;
 
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
+import com.brightskies.biker_system.exception.model.BikerNotFoundException;
+import com.brightskies.biker_system.exception.model.DeliveryAssignmentException;
+import com.brightskies.biker_system.exception.model.DeliveryAssignmentNotFoundException;
+import com.brightskies.biker_system.exception.model.OrderNotFoundException;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.*;
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
@@ -35,14 +39,14 @@ public class DeliveryAssignmentService {
         deliveryAssignmentRepository.save(deliveryAssignment);
     }
 
-    public DeliveryAssignment addDeliveryAssignment(DeliveryAssignmentDTO deliveryAssignmentDTO) throws Exception {
+    public DeliveryAssignment addDeliveryAssignment(DeliveryAssignmentDTO deliveryAssignmentDTO) {
         Order order = orderRepository.findById(deliveryAssignmentDTO.order())
-                .orElseThrow(() -> new Exception("Order with the specified ID does not exist."));
+                .orElseThrow(() -> new OrderNotFoundException(deliveryAssignmentDTO.order()));
         if (orderRepository.findFreeOrderById(deliveryAssignmentDTO.order()).isEmpty()) {
-            throw new IllegalArgumentException("Order has already been assigned a biker.");
+            throw new DeliveryAssignmentException("Order has already been assigned a biker.");
         }
         Biker biker = bikerRepository.findById(deliveryAssignmentDTO.biker())
-                .orElseThrow(() -> new InstanceNotFoundException("Biker with specified ID does not exist."));
+                .orElseThrow(() -> new BikerNotFoundException(deliveryAssignmentDTO.biker()));
         DeliveryAssignment deliveryAssignment = new DeliveryAssignment(
                 order,
                 LocalDate.now(),
@@ -57,11 +61,11 @@ public class DeliveryAssignmentService {
 
     //have to check for safety that the delivery assignment id is assigned to same biker id when
     //they change
-    public void changeStatus(Long id, AssignmentStatus status) throws Exception {
+    public void changeStatus(Long id, AssignmentStatus status) throws DeliveryAssignmentException {
         DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
-                .orElseThrow(() -> new Exception("Delivery assignment with the specified ID does not exist."));
+                .orElseThrow(() -> new DeliveryAssignmentNotFoundException(id));
         if(deliveryAssignment.getStatus() == status) {
-            throw new IllegalArgumentException("Delivery assignment already has the requested status as the current one.");
+            throw new DeliveryAssignmentException("Delivery assignment already has the requested status as the current one.");
         }
         deliveryAssignment.setStatus(status);
         deliveryAssignmentRepository.save(deliveryAssignment);
@@ -75,9 +79,9 @@ public class DeliveryAssignmentService {
         return deliveryAssignmentRepository.findById(deliveryAssignmentId);
     }
 
-    public void deleteDeliveryAssignment(Long id) throws Exception {
+    public void deleteDeliveryAssignment(Long id) throws DeliveryAssignmentException {
         DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
-                .orElseThrow(() -> new Exception("Delivery assignment with the specified ID does not exist."));
+                .orElseThrow(() -> new DeliveryAssignmentNotFoundException(id));
         deliveryAssignmentRepository.deleteById(id);
     }
 }

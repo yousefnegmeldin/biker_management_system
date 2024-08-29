@@ -1,6 +1,7 @@
 package com.brightskies.biker_system.order.model;
 
 import com.brightskies.biker_system.store.model.Product;
+import com.brightskies.biker_system.store.model.Store;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,9 +28,14 @@ public class OrderHistory
     @Column(nullable = false)
     private Integer quantity;
 
-    public OrderHistory(Order order, Product product, Integer quantity) {
+    @ManyToOne
+    @JoinColumn(name = "store_id" , nullable = false)
+    private Store store;
+
+    public OrderHistory(Order order, Product product, Integer quantity,Store store) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
+        this.store = store;
     }
 }

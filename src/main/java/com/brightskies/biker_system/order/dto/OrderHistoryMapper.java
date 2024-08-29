@@ -1,11 +1,6 @@
 package com.brightskies.biker_system.order.dto;
 
-import com.brightskies.biker_system.customer.repository.CustomerRepository;
-import com.brightskies.biker_system.order.model.CartItem;
-import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.model.OrderHistory;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

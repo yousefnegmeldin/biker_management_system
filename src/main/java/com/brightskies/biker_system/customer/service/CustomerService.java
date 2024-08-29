@@ -2,6 +2,7 @@ package com.brightskies.biker_system.customer.service;
 
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
+import com.brightskies.biker_system.exception.model.CustomerNotFoundException;
 import com.brightskies.biker_system.general.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ public class CustomerService {
     }
 
     public void updateLastLogin(User user) {
-        Customer customer = customerRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        Customer customer = customerRepository.findById(user.getId()).
+                orElseThrow(() -> new CustomerNotFoundException(user.getId()));
         customer.setLastLogin(LocalDate.now());
         customerRepository.save(customer);
     }
