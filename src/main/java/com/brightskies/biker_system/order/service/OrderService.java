@@ -5,6 +5,7 @@ import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.AddressRepository;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
+import com.brightskies.biker_system.exception.model.*;
 import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
 import com.brightskies.biker_system.order.dto.OrderDto;
@@ -16,7 +17,6 @@ import com.brightskies.biker_system.order.model.OrderHistory;
 import com.brightskies.biker_system.order.repository.CartRepository;
 import com.brightskies.biker_system.order.repository.OrderHistoryRepository;
 import com.brightskies.biker_system.order.repository.OrderRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -55,20 +55,24 @@ public class OrderService {
 
     public void addToOrderHistory(List<CartItem> items, Order order) {
         for(CartItem item : items) {
-            OrderHistory orderHistory = new OrderHistory(order, item.getProduct(), item.getQuantity());
+            OrderHistory orderHistory = new OrderHistory(order, item.getProduct(), item.getQuantity(),item.getStore());
             orderHistoryRepository.save(orderHistory);
         }
+    }
+
+    public List<OrderHistory> getItemsByOrderId(Long orderId){
+        return orderHistoryRepository.findByOrderId(orderId);
     }
 
     public OrderDto createOrder(Long addressId, String paymentMethod) {
         Long currentCustomerId = SecurityUtils.getCurrentUserId();
         Customer customer = customerRepo.findById(currentCustomerId).
-                orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+                orElseThrow(() -> new CustomerNotFoundException(currentCustomerId));
         Order order = new Order();
         order.setOrderDate(LocalDate.now());
         order.setCustomer(customer);
         order.setAddress(addressRepo.findById(addressId).
-                orElseThrow(() -> new EntityNotFoundException("Address not found")));
+                orElseThrow(() -> new AddressNotFoundException(addressId)));
 
         List<CartItem> items = cartRepository.findByCustomerId(currentCustomerId);
 
@@ -80,7 +84,7 @@ public class OrderService {
                     .sum();
             order.setAmount(total);
         }else {
-            throw new NullPointerException("Cart is empty!");
+            throw new EmptyCartException();
         }
 
         order.setPaymentMethod(paymentMethod);
@@ -95,7 +99,7 @@ public class OrderService {
 
     public String cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId).
-                orElseThrow(() -> new EntityNotFoundException("Order not found"));
+                orElseThrow(() -> new OrderNotFoundException(orderId));
 
         if (order.getBiker() == null) {
             orderHistoryRepository.deleteByOrderId(orderId);
@@ -120,9 +124,9 @@ public class OrderService {
     public DeliveryAssignment selectOrder(Long orderId) throws Exception {
         Long currentBikerId = SecurityUtils.getCurrentUserId();
         Order order = orderRepository.findById(orderId).
-                orElseThrow(() -> new EntityNotFoundException("Order not found"));
+                orElseThrow(() -> new OrderNotFoundException(orderId));
         Biker biker = bikerRepository.findById(currentBikerId).
-                orElseThrow(() -> new EntityNotFoundException("biker not found"));
+                orElseThrow(() -> new BikerNotFoundException(currentBikerId));
         return deliveryAssignmentService.addDeliveryAssignment(new DeliveryAssignmentDTO(
                 0L,
                 order.getId(),

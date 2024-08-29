@@ -4,11 +4,9 @@ import com.brightskies.biker_system.authentication.utility.SecurityUtils;
 import com.brightskies.biker_system.biker.dto.BikerDto;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
-import com.brightskies.biker_system.customer.model.Address;
-import com.brightskies.biker_system.order.dto.DeliveryAssignmentDTO;
-import com.brightskies.biker_system.order.dto.DeliveryAssignmentMapper;
+import com.brightskies.biker_system.exception.model.BikerNotFoundException;
+import com.brightskies.biker_system.exception.model.DeliveryAssignmentNotFoundException;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
-import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.DeliveryAssignment;
 import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.model.OrderHistory;
@@ -18,7 +16,6 @@ import com.brightskies.biker_system.order.service.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +41,7 @@ public class BikerService {
 
     //handle validation for email, or phone to be not duplicate
     public void updateBiker(Long id, BikerDto bikerDTO){
-        Biker biker = bikerRepository.findById(id).orElseThrow(() -> new RuntimeException("Biker not found"));
+        Biker biker = bikerRepository.findById(id).orElseThrow(() -> new BikerNotFoundException(id));
         if(bikerDTO.email() != null)
             biker.setEmail(bikerDTO.email());
         if(bikerDTO.name() != null)
@@ -79,7 +76,7 @@ public class BikerService {
     public void deliverOrder(Long deliveryAssignmentId) throws Exception {
         Optional<DeliveryAssignment> deliveryAssignment = deliveryAssignmentService.getDeliveryAssignmentById(deliveryAssignmentId);
         if(deliveryAssignment.isEmpty()){
-            throw new Exception("No delivery assignment found for biker");
+            throw new DeliveryAssignmentNotFoundException(SecurityUtils.getCurrentUserId());
         }
         updateAssignmentStatus(deliveryAssignment.get().getId(), AssignmentStatus.delivered);
         deliveryAssignmentService.setDeliveryTime(deliveryAssignment.get().getId(), LocalDate.now());

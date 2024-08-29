@@ -1,7 +1,5 @@
 package com.brightskies.biker_system.admin.controller;
 
-import com.brightskies.biker_system.order.controller.CartController;
-import com.brightskies.biker_system.order.dto.CartItemDtoMapper;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.service.CartService;
 import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
@@ -18,7 +16,6 @@ import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.service.ProductService;
 import com.brightskies.biker_system.store.service.StockService;
 import com.brightskies.biker_system.store.service.StoreService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

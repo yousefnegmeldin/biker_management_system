@@ -1,11 +1,11 @@
 package com.brightskies.biker_system.order.controller;
-
 import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.order.dto.OrderDto;
 import com.brightskies.biker_system.order.dto.OrderMapper;
+import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.Order;
+import com.brightskies.biker_system.order.model.OrderHistory;
 import com.brightskies.biker_system.order.service.OrderService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +26,8 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createOrder (@RequestParam Long addressId , @RequestParam String paymentMethod) {
-       try {
-           return (new ResponseEntity<> (orderService.createOrder(addressId,paymentMethod), HttpStatus.OK));
-       }catch (EntityNotFoundException e) {
-           return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
-       }catch (NullPointerException e) {
-           return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
-       }
+    public ResponseEntity<?> createOrder(@RequestParam Long addressId, @RequestParam String paymentMethod) {
+        return (new ResponseEntity<>(orderService.createOrder(addressId, paymentMethod), HttpStatus.OK));
     }
 
     @DeleteMapping("/cancel")
@@ -45,12 +39,23 @@ public class OrderController {
     @GetMapping("/getall")
     public ResponseEntity<?> getAllOrders() {
         List<OrderDto> orderDtos = new ArrayList<>();
-
         for (Order order : orderService.getAllFreeOrders()) {
+            List<OrderHistory> orderHistories = orderService.getItemsByOrderId(order.getId());
+            List<CartItem> cartItems = new ArrayList<>();
+            for(OrderHistory orderHistory : orderHistories) {
+                cartItems.add(new CartItem(
+                        orderHistory.getId(),
+                        order.getCustomer(),
+                        orderHistory.getProduct(),
+                        orderHistory.getQuantity(),
+                        orderHistory.getStore()
+                        ));
+            }
+            order.setItems(cartItems);
             orderDtos.add(OrderMapper.mapToDto(order));
         }
 
-        if(orderDtos.isEmpty()) {
+        if (orderDtos.isEmpty()) {
             return new ResponseEntity<>("There are no available orders currently.", HttpStatus.NO_CONTENT);
         }
 
@@ -60,21 +65,9 @@ public class OrderController {
     @GetMapping("/zone")
     public ResponseEntity<?> getAllOrdersInZone(@RequestParam Zone zone) {
         List<OrderDto> orderDTOs = OrderMapper.toDTOList(orderService.getOrdersInZone(zone));
-        if(orderDTOs.isEmpty()) {
+        if (orderDTOs.isEmpty()) {
             return new ResponseEntity<>("There are no available orders in that zone currently.", HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
     }
-
-    //Biker and manager only api
-//    @PostMapping("/selectorder")
-//    public ResponseEntity<?> selectOrder(@RequestParam Long orderId) {
-//        try {
-//            return new ResponseEntity<>(orderService.selectOrder(orderId), HttpStatus.OK);
-//        }catch(EntityNotFoundException e){
-//            return new ResponseEntity<> (e.getMessage(),HttpStatus.NOT_FOUND);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-//        }
-//    }
 }

@@ -5,13 +5,10 @@ import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.biker.mapper.BikerMapper;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.service.BikerService;
-import com.brightskies.biker_system.feedback.dto.FeedBackDTO;
-import com.brightskies.biker_system.feedback.dto.ViewFeedBackDTO;
 import com.brightskies.biker_system.feedback.service.FeedBackService;
 import com.brightskies.biker_system.manager.service.ManagerService;
 import com.brightskies.biker_system.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,22 +63,12 @@ public class ManagerController {
 
     @GetMapping("/biker/feedback/{bikerId}")
     public ResponseEntity<?> getFeedback(@PathVariable Long bikerId) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(feedBackService.allBikerFeedback(bikerId));
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(feedBackService.allBikerFeedback(bikerId));
     }
 
     @PostMapping("/assign-biker")
     public ResponseEntity<?> assignBikerToOrder(@RequestParam Long bikerId, @RequestParam Long orderId) {
-        try {
-            managerService.assignBikerToOrder(bikerId, orderId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
+        managerService.assignBikerToOrder(bikerId, orderId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }

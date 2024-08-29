@@ -1,13 +1,10 @@
 package com.brightskies.biker_system.search.controller;
-
 import com.brightskies.biker_system.authentication.dto.UserDTO;
 import com.brightskies.biker_system.authentication.mapper.UserMapper;
 import com.brightskies.biker_system.biker.dto.BikerDto;
 import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.biker.mapper.BikerMapper;
-import com.brightskies.biker_system.customer.dto.CustomerDto;
 import com.brightskies.biker_system.general.enums.ViewUserDTO;
-import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.general.models.User;
@@ -19,8 +16,6 @@ import com.brightskies.biker_system.store.model.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.plaf.OptionPaneUI;
 import java.util.List;
 import java.util.Optional;
 

@@ -2,6 +2,7 @@ package com.brightskies.biker_system.general.models;
 
 import com.brightskies.biker_system.general.enums.UserRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +23,7 @@ public class User implements UserDetails{
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false, unique = true)

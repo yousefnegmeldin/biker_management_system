@@ -1,17 +1,12 @@
 package com.brightskies.biker_system.store.service;
-
-import com.brightskies.biker_system.order.model.CartItem;
+import com.brightskies.biker_system.exception.model.StoreNotFoundException;
 import com.brightskies.biker_system.store.model.Stock;
 import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.repository.ProductRepository;
 import com.brightskies.biker_system.store.repository.StockRepository;
 import com.brightskies.biker_system.store.repository.StoreRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.lang.reflect.InvocationTargetException;
-
 @Service
 public class StockService {
 
@@ -34,7 +29,7 @@ public class StockService {
     }
 
     public int getProductQuantity (Long productId, Long storeId) {
-        Store store = storeRepository.findById(storeId).orElseThrow(()->new EntityNotFoundException("Store not found"));
+        Store store = storeRepository.findById(storeId).orElseThrow(()->new StoreNotFoundException(storeId));
         return stockRepository.findByProdIdAndStoreId(
                         productRepository.selectById(productId)
                                 .getId(), store.getId())
@@ -42,7 +37,7 @@ public class StockService {
     }
 
     public void setProductQuantity(Long productId, int incdec, Long storeId) {
-        Store store = storeRepository.findById(storeId).orElseThrow(()->new EntityNotFoundException("Store not found"));
+        Store store = storeRepository.findById(storeId).orElseThrow(()->new StoreNotFoundException(storeId));
         Stock stock = stockRepository.findByProdIdAndStoreId(
                         productRepository.selectById(productId)
                                 .getId(),store.getId());
