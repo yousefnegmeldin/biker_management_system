@@ -1,13 +1,15 @@
 package com.brightskies.biker_system.store.DTO;
 
+import jakarta.validation.constraints.NotNull;
+
 public record ProductDTO
         (
-                Long id,
-                String name,
+                @NotNull Long id,
+                @NotNull String name,
                 String description,
                 String barcode,
                 String category,
-                double price
+                @NotNull double price
         )
 {
 

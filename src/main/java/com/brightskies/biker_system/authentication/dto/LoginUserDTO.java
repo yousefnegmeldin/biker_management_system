@@ -1,4 +1,6 @@
 package com.brightskies.biker_system.authentication.dto;
 
-public record LoginUserDTO(String email,String password) {
+import jakarta.validation.constraints.NotBlank;
+
+public record LoginUserDTO(@NotBlank String email,@NotBlank String password) {
 }

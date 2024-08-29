@@ -1,4 +1,6 @@
 package com.brightskies.biker_system.authentication.dto;
 
-public record LoginResponseDTO(String token, long expiresIn) {
+import jakarta.validation.constraints.NotBlank;
+
+public record LoginResponseDTO(@NotBlank String token,@NotBlank long expiresIn) {
 }

@@ -1,4 +1,6 @@
 package com.brightskies.biker_system.feedback.dto;
 
-public record ViewFeedBackDTO(Integer rating, String text) {
+import jakarta.validation.constraints.NotNull;
+
+public record ViewFeedBackDTO(@NotNull Integer rating, String text) {
 }

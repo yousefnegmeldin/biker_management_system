@@ -5,6 +5,7 @@ import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.biker.mapper.BikerMapper;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.service.BikerService;
+import com.brightskies.biker_system.exceptions.UserExceptions.EmailExistsException;
 import com.brightskies.biker_system.feedback.dto.FeedBackDTO;
 import com.brightskies.biker_system.feedback.dto.ViewFeedBackDTO;
 import com.brightskies.biker_system.feedback.service.FeedBackService;
@@ -53,7 +54,7 @@ public class ManagerController {
 
     //add validation for updating fields, like email
     @PatchMapping("/biker/{id}")
-    public ResponseEntity<?> updateBiker(@PathVariable Long id, @RequestBody BikerDto bikerDTO){
+    public ResponseEntity<?> updateBiker(@PathVariable Long id, @RequestBody BikerDto bikerDTO) throws EmailExistsException {
         bikerService.updateBiker(id, bikerDTO);
         return ResponseEntity.noContent().build();
     }

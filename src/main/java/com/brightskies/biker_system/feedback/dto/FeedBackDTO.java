@@ -1,4 +1,6 @@
 package com.brightskies.biker_system.feedback.dto;
 
-public record FeedBackDTO(Long order, Integer rating, String text) {
+import jakarta.validation.constraints.NotNull;
+
+public record FeedBackDTO(@NotNull Long order,@NotNull Integer rating, String text) {
 }
