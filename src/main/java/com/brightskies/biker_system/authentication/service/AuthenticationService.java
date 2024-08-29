@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.authentication.service;
 
+import com.brightskies.biker_system.admin.model.Admin;
 import com.brightskies.biker_system.authentication.dto.*;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.customer.model.Customer;
@@ -89,6 +90,22 @@ public class AuthenticationService {
         return userRepository.save(manager);
     }
 
+    public Admin signupAdmin(RegisterManagerDTO input){
+        if (userRepository.existsByEmail(input.email()) && userRepository.existsByPhone(input.phone())) {
+            throw new RuntimeException("Email already exists");
+        }
+        if (userRepository.existsByPhone(input.phone())) {
+            throw new RuntimeException("Phone already exists");
+        }
+        Admin admin = new Admin();
+        admin.setEmail(input.email());
+        admin.setName(input.firstName() + " " + input.lastName());
+        admin.setPassword(passwordEncoder.encode(input.password()));
+        admin.setPhone(input.phone());
+        admin.setRole(input.role());
+        admin.setJoinedAt(LocalDate.now());
+        return userRepository.save(admin);
+    }
 
     public User authenticate(LoginUserDTO input) {
             authenticationManager.authenticate(

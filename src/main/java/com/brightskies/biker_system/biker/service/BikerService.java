@@ -41,6 +41,7 @@ public class BikerService {
         this.orderRepository = orderRepository;
     }
 
+    //handle validation for email, or phone to be not duplicate
     public void updateBiker(Long id, BikerDto bikerDTO){
         Biker biker = bikerRepository.findById(id).orElseThrow(() -> new RuntimeException("Biker not found"));
         if(bikerDTO.email() != null)
@@ -50,9 +51,9 @@ public class BikerService {
         if(bikerDTO.phone() !=null)
             biker.setPhone(bikerDTO.phone());
         bikerRepository.save(biker);
-
     }
 
+    //handle checking if id is already found or not
     public void deleteBiker(Long id){
         bikerRepository.deleteById(id);
     }
@@ -74,12 +75,11 @@ public class BikerService {
         return orderService.getCartItemsForCurrentOrder(orderId);
     }
 
-    public void deliverOrder() throws Exception {
-        Optional<DeliveryAssignment> deliveryAssignment = deliveryAssignmentService.getDeliveryAssignmentForBiker(SecurityUtils.getCurrentUserId());
+    public void deliverOrder(Long deliveryAssignmentId) throws Exception {
+        Optional<DeliveryAssignment> deliveryAssignment = deliveryAssignmentService.getDeliveryAssignmentById(deliveryAssignmentId);
         if(deliveryAssignment.isEmpty()){
             throw new Exception("No delivery assignment found for biker");
         }
-
         updateAssignmentStatus(deliveryAssignment.get().getId(), AssignmentStatus.delivered);
         deliveryAssignmentService.setDeliveryTime(deliveryAssignment.get().getId(), LocalDate.now());
     }

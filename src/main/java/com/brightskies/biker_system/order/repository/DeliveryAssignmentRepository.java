@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface DeliveryAssignmentRepository extends JpaRepository<DeliveryAssignment,Long> {
     Optional<DeliveryAssignment> findByBikerId(Long bikerId);
+
 }

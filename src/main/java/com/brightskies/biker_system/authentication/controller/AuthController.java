@@ -61,7 +61,7 @@ public class AuthController {
 
     @PostMapping("/singup/admin")
     public ResponseEntity<UserDTO> registerAdmin(@RequestBody RegisterManagerDTO registerManagerDto) {
-        User registeredUser = authenticationService.signUpManager(registerManagerDto);
+        User registeredUser = authenticationService.signupAdmin(registerManagerDto);
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 }

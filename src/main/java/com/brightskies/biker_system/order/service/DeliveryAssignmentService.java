@@ -71,6 +71,10 @@ public class DeliveryAssignmentService {
         return deliveryAssignmentRepository.findByBikerId(bikerId);
     }
 
+    public Optional<DeliveryAssignment> getDeliveryAssignmentById (Long deliveryAssignmentId){
+        return deliveryAssignmentRepository.findById(deliveryAssignmentId);
+    }
+
     public void deleteDeliveryAssignment(Long id) throws Exception {
         DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
                 .orElseThrow(() -> new Exception("Delivery assignment with the specified ID does not exist."));

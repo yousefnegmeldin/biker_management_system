@@ -60,8 +60,8 @@ public class BikerController {
     }
 
     @PutMapping("/orders/deliver")
-    public ResponseEntity<Void> deliverOrder() throws Exception {
-        bikerService.deliverOrder();
+    public ResponseEntity<Void> deliverOrder(@RequestParam Long deliveryAssignmentId) throws Exception {
+        bikerService.deliverOrder(deliveryAssignmentId);
         return ResponseEntity.ok().build();
     }
 

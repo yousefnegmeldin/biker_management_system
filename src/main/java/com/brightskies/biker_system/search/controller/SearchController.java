@@ -1,6 +1,8 @@
 package com.brightskies.biker_system.search.controller;
 
+import com.brightskies.biker_system.biker.dto.BikerDto;
 import com.brightskies.biker_system.biker.enums.BikerStatus;
+import com.brightskies.biker_system.biker.mapper.BikerMapper;
 import com.brightskies.biker_system.general.enums.Zone;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.customer.model.Customer;
@@ -38,23 +40,27 @@ public class SearchController {
 
     @GetMapping("/stores")
     public ResponseEntity<Store> searchForStore(@RequestParam String name) {
+        //
         return ResponseEntity.ok(searchService.searchForStore(name));
     }
 
     @GetMapping("/bikers")
-    public ResponseEntity<List<Biker>> getAllBikers() {
-        return ResponseEntity.ok(searchService.getAllBikers());
+    public ResponseEntity<List<BikerDto>> getAllBikers() {
+        List<Biker> bikers = searchService.getAllBikers();
+        List<BikerDto> bikerDtos = bikers.stream().map(BikerMapper::toDTO).toList();
+        return ResponseEntity.ok(bikerDtos);
     }
 
     @GetMapping("/bikers/name")
-    public ResponseEntity<List<Biker>> getBikerByName(@RequestParam String name) {
-        return ResponseEntity.ok(searchService.getBikerByName(name));
+    public ResponseEntity<List<BikerDto>> getBikerByName(@RequestParam String name) {
+        List<Biker> bikers = searchService.getBikerByName(name);
+        List<BikerDto> bikerDtos = bikers.stream().map(BikerMapper::toDTO).toList();
+        return ResponseEntity.ok(bikerDtos);
     }
 
-
     @GetMapping("/bikers/phone")
-    public ResponseEntity<Biker> getBikerByPhone(@RequestParam String phone) {
-        return ResponseEntity.ok(searchService.getBikerByPhone(phone));
+    public ResponseEntity<BikerDto> getBikerByPhone(@RequestParam String phone) {
+        return ResponseEntity.ok(BikerMapper.toDTO(searchService.getBikerByPhone(phone)));
     }
 
     @GetMapping("/bikers/status")
