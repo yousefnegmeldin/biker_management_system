@@ -9,6 +9,7 @@ import com.brightskies.biker_system.general.models.User;
 import com.brightskies.biker_system.general.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,14 +36,14 @@ public class AuthController {
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     @PostMapping("/signup/biker")
     public ResponseEntity<UserDTO> registerBiker(@RequestBody RegisterBikerDTO registerBikerDto) {
         User registeredUser = authenticationService.signUpBiker(registerBikerDto);
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/signup/manager")
     public ResponseEntity<UserDTO> registerManager(@RequestBody RegisterManagerDTO registerManagerDto) {
         User registeredUser = authenticationService.signUpManager(registerManagerDto);
@@ -59,7 +60,8 @@ public class AuthController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    @PostMapping("/singup/admin")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/signup/admin")
     public ResponseEntity<UserDTO> registerAdmin(@RequestBody RegisterManagerDTO registerManagerDto) {
         User registeredUser = authenticationService.signupAdmin(registerManagerDto);
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
