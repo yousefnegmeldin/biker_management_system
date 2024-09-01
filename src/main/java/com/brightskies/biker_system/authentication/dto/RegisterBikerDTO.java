@@ -9,16 +9,20 @@ import jakarta.validation.constraints.NotNull;
 
 public record RegisterBikerDTO(
         @NotBlank
-
         String firstName,
         @NotNull
         String lastName,
         @Email
         String email,
+        @NotNull
         String phone,
+        @NotNull
         String password,
+        @NotNull
         UserRole role,
+        @NotNull
         BikerStatus status,
+        @NotNull
         Zone zone
                                ) {
 }

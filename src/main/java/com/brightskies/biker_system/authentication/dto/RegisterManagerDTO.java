@@ -1,13 +1,20 @@
 package com.brightskies.biker_system.authentication.dto;
 
 import com.brightskies.biker_system.general.enums.UserRole;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
-public record RegisterManagerDTO(String firstName,
-                                 String lastName,
-                                 String email,
-                                 String phone,
-                                 String password,
-                                 UserRole role,
-                                 String department
-                                 ) {
-}
+public record RegisterManagerDTO( @NotNull
+                                  String firstName,
+                                  @NotNull
+                                  String lastName,
+                                  @Email
+                                  String email,
+                                  @NotNull
+                                  String phone,
+                                  @NotNull
+                                  String password,
+                                  @NotNull
+                                  UserRole role,
+                                  String department) {}
+

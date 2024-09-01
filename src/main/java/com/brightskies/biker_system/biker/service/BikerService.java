@@ -5,7 +5,9 @@ import com.brightskies.biker_system.biker.dto.BikerDto;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.exception.model.BikerNotFoundException;
+import com.brightskies.biker_system.exceptions.UserExceptions.EmailExistsException;
 import com.brightskies.biker_system.exception.model.DeliveryAssignmentNotFoundException;
+import com.brightskies.biker_system.exceptions.UserExceptions.EmailExistsException;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import com.brightskies.biker_system.order.model.DeliveryAssignment;
 import com.brightskies.biker_system.order.model.Order;
@@ -40,7 +42,10 @@ public class BikerService {
     }
 
     //handle validation for email, or phone to be not duplicate
-    public void updateBiker(Long id, BikerDto bikerDTO){
+    public void updateBiker(Long id, BikerDto bikerDTO) throws Exception {
+        if(!bikerDTO.email().isEmpty() && bikerRepository.findByEmail(bikerDTO.email()) != null){
+            throw new EmailExistsException();
+        }
         Biker biker = bikerRepository.findById(id).orElseThrow(() -> new BikerNotFoundException(id));
         if(bikerDTO.email() != null)
             biker.setEmail(bikerDTO.email());

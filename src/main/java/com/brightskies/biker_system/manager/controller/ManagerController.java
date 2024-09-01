@@ -5,10 +5,13 @@ import com.brightskies.biker_system.biker.enums.BikerStatus;
 import com.brightskies.biker_system.biker.mapper.BikerMapper;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.service.BikerService;
+import com.brightskies.biker_system.feedback.dto.FeedBackDTO;
+import com.brightskies.biker_system.feedback.dto.ViewFeedBackDTO;
 import com.brightskies.biker_system.feedback.service.FeedBackService;
 import com.brightskies.biker_system.manager.service.ManagerService;
 import com.brightskies.biker_system.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,7 +55,7 @@ public class ManagerController {
 
     //add validation for updating fields, like email
     @PatchMapping("/biker/{id}")
-    public ResponseEntity<?> updateBiker(@PathVariable Long id, @RequestBody BikerDto bikerDTO){
+    public ResponseEntity<?> updateBiker(@PathVariable Long id, @RequestBody BikerDto bikerDTO) throws Exception {
         bikerService.updateBiker(id, bikerDTO);
         return ResponseEntity.noContent().build();
     }
@@ -73,4 +76,5 @@ public class ManagerController {
         managerService.assignBikerToOrder(bikerId, orderId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }

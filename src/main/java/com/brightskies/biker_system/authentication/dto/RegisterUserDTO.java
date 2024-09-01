@@ -1,11 +1,13 @@
 package com.brightskies.biker_system.authentication.dto;
 
 import com.brightskies.biker_system.general.enums.UserRole;
+import jakarta.validation.constraints.NotNull;
 
-public record RegisterUserDTO(String firstName,
-                              String lastName,
-                              String email,
-                              String phone,
-                              String password,
-                              UserRole role) {
+public record RegisterUserDTO(
+        @NotNull              String firstName,
+        @NotNull              String lastName,
+        @NotNull              String email,
+        @NotNull              String phone,
+        @NotNull              String password,
+        @NotNull              UserRole role) {
 }
