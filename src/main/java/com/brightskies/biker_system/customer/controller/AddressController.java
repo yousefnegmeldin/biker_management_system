@@ -7,12 +7,14 @@ import com.brightskies.biker_system.customer.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceNotFoundException;
 
 @RequestMapping("/customer/address")
 @RestController
+@PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
 public class AddressController {
     private AddressService addressService;
 

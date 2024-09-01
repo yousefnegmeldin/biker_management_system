@@ -6,6 +6,7 @@ import com.brightskies.biker_system.store.model.Store;
 import com.brightskies.biker_system.store.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +21,7 @@ public class StoreController
         this.storeService = storeService;
         this.storeConverter = storeConverter;
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<StoreDTO> addStore(@RequestBody StoreDTO storeDTO)
     {
@@ -29,7 +30,7 @@ public class StoreController
         StoreDTO newDto = storeConverter.toDTO(store);
         return ResponseEntity.ok(newDto);
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable Long id)
     {

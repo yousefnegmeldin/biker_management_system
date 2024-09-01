@@ -6,12 +6,14 @@ import com.brightskies.biker_system.order.dto.*;
 import com.brightskies.biker_system.order.enums.AssignmentStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/biker")
+@PreAuthorize("hasAnyRole('ROLE_BIKER')")
 public class BikerController {
     private BikerService bikerService;
 

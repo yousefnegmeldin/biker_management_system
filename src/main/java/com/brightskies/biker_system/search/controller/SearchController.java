@@ -15,6 +15,7 @@ import com.brightskies.biker_system.store.model.Product;
 import com.brightskies.biker_system.store.model.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class SearchController {
         this.searchService = searchService;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<ViewUserDTO>> searchForUsersByName(@RequestParam String name) {
         List<User> users = searchService.searchForUsersByName(name);
@@ -41,6 +43,7 @@ public class SearchController {
         return ResponseEntity.ok(viewUserDTOList);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/products")
     public ResponseEntity<List<ProductDTO>> searchForProducts(@RequestParam String name) {
         List<Product> products = searchService.searchForProducts(name);
@@ -57,12 +60,15 @@ public class SearchController {
         return ResponseEntity.ok(productDTOList);
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/stores")
     public ResponseEntity<StoreDTO> searchForStore(@RequestParam String name) {
         Store store = searchService.searchForStore(name);
         return ResponseEntity.ok(new StoreDTO(store.getId(),store.getName(),store.getArea()));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/bikers")
     public ResponseEntity<List<BikerDto>> getAllBikers() {
         List<Biker> bikers = searchService.getAllBikers();
@@ -70,6 +76,7 @@ public class SearchController {
         return ResponseEntity.ok(bikerDtos);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/bikers/name")
     public ResponseEntity<List<BikerDto>> getBikerByName(@RequestParam String name) {
         List<Biker> bikers = searchService.getBikerByName(name);
@@ -77,11 +84,12 @@ public class SearchController {
         return ResponseEntity.ok(bikerDtos);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/bikers/phone")
     public ResponseEntity<BikerDto> getBikerByPhone(@RequestParam String phone) {
         return ResponseEntity.ok(BikerMapper.toDTO(searchService.getBikerByPhone(phone)));
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/bikers/status")
     public ResponseEntity<List<BikerDto>> getBikersByStatus(@RequestParam BikerStatus status) {
         List<Biker> bikers = searchService.getBikersByStatus(status);
@@ -89,11 +97,13 @@ public class SearchController {
         return ResponseEntity.ok(bikerDtos);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/bikers/{id}")
     public ResponseEntity<BikerDto> getBikerById(@PathVariable Long id) {
         return ResponseEntity.ok(BikerMapper.toDTO(searchService.getBikerById(id)));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/products/category")
     public ResponseEntity<List<ProductDTO>> searchForProductsByCategory(@RequestParam String category) {
         List<Product> products = searchService.searchForProductsByCategory(category);
@@ -105,6 +115,7 @@ public class SearchController {
         return ResponseEntity.ok(productDTOList);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/products/barcode")
     public ResponseEntity<ProductDTO> searchForProductByBarcode(@RequestParam String barcode) {
         Product product = searchService.searchForProductByBarcode(barcode);
@@ -112,6 +123,7 @@ public class SearchController {
         return ResponseEntity.ok(productDTO);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/products/{id}")
     public ResponseEntity<?> findProductById(@PathVariable Long id) {
 
@@ -124,6 +136,7 @@ public class SearchController {
         return ResponseEntity.ok(productDTO);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/customers/id/{id}")
     public ResponseEntity<?> findCustomerById(@PathVariable Long id) {
         Optional<Customer> customer = searchService.findCustomerById(id);
@@ -135,17 +148,18 @@ public class SearchController {
         return ResponseEntity.ok(UserMapper.toUserDTO(presentCustomer));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/stock/quantity")
     public ResponseEntity<Integer> findQuantityOfProductInStock(@RequestParam Long productId, @RequestParam Long storeId) {
         return ResponseEntity.ok(searchService.findQuantityOfProductInStock(productId, storeId));
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/customers")
     public ResponseEntity<List<UserDTO>> getAllCustomers() {
         List<Customer> users = searchService.getAllCustomers();
         return ResponseEntity.ok(users.stream().map(UserMapper::toUserDTO).toList());
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/all-products")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<Product> products = searchService.getAllProducts();
@@ -156,21 +170,21 @@ public class SearchController {
                 .toList();
         return ResponseEntity.ok(productDTOList);
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/all-stores")
     public ResponseEntity<List<StoreDTO>> getAllStores() {
         List<Store> stores = searchService.getAllStores();
         List<StoreDTO> storeDTOS = stores.stream().map(store -> new StoreDTO(store.getId(),store.getName(),store.getArea())).toList();
         return ResponseEntity.ok(storeDTOS);
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/stores/zone")
     public ResponseEntity<List<StoreDTO>> getStoresByZone(@RequestParam String area) {
         List<Store> stores = searchService.getStoresByZone(area);
         List<StoreDTO> storeDTOS = stores.stream().map(store -> new StoreDTO(store.getId(),store.getName(),store.getArea())).toList();
         return ResponseEntity.ok(storeDTOS);
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/stores/id/{id}")
     public ResponseEntity<?> getStoreById(@PathVariable Long id) {
         Optional<Store> store = searchService.getStoreById(id);

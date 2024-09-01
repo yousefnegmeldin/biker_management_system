@@ -6,6 +6,7 @@ import com.brightskies.biker_system.store.model.Stock;
 import com.brightskies.biker_system.store.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +21,7 @@ public class StockController
         this.stockService = stockService;
         this.stockConverter = stockConverter;
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<?> addStock(@RequestBody StockDTO stockDTO)
     {
