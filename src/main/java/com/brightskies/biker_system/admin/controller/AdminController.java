@@ -60,7 +60,6 @@ public class AdminController
         return ResponseEntity.ok("Store added");
     }
 
-
     @DeleteMapping("/store/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable Long id)
     {
@@ -109,7 +108,6 @@ public class AdminController
         return ResponseEntity.ok("Delivery status is updated");
     }
 
-
     @DeleteMapping("/deleteorder/{orderId}")
     public ResponseEntity<?> deleteOrder(@PathVariable Long orderId)
     {
@@ -117,6 +115,12 @@ public class AdminController
         return ResponseEntity.ok("Order is Deleted");
     }
 
+    @DeleteMapping("/deletedeliveryassignment")
+    public ResponseEntity<?> deleteDeliveryAssignment(@PathVariable Long id)
+    {
+        deliveryAssignmentService.deleteDeliveryAssignment(id);
+        return ResponseEntity.ok("Delivery Assignment is Deleted");
+    }
 
 }
 
