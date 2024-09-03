@@ -78,6 +78,11 @@ public class GlobalExceptionHandler {
             return detail;
         }
 
+        if(exception instanceof AddressLabelRepeatedException){
+            detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), exception.getMessage());
+            return detail;
+        }
+
         if(exception instanceof OrderNotFoundException){
             detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), exception.getMessage());
             return detail;

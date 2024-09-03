@@ -22,7 +22,6 @@ public class BikerController {
         this.bikerService = bikerService;
     }
 
-
     @GetMapping("/orders/free")
     public ResponseEntity<List<OrderDto>> getAllFreeOrders() {
         return ResponseEntity.ok(OrderMapper.toDTOList(bikerService.getOrdersInZone()));
@@ -33,7 +32,7 @@ public class BikerController {
         return ResponseEntity.ok(DeliveryAssignmentMapper.toDTO(bikerService.acceptOrder(orderId)));
     }
 
-    @PutMapping("/assignment/{deliveryAssignmentId}/status")
+    @PutMapping("/assignment/{deliveryAssignmentId}")
     public ResponseEntity<?> updateAssignmentStatus(@PathVariable Long deliveryAssignmentId, @RequestParam AssignmentStatus status) throws Exception {
         bikerService.updateAssignmentStatus(deliveryAssignmentId, status);
         return ResponseEntity.ok("Updated assignment status successfully.");
