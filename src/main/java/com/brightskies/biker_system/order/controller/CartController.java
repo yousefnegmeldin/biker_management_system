@@ -20,23 +20,23 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("/showall")
+    @GetMapping("/all")
     public ResponseEntity<?> showAll() {
         return new ResponseEntity<>(cartService.getAllCartItems(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteall")
+    @DeleteMapping("/all")
     public ResponseEntity<String> deleteAll() {
         cartService.deleteAll();
-        return new ResponseEntity<>("All items have been removed from cart",HttpStatus.OK);
+        return new ResponseEntity<>("All items have been removed from cart", HttpStatus.OK);
     }
 
-    @PostMapping("/additem")
-    public ResponseEntity<?> addCartItem(@RequestParam Long prodId, @RequestParam int quantity,@RequestParam Long storeId) {
+    @PostMapping("/item")
+    public ResponseEntity<?> addCartItem(@RequestParam Long prodId, @RequestParam int quantity, @RequestParam Long storeId) {
         return new ResponseEntity<>(CartItemDtoMapper.map(cartService.addCartItem(prodId, quantity, storeId)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteitem")
+    @DeleteMapping("/item")
     public ResponseEntity<String> deleteCartItem(@RequestParam Long cartItemId) {
         cartService.deleteCartitem(cartItemId);
         return new ResponseEntity<>("Cart item "+ cartItemId +" has been Deleted!", HttpStatus.OK);
