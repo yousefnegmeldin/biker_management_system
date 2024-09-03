@@ -13,6 +13,7 @@ import com.brightskies.biker_system.store.repository.ProductRepository;
 import com.brightskies.biker_system.store.repository.StoreRepository;
 import com.brightskies.biker_system.store.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.task.ThreadPoolTaskExecutorBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,17 +28,21 @@ public class CartService {
     private final CustomerRepository customerRepository;
     private final StockService stockService;
     private final StoreRepository storeRepository;
+    private final SecurityUtils securityUtils;
+    private final ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder;
 
     @Autowired
     public CartService(CartRepository cartRepository,
                        ProductRepository productRepository,
                        CustomerRepository customerRepository,
-                       StockService stockService, StoreRepository storeRepository) {
+                       StockService stockService, StoreRepository storeRepository, SecurityUtils securityUtils, ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.customerRepository = customerRepository;
         this.stockService = stockService;
         this.storeRepository = storeRepository;
+        this.securityUtils = securityUtils;
+        this.threadPoolTaskExecutorBuilder = threadPoolTaskExecutorBuilder;
     }
 
     public CartResultDto getAllCartItems() {
@@ -75,6 +80,9 @@ public class CartService {
 
     public void deleteCartitem(Long cartItemId) {
         CartItem cartItem = cartRepository.findById(cartItemId).orElseThrow( () -> new CartItemNotFoundException(cartItemId));
+        if (!cartItem.getCustomer().getId().equals(SecurityUtils.getCurrentUserId())){
+            throw new CartItemException("Cart item doesn't belong to current user");
+        }
         Store store = storeRepository.findById(cartItem.getStore().getId()).orElseThrow( () -> new StoreNotFoundException(cartItem.getStore().getId()));
         int stockQuantity = stockService.getProductQuantity(cartItem.getProduct().getId(),store.getId());
         stockService.setProductQuantity(cartItem.getProduct().getId(),stockQuantity+cartItem.getQuantity(),store.getId());
@@ -82,45 +90,54 @@ public class CartService {
     }
 
     public CartItem increaseCartItemAmount(Long cartItemId) {
-        Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
-        if(updatableItem.isPresent()) {
-            int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(),
-                    updatableItem.get().getStore().getId());
-
-            if(stockQuantity > 0) {
-                updatableItem.get().setQuantity(updatableItem.get().getQuantity() + 1);
-                cartRepository.save(updatableItem.get());
-                stockService.setProductQuantity(
-                        updatableItem.get().getProduct().getId(),
-                        stockQuantity-1,
-                        updatableItem.get().getStore().getId());
-
-                return updatableItem.get();
-            }else {
-                throw new StockQuantityExceededException();
-            }
+        Optional<CartItem> updatableItem = cartRepository.findById(cartItemId);
+        if (updatableItem.isEmpty()) {
+            throw new CartItemNotFoundException(cartItemId);
         }
 
-        throw new CartItemNotFoundException(cartItemId);
+        if (!updatableItem.get().getCustomer().getId().equals(SecurityUtils.getCurrentUserId())) {
+            throw new CartItemException("Cart item doesn't belong to current user");
+        }
+
+        int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(),
+                updatableItem.get().getStore().getId());
+
+        if (stockQuantity > 0) {
+            updatableItem.get().setQuantity(updatableItem.get().getQuantity() + 1);
+            cartRepository.save(updatableItem.get());
+            stockService.setProductQuantity(
+                    updatableItem.get().getProduct().getId(),
+                    stockQuantity - 1,
+                    updatableItem.get().getStore().getId());
+        } else {
+            throw new StockQuantityExceededException();
+            }
+
+        return updatableItem.orElseThrow(() -> new CartItemNotFoundException(cartItemId));
     }
 
     public CartItem decreaseCartItemAmount(Long cartItemId) {
         Optional <CartItem> updatableItem = cartRepository.findById(cartItemId);
-        if(updatableItem.isPresent()) {
-            int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(),
-                    updatableItem.get().getStore().getId());
+        if(updatableItem.isEmpty()) {
+            throw new CartItemNotFoundException(cartItemId);
+        }
+        if (!updatableItem.get().getCustomer().getId().equals(SecurityUtils.getCurrentUserId())) {
+            throw new CartItemException("Cart item doesn't belong to current user");
+        }
 
-            if(updatableItem.get().getQuantity() > 0) {
-                updatableItem.get().setQuantity(updatableItem.get().getQuantity() - 1);
-                if(updatableItem.get().getQuantity() == 0) {
-                    cartRepository.deleteById(cartItemId);
-                }else {
-                    cartRepository.save(updatableItem.get());
-                    stockService.setProductQuantity(
-                            updatableItem.get().getProduct().getId(),
-                            stockQuantity+1,
-                            updatableItem.get().getStore().getId());
-                }
+        int stockQuantity = stockService.getProductQuantity(updatableItem.get().getProduct().getId(),
+                updatableItem.get().getStore().getId());
+
+        if (updatableItem.get().getQuantity() > 0) {
+            updatableItem.get().setQuantity(updatableItem.get().getQuantity() - 1);
+            if (updatableItem.get().getQuantity() == 0) {
+                cartRepository.deleteById(cartItemId);
+            } else {
+                cartRepository.save(updatableItem.get());
+                stockService.setProductQuantity(
+                        updatableItem.get().getProduct().getId(),
+                        stockQuantity + 1,
+                        updatableItem.get().getStore().getId());
             }
         }
         return updatableItem.orElseThrow(() -> new CartItemNotFoundException (cartItemId));

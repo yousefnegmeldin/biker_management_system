@@ -114,6 +114,11 @@ public class GlobalExceptionHandler {
             return detail;
         }
 
+        if(exception instanceof CartItemException){
+            detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), exception.getMessage());
+            return detail;
+        }
+
         if (detail == null) {
             System.err.println(" internal server error: " + exception.getMessage());
             detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
