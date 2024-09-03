@@ -15,7 +15,7 @@ public class Address {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String label;
     @Column(nullable = false)
     private Zone zone;

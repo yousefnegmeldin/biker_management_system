@@ -4,6 +4,7 @@ import com.brightskies.biker_system.store.DTO.StockDTO;
 import com.brightskies.biker_system.store.mapper.StockConverter;
 import com.brightskies.biker_system.store.model.Stock;
 import com.brightskies.biker_system.store.service.StockService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,8 @@ public class StockController
         this.stockService = stockService;
         this.stockConverter = stockConverter;
     }
+    @Operation(summary = "Add a new stock",
+            description = "Add a new stock to the store. Accessible by MANAGER and ADMIN roles.")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<?> addStock(@RequestBody StockDTO stockDTO)

@@ -7,6 +7,7 @@ import com.brightskies.biker_system.authentication.service.JwtService;
 import com.brightskies.biker_system.customer.service.CustomerService;
 import com.brightskies.biker_system.general.models.User;
 import com.brightskies.biker_system.general.enums.UserRole;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,13 +30,16 @@ public class AuthController {
         this.customerService = customerService;
     }
 
-
+    @Operation(summary = "Sign up as a customer",
+            description = "Sign up as a customer and return the user data accessible to anyone.")
     @PostMapping("/signup/customer")
     public ResponseEntity<UserDTO> register(@RequestBody RegisterCustomerDTO registerCustomerDto) {
         User registeredUser = authenticationService.signUpCustomer(registerCustomerDto);
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 
+    @Operation(summary = "Sign up as a biker",
+            description = "Sign up as a biker and return the user data. Accessible by ADMIN and MANAGER roles.")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     @PostMapping("/signup/biker")
     public ResponseEntity<UserDTO> registerBiker(@RequestBody RegisterBikerDTO registerBikerDto) {
@@ -43,6 +47,8 @@ public class AuthController {
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 
+    @Operation(summary = "Sign up as a manager",
+            description = "Sign up as a manager and return the user data. Accessible by ADMIN role.")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/signup/manager")
     public ResponseEntity<UserDTO> registerManager(@RequestBody RegisterManagerDTO registerManagerDto) {
@@ -50,6 +56,8 @@ public class AuthController {
         return ResponseEntity.ok(UserMapper.toUserDTO(registeredUser));
     }
 
+    @Operation(summary = "Login",
+            description = "Authenticate a user and return a JWT token.")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginUserDTO loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
@@ -60,6 +68,8 @@ public class AuthController {
         return ResponseEntity.ok(loginResponse);
     }
 
+    @Operation(summary = "Sign up as an admin",
+            description = "Sign up as an admin and return the user data. Accessible by ADMIN role.")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/signup/admin")
     public ResponseEntity<UserDTO> registerAdmin(@RequestBody RegisterManagerDTO registerManagerDto) {

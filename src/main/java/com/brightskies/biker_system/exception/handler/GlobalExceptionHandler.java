@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
             System.err.println("BadCredentialsException, username or password is incorrect");
             detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
             detail.setProperty("description", "The username or password is incorrect");
+            detail.setProperty("error", "BadCredentialsException");
             return detail;
         }
 
@@ -75,6 +76,11 @@ public class GlobalExceptionHandler {
 
         if(exception instanceof AddressNotFoundException){
             detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), exception.getMessage());
+            return detail;
+        }
+
+        if(exception instanceof AddressLabelRepeatedException){
+            detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), exception.getMessage());
             return detail;
         }
 

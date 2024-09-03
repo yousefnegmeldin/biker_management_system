@@ -50,50 +50,6 @@ public class AdminController
         this.orderService= orderService;
     }
 
-    //we can just put the role of admin on existing api
-    @PostMapping("/addstore")
-    public ResponseEntity<?> addStore(@RequestBody StoreDTO storeDTO)
-    {
-        Store newstoreDTO = storeConverter.toEntity(storeDTO);
-        Store store = storeService.addStore(newstoreDTO);
-        StoreDTO newDto = storeConverter.toDTO(store);
-        return ResponseEntity.ok("Store added");
-    }
-
-    @DeleteMapping("/store/{id}")
-    public ResponseEntity<?> deleteStore(@PathVariable Long id)
-    {
-        storeService.deleteStore(id);
-        return ResponseEntity.ok("Store is deleted");
-    }
-
-    //we can just put the role of admin on existing api
-    @PostMapping("/addproduct")
-    public ResponseEntity<?> addProduct(@RequestBody ProductDTO productDTO)
-    {
-        Product newproductDTO = productConverter.toEntity(productDTO);
-        Product product = productService.addProduct(newproductDTO);
-        ProductDTO newDto = productConverter.toDTO(product);
-        return ResponseEntity.ok("Product added");
-    }
-
-    @DeleteMapping("/deleteproduct/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id)
-    {
-        productService.deleteProductById(id);
-        return ResponseEntity.ok("Product is deleted");
-    }
-
-    //we can just put the role of admin on existing api
-    @PostMapping("/addstock")
-    public ResponseEntity<?> addStock(@RequestBody StockDTO stockDTO)
-    {
-        Stock newstockDTO = stockConverter.toEntity(stockDTO);
-        Stock stock = stockService.addStock(newstockDTO);
-        StockDTO newDto = stockConverter.toDTO(stock);
-        return ResponseEntity.ok("Stock added");
-    }
-
     @DeleteMapping("/deletecartitem/{cartItemId}")
     public ResponseEntity<?> deleteCartItem(@PathVariable Long cartItemId)
     {
