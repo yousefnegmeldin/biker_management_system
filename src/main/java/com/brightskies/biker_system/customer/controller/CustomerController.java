@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/customer")
-@PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
+@PreAuthorize("hasAnyRole('ROLE_customer')")
 @Tag(name = "Customer Controller", description = "API for managing customer operations. Accessible by role customer.")
 public class CustomerController {
     private FeedBackService feedbackService;

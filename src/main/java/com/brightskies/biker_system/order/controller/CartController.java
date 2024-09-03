@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cart")
-@PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
+@PreAuthorize("hasAnyRole('ROLE_customer')")
 public class CartController {
 
     private final CartService cartService;
@@ -87,7 +87,7 @@ public class CartController {
         return new ResponseEntity<>(CartItemDtoMapper.map(cartService.addCartItem(prodId, quantity, storeId)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/item/{cartItemid}")
+    @DeleteMapping("/item/{cartItemId}")
     @Operation(
             summary = "Deletes item from cart",
             description = "Delete an item present in cart for current user",

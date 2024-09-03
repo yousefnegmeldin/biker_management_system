@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/manager")
-@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+@PreAuthorize("hasAnyRole('ROLE_admin','ROLE_manager')")
 public class ManagerController {
     SearchService searchService;
     BikerService bikerService;

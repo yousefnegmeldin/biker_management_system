@@ -24,7 +24,7 @@ public class StoreController
     }
     @Operation(summary = "Add a new store",
             description = "Add a new store to the system. Accessible by ADMIN role.")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_admin')")
     @PostMapping("/add")
     public ResponseEntity<StoreDTO> addStore(@RequestBody StoreDTO storeDTO)
     {
@@ -35,7 +35,7 @@ public class StoreController
     }
     @Operation(summary = "Delete a store by ID",
             description = "Delete a store from the system by its ID. Accessible by ADMIN role.")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_admin')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable Long id)
     {

@@ -26,7 +26,7 @@ public class ProductController
 
     @Operation(summary = "Add a new product",
             description = "Add a new product to the store. Accessible by MANAGER and ADMIN roles.")
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_manager','ROLE_admin')")
     @PostMapping("/add")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO)
     {
@@ -38,7 +38,7 @@ public class ProductController
 
     @Operation(summary = "Delete a product by ID",
             description = "Delete a product from the store by its ID. Accessible by MANAGER and ADMIN roles.")
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_manager','ROLE_admin')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProductByName(@PathVariable Long id)
     {

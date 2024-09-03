@@ -20,7 +20,7 @@ import javax.management.InstanceNotFoundException;
 
 @RequestMapping("/customer/address")
 @RestController
-@PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
+@PreAuthorize("hasAnyRole('ROLE_customer')")
 @Tag(name = "Address Controller", description = "API for managing customer addresses. Accessible by role customer.")
 public class AddressController {
     private AddressService addressService;

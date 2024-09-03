@@ -24,7 +24,7 @@ public class StockController
     }
     @Operation(summary = "Add a new stock",
             description = "Add a new stock to the store. Accessible by MANAGER and ADMIN roles.")
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_manager','ROLE_admin')")
     @PostMapping("/add")
     public ResponseEntity<?> addStock(@RequestBody StockDTO stockDTO)
     {

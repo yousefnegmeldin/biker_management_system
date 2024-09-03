@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.order.service;
 
+import com.brightskies.biker_system.authentication.utility.SecurityUtils;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.exception.model.BikerNotFoundException;
@@ -61,9 +62,12 @@ public class DeliveryAssignmentService {
 
     //have to check for safety that the delivery assignment id is assigned to same biker id when
     //they change
-    public void changeStatus(Long id, AssignmentStatus status) throws DeliveryAssignmentException {
+    public void changeStatus(Long id, AssignmentStatus status) {
         DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(id)
                 .orElseThrow(() -> new DeliveryAssignmentNotFoundException(id));
+        if(SecurityUtils.getCurrentUserId() != deliveryAssignment.getBiker().getId()){
+            throw new DeliveryAssignmentException("You are not authorized to change the status of this delivery assignment.");
+        }
         if(deliveryAssignment.getStatus() == status) {
             throw new DeliveryAssignmentException("Delivery assignment already has the requested status as the current one.");
         }

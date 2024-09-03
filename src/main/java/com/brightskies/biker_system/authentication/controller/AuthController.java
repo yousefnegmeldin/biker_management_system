@@ -40,7 +40,7 @@ public class AuthController {
 
     @Operation(summary = "Sign up as a biker",
             description = "Sign up as a biker and return the user data. Accessible by ADMIN and MANAGER roles.")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_admin','ROLE_manager')")
     @PostMapping("/signup/biker")
     public ResponseEntity<UserDTO> registerBiker(@RequestBody RegisterBikerDTO registerBikerDto) {
         User registeredUser = authenticationService.signUpBiker(registerBikerDto);
@@ -49,7 +49,7 @@ public class AuthController {
 
     @Operation(summary = "Sign up as a manager",
             description = "Sign up as a manager and return the user data. Accessible by ADMIN role.")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_admin')")
     @PostMapping("/signup/manager")
     public ResponseEntity<UserDTO> registerManager(@RequestBody RegisterManagerDTO registerManagerDto) {
         User registeredUser = authenticationService.signUpManager(registerManagerDto);
@@ -70,7 +70,7 @@ public class AuthController {
 
     @Operation(summary = "Sign up as an admin",
             description = "Sign up as an admin and return the user data. Accessible by ADMIN role.")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasAnyRole('ROLE_admin')")
     @PostMapping("/signup/admin")
     public ResponseEntity<UserDTO> registerAdmin(@RequestBody RegisterManagerDTO registerManagerDto) {
         User registeredUser = authenticationService.signupAdmin(registerManagerDto);

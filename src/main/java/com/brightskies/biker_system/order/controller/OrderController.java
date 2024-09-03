@@ -49,7 +49,7 @@ public class OrderController {
                             content = @Content(schema = @Schema(implementation = String.class))),
             }
     )
-    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
+    @PreAuthorize("hasAnyRole('ROLE_customer')")
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestParam Long addressId, @RequestParam String paymentMethod) {
         return (new ResponseEntity<>(orderService.createOrder(addressId, paymentMethod), HttpStatus.OK));
@@ -69,7 +69,7 @@ public class OrderController {
                             content = @Content(schema = @Schema(implementation = String.class))),
             }
     )
-    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_customer','ROLE_manager','ROLE_admin')")
     @DeleteMapping("/cancel")
     public ResponseEntity<String> cancelOrder(@RequestParam Long orderId) {
         return (new ResponseEntity<>(orderService.cancelOrder(orderId), HttpStatus.OK));
@@ -89,7 +89,7 @@ public class OrderController {
                             content = @Content(schema = @Schema(implementation = String.class))),
             }
     )
-    @PreAuthorize("hasAnyRole('ROLE_BIKER','ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_BIKER','ROLE_manager','ROLE_admin')")
     @GetMapping("/getall")
     public ResponseEntity<?> getAllOrders() {
         List<OrderDto> orderDtos = new ArrayList<>();
@@ -132,7 +132,7 @@ public class OrderController {
             }
     )
     @GetMapping("/zone")
-    @PreAuthorize("hasAnyRole('ROLE_BIKER','ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_BIKER','ROLE_manager','ROLE_admin')")
     public ResponseEntity<?> getAllOrdersInZone(@RequestParam Zone zone) {
         List<OrderDto> orderDTOs = OrderMapper.toDTOList(orderService.getOrdersInZone(zone));
         if (orderDTOs.isEmpty()) {
