@@ -50,32 +50,32 @@ public class AdminController
         this.orderService= orderService;
     }
 
-    @DeleteMapping("/deletecartitem/{cartItemId}")
+    @DeleteMapping("/cart-item/{cartItemId}")
     public ResponseEntity<?> deleteCartItem(@PathVariable Long cartItemId)
     {
        cartService.deleteCartitem(cartItemId);
-       return new ResponseEntity<>("Cart Item is Deleted!", HttpStatus.OK);
+       return ResponseEntity.ok("Cart Item is deleted successfully!");
     }
 
     //put role of admin on existing api
-    @PatchMapping("/status/{id}/{status}")
-    public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @PathVariable AssignmentStatus status) throws Exception {
+    @PatchMapping("/delivery-assignment/{id}")
+    public ResponseEntity<?> updateDeliveryAssignmentStatus(@PathVariable Long id, @RequestParam AssignmentStatus status) throws Exception {
         deliveryAssignmentService.changeStatus(id,status);
-        return ResponseEntity.ok("Delivery status is updated");
+        return ResponseEntity.ok("Delivery status is updated.");
     }
 
-    @DeleteMapping("/deleteorder/{orderId}")
+    @DeleteMapping("/order/{orderId}")
     public ResponseEntity<?> deleteOrder(@PathVariable Long orderId)
     {
         orderService.cancelOrder(orderId);
-        return ResponseEntity.ok("Order is Deleted");
+        return ResponseEntity.ok("Order is deleted successfully!");
     }
 
-    @DeleteMapping("/deletedeliveryassignment")
+    @DeleteMapping("/delivery-assignment")
     public ResponseEntity<?> deleteDeliveryAssignment(@PathVariable Long id)
     {
         deliveryAssignmentService.deleteDeliveryAssignment(id);
-        return ResponseEntity.ok("Delivery Assignment is Deleted");
+        return ResponseEntity.ok("Delivery Assignment is deleted successfully!");
     }
 
 }

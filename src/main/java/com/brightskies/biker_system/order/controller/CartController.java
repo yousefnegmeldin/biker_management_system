@@ -28,7 +28,7 @@ public class CartController {
     }
 
 
-    @GetMapping("/showall")
+    @GetMapping("/all")
     @Operation(
             summary = "Get all cart items",
             description = "Retrieve all cart items for current user",
@@ -47,7 +47,7 @@ public class CartController {
         return new ResponseEntity<>(cartService.getAllCartItems(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteall")
+    @DeleteMapping("/all")
     @Operation(
             summary = "Delete all cart items",
             description = "Delete all cart items for current user",
@@ -68,7 +68,7 @@ public class CartController {
     }
 
 
-    @PostMapping("/additem")
+    @PostMapping("/item")
     @Operation(
             summary = "Add item to cart",
             description = "Adds a cart item to cart for current user",
@@ -87,7 +87,7 @@ public class CartController {
         return new ResponseEntity<>(CartItemDtoMapper.map(cartService.addCartItem(prodId, quantity, storeId)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteitem")
+    @DeleteMapping("/item/{cartItemid}")
     @Operation(
             summary = "Deletes item from cart",
             description = "Delete an item present in cart for current user",
@@ -102,12 +102,12 @@ public class CartController {
                             content = @Content(schema = @Schema(implementation = String.class))),
             }
     )
-    public ResponseEntity<String> deleteCartItem(@RequestParam Long cartItemId) {
+    public ResponseEntity<String> deleteCartItem(@PathVariable Long cartItemId) {
         cartService.deleteCartitem(cartItemId);
         return new ResponseEntity<>("Cart item "+ cartItemId +" has been Deleted!", HttpStatus.OK);
     }
 
-    @PatchMapping("/inc")
+    @PatchMapping("/inc/{cartItemId}")
     @Operation(
             summary = "Increases item quantity by one",
             description = "Increases an item quantity by one for cart item present in cart for current user",
@@ -122,11 +122,11 @@ public class CartController {
                             content = @Content(schema = @Schema(implementation = String.class))),
             }
     )
-    public ResponseEntity<?> increaseCartItemAmount(@RequestParam Long cartItemId) {
+    public ResponseEntity<?> increaseCartItemAmount(@PathVariable Long cartItemId) {
         return new ResponseEntity<>(CartItemDtoMapper.map(cartService.increaseCartItemAmount(cartItemId)),HttpStatus.OK);
     }
 
-    @PatchMapping("/dec")
+    @PatchMapping("/dec/{cartItemId}")
     @Operation(
             summary = "Decreases item quantity by one",
             description = "Decreases an item quantity by one for cart item present in cart for current user",
@@ -141,7 +141,7 @@ public class CartController {
                             content = @Content(schema = @Schema(implementation = String.class))),
             }
     )
-    public ResponseEntity<?> decreaseCartItemAmount(@RequestParam Long cartItemId) {
+    public ResponseEntity<?> decreaseCartItemAmount(@PathVariable Long cartItemId) {
         CartItem item = cartService.decreaseCartItemAmount(cartItemId);
         if (item.getQuantity() > 0) {
             return new ResponseEntity<>(CartItemDtoMapper.map(item),HttpStatus.OK);
