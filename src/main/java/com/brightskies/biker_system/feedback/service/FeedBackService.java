@@ -1,5 +1,6 @@
 package com.brightskies.biker_system.feedback.service;
 
+import com.brightskies.biker_system.authentication.utility.SecurityUtils;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
 import com.brightskies.biker_system.exception.model.BikerNotFoundException;
@@ -16,7 +17,10 @@ import com.brightskies.biker_system.order.repository.DeliveryAssignmentRepositor
 import com.brightskies.biker_system.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.AccessDeniedException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,9 +46,13 @@ public class FeedBackService {
         bikerRepository.save(biker);
     }
 
-    public FeedBack addFeedback(FeedBackDTO feedbackDTO) {
+    public FeedBack addFeedback(FeedBackDTO feedbackDTO) throws Exception {
         Order order = orderRepository.findById(feedbackDTO.order())
                 .orElseThrow(() -> new OrderNotFoundException(feedbackDTO.order()));
+        Long customerID = SecurityUtils.getCurrentUserId();
+        if(!Objects.equals(order.getCustomer().getId(), customerID)) {
+            throw new AccessDeniedException("Cannot give feedback to this order");
+        }
         DeliveryAssignment deliveryAssignment = deliveryAssignmentRepository.findById(feedbackDTO.order())
                 .orElseThrow(() -> new DeliveryAssignmentException("Order has not been assigned a biker yet, nothing to rate."));
         if(!(deliveryAssignment.getStatus() == AssignmentStatus.delivered)) {

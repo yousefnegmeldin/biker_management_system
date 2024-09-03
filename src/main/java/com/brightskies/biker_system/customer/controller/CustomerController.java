@@ -35,6 +35,8 @@ public class CustomerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created", content =
                     { @Content(mediaType = "application/json", schema = @Schema(implementation = FeedBackDTO.class)) }),
+            @ApiResponse(responseCode = "403", description = "Customer did not place the specified order", content =
+                    { @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))}),
             @ApiResponse(responseCode = "404", description = "Order does not exist", content =
                     { @Content(mediaType = "application/json", schema = @Schema(implementation = String.class)) }),
             @ApiResponse(responseCode = "406", description = "Order has not been assigned/delivered, nothing to rate", content =
@@ -43,7 +45,7 @@ public class CustomerController {
                     { @Content(mediaType = "application/json") })
     })
     @PostMapping("/feedback")
-    public ResponseEntity<?> addFeedback(@RequestBody FeedBackDTO feedbackDTO) {
+    public ResponseEntity<?> addFeedback(@RequestBody FeedBackDTO feedbackDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 FeedBackMapper.toDTO(
                         feedbackService.addFeedback(feedbackDTO)
