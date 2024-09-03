@@ -6,6 +6,10 @@ import com.brightskies.biker_system.order.model.CartItem;
 import com.brightskies.biker_system.order.model.Order;
 import com.brightskies.biker_system.order.model.OrderHistory;
 import com.brightskies.biker_system.order.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,19 +30,65 @@ public class OrderController {
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
+
+    @Operation(
+            summary = "Creates an order",
+            description = "Creates an order for current user",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successful operation",
+                            content = @Content(schema = @Schema(implementation = OrderDto.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Customer doesn't exist or address is invalid",
+                            content = @Content(schema = @Schema(implementation = String.class))),
+                    @ApiResponse(
+                            responseCode = "406",
+                            description = "Order not created as cart is empty",
+                            content = @Content(schema = @Schema(implementation = String.class))),
+            }
+    )
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER')")
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestParam Long addressId, @RequestParam String paymentMethod) {
         return (new ResponseEntity<>(orderService.createOrder(addressId, paymentMethod), HttpStatus.OK));
     }
+
+    @Operation(
+            summary = "Cancels an order",
+            description = "Cancels an order for current user if a biker hasn't been assigned yet",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successful operation",
+                            content = @Content(schema = @Schema(implementation = String.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Order doesn't exist",
+                            content = @Content(schema = @Schema(implementation = String.class))),
+            }
+    )
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_MANAGER','ROLE_ADMIN')")
     @DeleteMapping("/cancel")
-    //check that if customer is cancelling, that orderid corresponds to the customer
     public ResponseEntity<String> cancelOrder(@RequestParam Long orderId) {
         return (new ResponseEntity<>(orderService.cancelOrder(orderId), HttpStatus.OK));
     }
 
-    //Biker and manager only api
+    @Operation(
+            summary = "Gets all available orders",
+            description = "Gets all unassigned orders, only biker, manager and admin can access this api",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successful operation",
+                            content = @Content(schema = @Schema(type = "array", implementation = OrderDto.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No free orders are available",
+                            content = @Content(schema = @Schema(implementation = String.class))),
+            }
+    )
     @PreAuthorize("hasAnyRole('ROLE_BIKER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/getall")
     public ResponseEntity<?> getAllOrders() {
@@ -60,19 +110,33 @@ public class OrderController {
         }
 
         if (orderDtos.isEmpty()) {
-            return new ResponseEntity<>("There are no available orders currently.", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("There are no available orders currently.", HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(orderDtos, HttpStatus.OK);
     }
 
 
+    @Operation(
+            summary = "Gets all available orders in the same zone as biker",
+            description = "Gets all unassigned orders in the same zone of the biker, only biker, manager and admin are able to use this api",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successful operation",
+                            content = @Content(schema = @Schema(type = "array", implementation = OrderDto.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No free orders are available in the required zone",
+                            content = @Content(schema = @Schema(implementation = String.class))),
+            }
+    )
     @GetMapping("/zone")
     @PreAuthorize("hasAnyRole('ROLE_BIKER','ROLE_MANAGER','ROLE_ADMIN')")
     public ResponseEntity<?> getAllOrdersInZone(@RequestParam Zone zone) {
         List<OrderDto> orderDTOs = OrderMapper.toDTOList(orderService.getOrdersInZone(zone));
         if (orderDTOs.isEmpty()) {
-            return new ResponseEntity<>("There are no available orders in that zone currently.", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("There are no available orders in that zone currently.", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
     }
