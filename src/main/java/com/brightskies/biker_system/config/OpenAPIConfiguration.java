@@ -5,10 +5,11 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-//@Configuration
+@Configuration
 public class OpenAPIConfiguration {
     @Bean
     public OpenAPI defineOpenApi(){
@@ -17,13 +18,14 @@ public class OpenAPIConfiguration {
         server.setDescription("dev");
 
         Contact contact = new Contact();
+
         contact.setEmail("yousefnegm@gmail.com");
         contact.setName("yousef negm");
 
         Info information = new Info()
-                .title("JWT APPLICATION")
+                .title("Biker Management System")
                 .version("1.0")
-                .description("simple login and register api implementation, using jwt")
+                .description("System for managing bikers, deliveries, products, stores, and stock.")
                 .contact(contact);
         return new OpenAPI().info(information).servers(List.of(server));
     }
