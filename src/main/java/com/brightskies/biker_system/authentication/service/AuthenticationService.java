@@ -4,6 +4,7 @@ import com.brightskies.biker_system.admin.model.Admin;
 import com.brightskies.biker_system.authentication.dto.*;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.customer.model.Customer;
+import com.brightskies.biker_system.general.enums.UserRole;
 import com.brightskies.biker_system.general.models.User;
 import com.brightskies.biker_system.general.repositories.UserRepository;
 import com.brightskies.biker_system.manager.model.Manager;
@@ -48,7 +49,7 @@ public class AuthenticationService {
         customer.setName(input.firstName() + " " + input.lastName());
         customer.setPassword(passwordEncoder.encode(input.password()));
         customer.setPhone(input.phone());
-        customer.setRole(input.role());
+        customer.setRole(UserRole.customer);
         customer.setJoinedAt(LocalDate.now());
         customer.setLastLogin(LocalDate.now());
         return userRepository.save(customer);
@@ -66,7 +67,7 @@ public class AuthenticationService {
         biker.setName(input.firstName() + " " + input.lastName());
         biker.setPassword(passwordEncoder.encode(input.password()));
         biker.setPhone(input.phone());
-        biker.setRole(input.role());
+        biker.setRole(UserRole.biker);
         biker.setJoinedAt(LocalDate.now());
         biker.setStatus(input.status());
         biker.setZone(input.zone());
@@ -85,7 +86,7 @@ public class AuthenticationService {
         manager.setName(input.firstName() + " " + input.lastName());
         manager.setPassword(passwordEncoder.encode(input.password()));
         manager.setPhone(input.phone());
-        manager.setRole(input.role());
+        manager.setRole(UserRole.manager);
         manager.setJoinedAt(LocalDate.now());
         return userRepository.save(manager);
     }
@@ -102,7 +103,7 @@ public class AuthenticationService {
         admin.setName(input.firstName() + " " + input.lastName());
         admin.setPassword(passwordEncoder.encode(input.password()));
         admin.setPhone(input.phone());
-        admin.setRole(input.role());
+        admin.setRole(UserRole.admin);
         admin.setJoinedAt(LocalDate.now());
         return userRepository.save(admin);
     }

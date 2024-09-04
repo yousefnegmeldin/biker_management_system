@@ -19,8 +19,6 @@ public record RegisterBikerDTO(
         @NotNull
         String password,
         @NotNull
-        UserRole role,
-        @NotNull
         BikerStatus status,
         @NotNull
         Zone zone

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CartRepository extends JpaRepository<CartItem,Long> {
@@ -13,4 +14,5 @@ public interface CartRepository extends JpaRepository<CartItem,Long> {
     @Query("SELECT c FROM CartItem c WHERE c.customer.id = :customerId")
     List<CartItem> findByCustomerId(Long customerId);
 
+    Optional<CartItem> findByProductIdAndCustomerId(Long prodId, Long currentCustomerId);
 }

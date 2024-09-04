@@ -62,11 +62,15 @@ public class CartService {
         return new CartResultDto(cartItemDtos, totalPrice);
     }
 
-    public CartItem addCartItem(Long prodId, int quantity,Long storeId) {
+    public CartItem addCartItem(Long prodId, int quantity,Long storeId) throws CartItemAlreadyExistsException {
         Long currentCustomerId = SecurityUtils.getCurrentUserId();
         Customer customer = customerRepository.findById(currentCustomerId).orElseThrow(() -> new CustomerNotFoundException(currentCustomerId));
         Product product = productRepository.findById(prodId).orElseThrow( () -> new ProductNotFoundException(prodId));
         Store store = storeRepository.findById(storeId).orElseThrow( () -> new StoreNotFoundException(storeId));
+        Optional<CartItem> cartItemFound = cartRepository.findByProductIdAndCustomerId(prodId, currentCustomerId);
+        if (cartItemFound.isPresent()) {
+            throw new CartItemAlreadyExistsException("Product already exists in cart");
+        }
         int stockQuantity = stockService.getProductQuantity(product.getId(),storeId);
         if(stockQuantity - quantity >= 0) {
             stockService.setProductQuantity(product.getId(), stockQuantity - quantity,storeId);

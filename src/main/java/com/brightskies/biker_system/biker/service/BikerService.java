@@ -16,6 +16,7 @@ import com.brightskies.biker_system.order.service.DeliveryAssignmentService;
 import com.brightskies.biker_system.order.service.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -81,6 +82,9 @@ public class BikerService {
         Optional<DeliveryAssignment> deliveryAssignment = deliveryAssignmentService.getDeliveryAssignmentById(deliveryAssignmentId);
         if(deliveryAssignment.isEmpty()){
             throw new DeliveryAssignmentNotFoundException(SecurityUtils.getCurrentUserId());
+        }
+        if(deliveryAssignment.get().getBiker().getId().equals(SecurityUtils.getCurrentUserId())){
+            throw new AccessDeniedException("You are not authorized to deliver this order");
         }
         updateAssignmentStatus(deliveryAssignment.get().getId(), AssignmentStatus.delivered);
         deliveryAssignmentService.setDeliveryTime(deliveryAssignment.get().getId(), LocalDate.now());

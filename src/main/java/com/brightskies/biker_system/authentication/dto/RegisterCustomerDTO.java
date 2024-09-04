@@ -14,6 +14,4 @@ public record RegisterCustomerDTO (
                                          @NotNull
                                          String phone,
                                          @NotNull
-                                         String password,
-                                         @NotNull
-                                         UserRole role) {}
+                                         String password) {}

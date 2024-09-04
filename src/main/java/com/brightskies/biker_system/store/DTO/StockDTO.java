@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record StockDTO
         (
-                 @NotNull StockId id,
                  @NotNull Long storeId,
                  @NotNull Long productId,
                  @NotNull int quantity

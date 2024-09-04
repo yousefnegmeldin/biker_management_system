@@ -2,6 +2,7 @@ package com.brightskies.biker_system.order.service;
 import com.brightskies.biker_system.authentication.utility.SecurityUtils;
 import com.brightskies.biker_system.biker.model.Biker;
 import com.brightskies.biker_system.biker.repository.BikerRepository;
+import com.brightskies.biker_system.customer.model.Address;
 import com.brightskies.biker_system.customer.model.Customer;
 import com.brightskies.biker_system.customer.repository.AddressRepository;
 import com.brightskies.biker_system.customer.repository.CustomerRepository;
@@ -19,6 +20,8 @@ import com.brightskies.biker_system.order.repository.OrderHistoryRepository;
 import com.brightskies.biker_system.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -64,10 +67,15 @@ public class OrderService {
         return orderHistoryRepository.findByOrderId(orderId);
     }
 
-    public OrderDto createOrder(Long addressId, String paymentMethod) {
+    public OrderDto createOrder(Long addressId, String paymentMethod) throws AccessDeniedException {
         Long currentCustomerId = SecurityUtils.getCurrentUserId();
         Customer customer = customerRepo.findById(currentCustomerId).
                 orElseThrow(() -> new CustomerNotFoundException(currentCustomerId));
+        Address address = addressRepo.findById(addressId).
+                orElseThrow(() -> new AddressNotFoundException(addressId));
+        if (!address.getCustomer().getId().equals(currentCustomerId)){
+            throw new AccessDeniedException("You are not authorized to access this address.");
+        }
         Order order = new Order();
         order.setOrderDate(LocalDate.now());
         order.setCustomer(customer);

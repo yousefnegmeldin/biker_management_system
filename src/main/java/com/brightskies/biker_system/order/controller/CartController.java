@@ -1,4 +1,5 @@
 package com.brightskies.biker_system.order.controller;
+import com.brightskies.biker_system.exception.model.CartItemAlreadyExistsException;
 import com.brightskies.biker_system.order.dto.CartItemDto;
 import com.brightskies.biker_system.order.dto.CartItemDtoMapper;
 import com.brightskies.biker_system.order.dto.CartResultDto;
@@ -83,7 +84,7 @@ public class CartController {
                             content = @Content(schema = @Schema(implementation = String.class))),
             }
     )
-    public ResponseEntity<?> addCartItem(@RequestParam Long prodId, @RequestParam int quantity,@RequestParam Long storeId) {
+    public ResponseEntity<?> addCartItem(@RequestParam Long prodId, @RequestParam int quantity,@RequestParam Long storeId) throws CartItemAlreadyExistsException {
         return new ResponseEntity<>(CartItemDtoMapper.map(cartService.addCartItem(prodId, quantity, storeId)), HttpStatus.OK);
     }
 
