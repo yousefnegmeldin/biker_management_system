@@ -14,7 +14,5 @@ public record RegisterManagerDTO( @NotNull
                                   String phone,
                                   @NotNull
                                   String password,
-                                  @NotNull
-                                  UserRole role,
                                   String department) {}
 

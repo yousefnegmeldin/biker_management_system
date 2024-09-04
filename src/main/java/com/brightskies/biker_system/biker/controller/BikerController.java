@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/biker")
-@PreAuthorize("hasAnyRole('ROLE_BIKER')")
+@PreAuthorize("hasAnyRole('ROLE_biker')")
 public class BikerController {
     private BikerService bikerService;
 

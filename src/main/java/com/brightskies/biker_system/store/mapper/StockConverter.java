@@ -25,7 +25,6 @@ public class StockConverter {
     {
         return new StockDTO
                 (
-                        stock.getId(),
                         stock.getStore().getId(),
                         stock.getProduct().getId(),
                         stock.getQuantity()
@@ -34,7 +33,6 @@ public class StockConverter {
 
     public Stock toEntity(StockDTO dto) {
         Stock stock = new Stock();
-        stock.setId(dto.id());
 
         Product product = productRepository.findById(dto.productId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));

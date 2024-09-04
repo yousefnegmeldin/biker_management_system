@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class OrderController {
     )
     @PreAuthorize("hasAnyRole('ROLE_customer')")
     @PostMapping("/create")
-    public ResponseEntity<?> createOrder(@RequestParam Long addressId, @RequestParam String paymentMethod) {
+    public ResponseEntity<?> createOrder(@RequestParam Long addressId, @RequestParam String paymentMethod) throws AccessDeniedException {
         return (new ResponseEntity<>(orderService.createOrder(addressId, paymentMethod), HttpStatus.OK));
     }
 
@@ -89,7 +90,7 @@ public class OrderController {
                             content = @Content(schema = @Schema(implementation = String.class))),
             }
     )
-    @PreAuthorize("hasAnyRole('ROLE_BIKER','ROLE_manager','ROLE_admin')")
+    @PreAuthorize("hasAnyRole('ROLE_biker','ROLE_manager','ROLE_admin')")
     @GetMapping("/getall")
     public ResponseEntity<?> getAllOrders() {
         List<OrderDto> orderDtos = new ArrayList<>();
@@ -132,7 +133,7 @@ public class OrderController {
             }
     )
     @GetMapping("/zone")
-    @PreAuthorize("hasAnyRole('ROLE_BIKER','ROLE_manager','ROLE_admin')")
+    @PreAuthorize("hasAnyRole('ROLE_biker','ROLE_manager','ROLE_admin')")
     public ResponseEntity<?> getAllOrdersInZone(@RequestParam Zone zone) {
         List<OrderDto> orderDTOs = OrderMapper.toDTOList(orderService.getOrdersInZone(zone));
         if (orderDTOs.isEmpty()) {
